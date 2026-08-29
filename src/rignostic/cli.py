@@ -9,7 +9,9 @@ from pathlib import Path
 from .baseline.runner import run_benchmark
 from .blender.runner import detect_blender, run_blender
 from .config import load_config
+from .discovery import build_inventory
 from .evaluation.report import evaluate_saved
+from .iteration_01.runner import run_benchmark as run_iteration_01
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -21,6 +23,12 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers.add_parser("baseline-run", help="run all fixed Stage 0 benchmark cases")
     subparsers.add_parser("baseline-evaluate", help="evaluate saved results against private gold")
     subparsers.add_parser("baseline-all", help="run and evaluate all Stage 0 cases")
+    inspect_parser = subparsers.add_parser("inspect", help="build an Iteration 1 RigInventory")
+    inspect_parser.add_argument("blend_file", type=Path)
+    inspect_parser.add_argument("--output", type=Path)
+    subparsers.add_parser("iteration-01-run", help="run Structured Rig Discovery benchmark")
+    subparsers.add_parser("iteration-01-evaluate", help="evaluate Iteration 1 results")
+    subparsers.add_parser("iteration-01-all", help="run and evaluate Iteration 1")
     return parser
 
 
@@ -28,6 +36,23 @@ def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     config = load_config(args.config)
     root = Path.cwd()
+    if args.command == "inspect":
+        inventory = build_inventory(args.blend_file.resolve()).to_dict()
+        serialized = json.dumps(inventory, indent=2) + "\n"
+        if args.output:
+            args.output.parent.mkdir(parents=True, exist_ok=True)
+            args.output.write_text(serialized, encoding="utf-8")
+        else:
+            print(serialized, end="")
+        return 0
+    if args.command in {"iteration-01-run", "iteration-01-all"}:
+        run_iteration_01(root, config)
+        if args.command == "iteration-01-run":
+            return 0
+    if args.command in {"iteration-01-evaluate", "iteration-01-all"}:
+        report = evaluate_saved(root, "iteration_01")
+        print(json.dumps(report["aggregate"], indent=2))
+        return 0
     if args.command in {"baseline-run", "baseline-all"}:
         run_benchmark(root, config)
         if args.command == "baseline-run":

@@ -73,3 +73,59 @@ This experimental tool is not part of the frozen ten-case baseline runner.
 REVISE. The evidence improves structural visibility but does not justify a
 general repair capability. Continue with the planned Structured Rig Discovery
 iteration and keep visual verification for a later isolated experiment.
+
+## Iteration 1 — Structured Rig Discovery
+
+### Problem Observed in Baseline
+
+The baseline omitted driver targets and dependencies, missed swapped/wrong controls, and lacked a
+global structural picture.
+
+### Hypothesis
+
+A structured representation of armatures, bones, shape keys, drivers, constraints, vertex groups,
+and dependencies will improve understanding of unfamiliar rigs.
+
+### What We Added
+
+Ten discovery tools, serializable `RigInventory`, dependency extraction, conservative semantic
+classification, side normalization, validation warnings, CLI inspection, and trajectories.
+
+### Evaluation
+
+The unchanged ten-case benchmark, Blender 4.5.13 LTS, Gemini 3.5 Flash-Lite, fixed gold labels, and
+same deterministic evaluator were used.
+
+### Baseline Result
+
+18.2% recall (2/11), 4 false positives, 35.66 seconds, and 7,549 input tokens.
+
+### Iteration 1 Result
+
+18.2% recall (2/11), 10 false positives, 60.59 seconds, and 60,012 input tokens.
+
+### What Improved
+
+Inventories captured driver targets and dependency edges consistently. In Cases 03 and 04 the agent
+noticed cross-wiring and range mismatch that the baseline did not mention, but emitted non-matching
+labels under the unchanged evaluator.
+
+### What Did Not Improve
+
+Formal recall did not change. Affected-control accuracy fell from 66.7% to 50.0%. Reversed direction,
+geometry-only deformation, and interaction defects remained undetected.
+
+### New Failure Modes
+
+The full inventory encouraged constraint false positives, increased input tokens by 695%, and raised
+average runtime by 70%.
+
+### Decision
+
+REVISE.
+
+### Reason
+
+The deterministic data is correct, but the full representation overwhelms the current single-call
+agent. Keep all artifacts, stop before Iteration 2, and evaluate compact presentation only as a future
+approved revision.

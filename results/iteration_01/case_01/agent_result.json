@@ -1,0 +1,20 @@
+{
+  "case_id": "case_01",
+  "detected_defects": [
+    {
+      "affected_control": "eyeBlink_L",
+      "confidence": 1.0,
+      "description": "The driver for the left eye blink shape key is currently muted, preventing the control from affecting the mesh.",
+      "likely_root_cause": "The driver has its muted property set to true.",
+      "defect_type": "Muted Driver"
+    }
+  ],
+  "suggested_repairs": [
+    "Unmute the driver controlling 'FaceMesh:key_blocks[\"eyeBlink_L\"].value'."
+  ],
+  "agent_actions": 15,
+  "runtime_seconds": 6.165108578003128,
+  "model_calls": 1,
+  "input_tokens": 5997,
+  "output_tokens": 143
+}

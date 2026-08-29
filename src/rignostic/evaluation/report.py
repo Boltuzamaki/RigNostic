@@ -11,8 +11,11 @@ from .evaluator import defect_matches, evaluate, load_gold, metrics_dict
 from .schemas import AgentResult
 
 
-def evaluate_saved(root: Path) -> dict[str, Any]:
-    result_paths = sorted((root / "results" / "baseline" / "cases").glob("case_*.json"))
+def evaluate_saved(root: Path, stage: str = "baseline") -> dict[str, Any]:
+    if stage == "baseline":
+        result_paths = sorted((root / "results" / "baseline" / "cases").glob("case_*.json"))
+    else:
+        result_paths = sorted((root / "results" / stage).glob("case_*/agent_result.json"))
     results = [AgentResult.from_dict(json.loads(path.read_text())) for path in result_paths]
     gold_by_case = {}
     for path in sorted((root / "benchmark" / "cases").glob("case_*/gold.json")):
@@ -47,16 +50,17 @@ def evaluate_saved(root: Path) -> dict[str, Any]:
         "approximate_cost_usd": None,
     }
     payload = {
-        "stage": "baseline",
+        "stage": stage,
         "model": "gemini-3.5-flash-lite",
         "aggregate": aggregate,
         "cases": cases,
         "results": [item.to_dict() for item in results],
     }
-    output = root / "results" / "baseline" / "results.json"
+    output_dir = root / "results" / stage
+    output = output_dir / "results.json"
     output.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
     lines = [
-        "# Stage 0 baseline results",
+        f"# {stage.replace('_', ' ').title()} results",
         "",
         f"Defect detection recall: {aggregate['defect_detection_recall']:.1%}",
         f"False positives: {aggregate['false_positives']}",
@@ -71,7 +75,7 @@ def evaluate_saved(root: Path) -> dict[str, Any]:
         f"{case['predicted_defects']} | {'PASS' if case['passed'] else 'FAIL'} |"
         for case in cases
     )
-    (root / "results" / "baseline" / "summary.md").write_text(
+    (output_dir / "summary.md").write_text(
         "\n".join(lines) + "\n", encoding="utf-8"
     )
     return payload

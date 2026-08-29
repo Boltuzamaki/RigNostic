@@ -1,0 +1,310 @@
+{
+  "stage": "iteration_01",
+  "model": "gemini-3.5-flash-lite",
+  "aggregate": {
+    "total_gold_defects": 11,
+    "correctly_detected": 2,
+    "false_positives": 10,
+    "defect_detection_recall": 0.18181818181818182,
+    "affected_control_accuracy": 0.5,
+    "root_cause_accuracy": 0.0,
+    "cases_attempted": 10,
+    "average_agent_actions": 15,
+    "average_runtime_seconds": 6.059241155299969,
+    "total_runtime_seconds": 60.59241155299969,
+    "model_calls": 10,
+    "input_tokens": 60012,
+    "output_tokens": 1948,
+    "approximate_cost_usd": null
+  },
+  "cases": [
+    {
+      "case_id": "case_01",
+      "gold_defects": 1,
+      "matched_defects": 1,
+      "predicted_defects": 1,
+      "passed": true
+    },
+    {
+      "case_id": "case_02",
+      "gold_defects": 1,
+      "matched_defects": 0,
+      "predicted_defects": 1,
+      "passed": false
+    },
+    {
+      "case_id": "case_03",
+      "gold_defects": 1,
+      "matched_defects": 0,
+      "predicted_defects": 1,
+      "passed": false
+    },
+    {
+      "case_id": "case_04",
+      "gold_defects": 1,
+      "matched_defects": 0,
+      "predicted_defects": 1,
+      "passed": false
+    },
+    {
+      "case_id": "case_05",
+      "gold_defects": 1,
+      "matched_defects": 0,
+      "predicted_defects": 1,
+      "passed": false
+    },
+    {
+      "case_id": "case_06",
+      "gold_defects": 1,
+      "matched_defects": 0,
+      "predicted_defects": 1,
+      "passed": false
+    },
+    {
+      "case_id": "case_07",
+      "gold_defects": 1,
+      "matched_defects": 0,
+      "predicted_defects": 1,
+      "passed": false
+    },
+    {
+      "case_id": "case_08",
+      "gold_defects": 1,
+      "matched_defects": 0,
+      "predicted_defects": 1,
+      "passed": false
+    },
+    {
+      "case_id": "case_09",
+      "gold_defects": 1,
+      "matched_defects": 0,
+      "predicted_defects": 2,
+      "passed": false
+    },
+    {
+      "case_id": "case_10",
+      "gold_defects": 2,
+      "matched_defects": 1,
+      "predicted_defects": 2,
+      "passed": false
+    }
+  ],
+  "results": [
+    {
+      "case_id": "case_01",
+      "detected_defects": [
+        {
+          "defect_type": "Muted Driver",
+          "affected_control": "eyeBlink_L",
+          "root_cause": "The driver has its muted property set to true.",
+          "description": "The driver for the left eye blink shape key is currently muted, preventing the control from affecting the mesh.",
+          "confidence": 1.0
+        }
+      ],
+      "suggested_repairs": [
+        "Unmute the driver controlling 'FaceMesh:key_blocks[\"eyeBlink_L\"].value'."
+      ],
+      "agent_actions": 15,
+      "runtime_seconds": 6.165108578003128,
+      "model_calls": 1,
+      "input_tokens": 5997,
+      "output_tokens": 143
+    },
+    {
+      "case_id": "case_02",
+      "detected_defects": [
+        {
+          "defect_type": "Constraint Axis Mismatch",
+          "affected_control": "browUp_L",
+          "root_cause": "Constraint applied to the wrong transformation channel or axis mismatch between the bone's limit constraint and the driver's variable configuration.",
+          "description": "The LIMIT_LOCATION constraint on browUp_L restricts movement along the Z-axis with max 0.25, but bone drivers depend on LOC_X, rendering the location limit ineffective for controlling the driver input correctly.",
+          "confidence": 0.85
+        }
+      ],
+      "suggested_repairs": [
+        "Align the LIMIT_LOCATION constraint axis to match the transform type used by the bone's driver (change the constrained axis to X or update the driver variable to read LOC_Z)."
+      ],
+      "agent_actions": 15,
+      "runtime_seconds": 6.283700804000546,
+      "model_calls": 1,
+      "input_tokens": 6003,
+      "output_tokens": 198
+    },
+    {
+      "case_id": "case_03",
+      "detected_defects": [
+        {
+          "defect_type": "cross_wired_drivers",
+          "affected_control": "mouthSmile_L",
+          "root_cause": "The driver variables were incorrectly mapped during rig setup, swapping the left and right controls.",
+          "description": "The driver for shape key mouthSmile_L is controlled by bone mouthSmile_R, and vice versa for mouthSmile_R.",
+          "confidence": 0.95
+        }
+      ],
+      "suggested_repairs": [
+        "Reassign the driver variable for FaceMesh:key_blocks[\"mouthSmile_L\"].value to target pose.bones[\"mouthSmile_L\"][\"value\"] instead of mouthSmile_R.",
+        "Reassign the driver variable for FaceMesh:key_blocks[\"mouthSmile_R\"].value to target pose.bones[\"mouthSmile_R\"][\"value\"] instead of mouthSmile_L."
+      ],
+      "agent_actions": 15,
+      "runtime_seconds": 6.03696724200563,
+      "model_calls": 1,
+      "input_tokens": 5997,
+      "output_tokens": 225
+    },
+    {
+      "case_id": "case_04",
+      "detected_defects": [
+        {
+          "defect_type": "Shape Key Range Mismatch",
+          "affected_control": "mouthFunnel",
+          "root_cause": "The shape key maximum limit was manually modified or incorrectly generated during shape key creation without adjusting the driver or bone limits accordingly.",
+          "description": "The shape key slider_max for mouthFunnel is set to 2.0, whereas standard shape key ranges are typically bounded between 0.0 and 1.0, which may lead to unexpected deformation scaling when fully driven.",
+          "confidence": 0.85
+        }
+      ],
+      "suggested_repairs": [
+        "Reset the slider_max property of the mouthFunnel shape key back to 1.0 or adjust the corresponding driver expression to correctly handle values up to 2.0."
+      ],
+      "agent_actions": 15,
+      "runtime_seconds": 6.169151226997201,
+      "model_calls": 1,
+      "input_tokens": 5997,
+      "output_tokens": 198
+    },
+    {
+      "case_id": "case_05",
+      "detected_defects": [
+        {
+          "defect_type": "Constraint Asymmetry",
+          "affected_control": "browUp_L",
+          "root_cause": "Asymmetric constraint configuration or accidental adjustment during rigging.",
+          "description": "The LIMIT_LOCATION constraint 'Brow Range' on bone browUp_L has an influence of 0.2, whereas the corresponding right-side bone browUp_R has an influence of 1.0.",
+          "confidence": 0.95
+        }
+      ],
+      "suggested_repairs": [
+        "Set the influence of the 'Brow Range' constraint on bone browUp_L to 1.0 to match browUp_R and restore symmetry."
+      ],
+      "agent_actions": 15,
+      "runtime_seconds": 5.857405884999025,
+      "model_calls": 1,
+      "input_tokens": 6029,
+      "output_tokens": 173
+    },
+    {
+      "case_id": "case_06",
+      "detected_defects": [
+        {
+          "defect_type": "none",
+          "affected_control": "none",
+          "root_cause": "none",
+          "description": "No defects observed in the provided baseline tool outputs and inventory.",
+          "confidence": 1.0
+        }
+      ],
+      "suggested_repairs": [
+        "No repairs needed."
+      ],
+      "agent_actions": 15,
+      "runtime_seconds": 5.4014548389968695,
+      "model_calls": 1,
+      "input_tokens": 5997,
+      "output_tokens": 100
+    },
+    {
+      "case_id": "case_07",
+      "detected_defects": [
+        {
+          "defect_type": "Driver Mismatched Target",
+          "affected_control": "mouthFunnel",
+          "root_cause": "Driver variable configuration error during rig setup.",
+          "description": "The driver for the mouthFunnel shape key is incorrectly targeted to the eyeBlink_R bone instead of the mouthFunnel bone.",
+          "confidence": 0.95
+        }
+      ],
+      "suggested_repairs": [
+        "Open the driver for FaceMesh key_blocks[\"mouthFunnel\"].value and update its variable target from pose.bones[\"eyeBlink_R\"] to pose.bones[\"mouthFunnel\"]."
+      ],
+      "agent_actions": 15,
+      "runtime_seconds": 5.88855440000043,
+      "model_calls": 1,
+      "input_tokens": 6001,
+      "output_tokens": 171
+    },
+    {
+      "case_id": "case_08",
+      "detected_defects": [
+        {
+          "defect_type": "Constraint Range Limitation",
+          "affected_control": "browUp_L",
+          "root_cause": "The limit location constraint restricts bone movement to a maximum of 0.25 units, which may restrict the associated shape key range or cause sudden clamping.",
+          "description": "The LIMIT_LOCATION constraint on browUp_L restricts translation to max_z: 0.25, but drivers evaluate bone location in world space or specific transform spaces where translation ranges might exceed or conflict with expected shape key ranges [0.0, 1.0].",
+          "confidence": 0.8
+        }
+      ],
+      "suggested_repairs": [
+        "Adjust the LIMIT_LOCATION constraint maximum values on brow bones to match the expected driver input range or rescale the driver expression."
+      ],
+      "agent_actions": 15,
+      "runtime_seconds": 5.889992022996012,
+      "model_calls": 1,
+      "input_tokens": 5997,
+      "output_tokens": 202
+    },
+    {
+      "case_id": "case_09",
+      "detected_defects": [
+        {
+          "defect_type": "LIMIT_LOCATION",
+          "affected_control": "browUp_L",
+          "root_cause": "Constraint was configured for Z-axis translation while driver reads X-axis translation, making the limit ineffective.",
+          "description": "The LIMIT_LOCATION constraint on bone browUp_L restricts movement on the Z axis with a maximum of 0.25, but the driver relies on LOC_X.",
+          "confidence": 0.85
+        },
+        {
+          "defect_type": "LIMIT_LOCATION",
+          "affected_control": "browUp_R",
+          "root_cause": "Constraint was configured for Z-axis translation while driver reads X-axis translation, making the limit ineffective.",
+          "description": "The LIMIT_LOCATION constraint on bone browUp_R restricts movement on the Z axis with a maximum of 0.25, but the driver relies on LOC_X.",
+          "confidence": 0.85
+        }
+      ],
+      "suggested_repairs": [
+        "Update the LIMIT_LOCATION constraint settings on browUp_L and browUp_R to target the X-axis (use_max_x / max_x) instead of the Z-axis, or change the driver variables to read the Z location."
+      ],
+      "agent_actions": 15,
+      "runtime_seconds": 6.551524540998798,
+      "model_calls": 1,
+      "input_tokens": 5997,
+      "output_tokens": 265
+    },
+    {
+      "case_id": "case_10",
+      "detected_defects": [
+        {
+          "defect_type": "Muted Driver",
+          "affected_control": "browUp_R",
+          "root_cause": "The driver was accidentally muted during setup or debugging.",
+          "description": "The driver for the right brow shape key (FaceMesh:key_blocks[\"browUp_R\"].value) is muted, preventing the control from affecting the mesh.",
+          "confidence": 1.0
+        },
+        {
+          "defect_type": "Zero Constraint Influence",
+          "affected_control": "browUp_R",
+          "root_cause": "Constraint influence was zeroed out during rig configuration.",
+          "description": "The LIMIT_LOCATION constraint 'Brow Range' on bone 'browUp_R' has an influence of 0.0.",
+          "confidence": 1.0
+        }
+      ],
+      "suggested_repairs": [
+        "Unmute the driver for FaceMesh:key_blocks[\"browUp_R\"].value.",
+        "Set the influence of the 'Brow Range' constraint on bone 'browUp_R' to 1.0."
+      ],
+      "agent_actions": 15,
+      "runtime_seconds": 6.348552014002053,
+      "model_calls": 1,
+      "input_tokens": 5997,
+      "output_tokens": 273
+    }
+  ]
+}

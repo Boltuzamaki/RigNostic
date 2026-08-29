@@ -1,0 +1,27 @@
+{
+  "case_id": "case_09",
+  "detected_defects": [
+    {
+      "defect_type": "LIMIT_LOCATION",
+      "affected_control": "browUp_L",
+      "description": "The LIMIT_LOCATION constraint on bone browUp_L restricts movement on the Z axis with a maximum of 0.25, but the driver relies on LOC_X.",
+      "likely_root_cause": "Constraint was configured for Z-axis translation while driver reads X-axis translation, making the limit ineffective.",
+      "confidence": 0.85
+    },
+    {
+      "defect_type": "LIMIT_LOCATION",
+      "affected_control": "browUp_R",
+      "description": "The LIMIT_LOCATION constraint on bone browUp_R restricts movement on the Z axis with a maximum of 0.25, but the driver relies on LOC_X.",
+      "likely_root_cause": "Constraint was configured for Z-axis translation while driver reads X-axis translation, making the limit ineffective.",
+      "confidence": 0.85
+    }
+  ],
+  "suggested_repairs": [
+    "Update the LIMIT_LOCATION constraint settings on browUp_L and browUp_R to target the X-axis (use_max_x / max_x) instead of the Z-axis, or change the driver variables to read the Z location."
+  ],
+  "agent_actions": 15,
+  "runtime_seconds": 6.551524540998798,
+  "model_calls": 1,
+  "input_tokens": 5997,
+  "output_tokens": 265
+}

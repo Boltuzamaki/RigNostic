@@ -115,3 +115,23 @@ uv run rignostic baseline-all
 ```
 
 Gold labels are opened only by `baseline-evaluate`, after all agent runs finish.
+
+## Run Iteration 1
+
+Build one inventory:
+
+```bash
+uv run rignostic inspect benchmark/cases/case_01/rig.blend \
+  --output results/iteration_01/case_01/inventory.json
+```
+
+Run and evaluate the unchanged benchmark:
+
+```bash
+uv run rignostic iteration-01-run
+uv run rignostic iteration-01-evaluate
+# or both
+uv run rignostic iteration-01-all
+```
+
+The agent never receives `gold.json`; only the evaluator reads it afterward.

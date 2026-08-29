@@ -1,0 +1,775 @@
+{
+  "metadata": {
+    "blend_file": "/home/boltuzamaki/Work/get_a_job/RigNostic/benchmark/cases/case_02/rig.blend",
+    "objects_scanned": 2
+  },
+  "armatures": [
+    {
+      "object_name": "FaceRig",
+      "data_name": "FaceRigData",
+      "bone_count": 9,
+      "visible": true,
+      "active": true
+    }
+  ],
+  "bones": [
+    {
+      "id": "FaceRig:face_root",
+      "name": "face_root",
+      "armature": "FaceRig",
+      "parent": null,
+      "children": [
+        "eyeBlink_L",
+        "eyeBlink_R",
+        "jawOpen",
+        "mouthSmile_L",
+        "mouthSmile_R",
+        "mouthFunnel",
+        "browUp_L",
+        "browUp_R"
+      ],
+      "use_deform": true,
+      "constraint_count": 0
+    },
+    {
+      "id": "FaceRig:eyeBlink_L",
+      "name": "eyeBlink_L",
+      "armature": "FaceRig",
+      "parent": "face_root",
+      "children": [],
+      "use_deform": true,
+      "constraint_count": 0
+    },
+    {
+      "id": "FaceRig:eyeBlink_R",
+      "name": "eyeBlink_R",
+      "armature": "FaceRig",
+      "parent": "face_root",
+      "children": [],
+      "use_deform": true,
+      "constraint_count": 0
+    },
+    {
+      "id": "FaceRig:jawOpen",
+      "name": "jawOpen",
+      "armature": "FaceRig",
+      "parent": "face_root",
+      "children": [],
+      "use_deform": true,
+      "constraint_count": 0
+    },
+    {
+      "id": "FaceRig:mouthSmile_L",
+      "name": "mouthSmile_L",
+      "armature": "FaceRig",
+      "parent": "face_root",
+      "children": [],
+      "use_deform": true,
+      "constraint_count": 0
+    },
+    {
+      "id": "FaceRig:mouthSmile_R",
+      "name": "mouthSmile_R",
+      "armature": "FaceRig",
+      "parent": "face_root",
+      "children": [],
+      "use_deform": true,
+      "constraint_count": 0
+    },
+    {
+      "id": "FaceRig:mouthFunnel",
+      "name": "mouthFunnel",
+      "armature": "FaceRig",
+      "parent": "face_root",
+      "children": [],
+      "use_deform": true,
+      "constraint_count": 0
+    },
+    {
+      "id": "FaceRig:browUp_L",
+      "name": "browUp_L",
+      "armature": "FaceRig",
+      "parent": "face_root",
+      "children": [],
+      "use_deform": true,
+      "constraint_count": 1
+    },
+    {
+      "id": "FaceRig:browUp_R",
+      "name": "browUp_R",
+      "armature": "FaceRig",
+      "parent": "face_root",
+      "children": [],
+      "use_deform": true,
+      "constraint_count": 1
+    }
+  ],
+  "shape_keys": [
+    {
+      "object": "FaceMesh",
+      "shape_keys": [
+        {
+          "id": "FaceMesh:Basis",
+          "name": "Basis",
+          "object": "FaceMesh",
+          "value": 0.0,
+          "slider_min": 0.0,
+          "slider_max": 1.0,
+          "mute": false,
+          "has_driver": false
+        },
+        {
+          "id": "FaceMesh:eyeBlink_L",
+          "name": "eyeBlink_L",
+          "object": "FaceMesh",
+          "value": 0.0,
+          "slider_min": 0.0,
+          "slider_max": 1.0,
+          "mute": false,
+          "has_driver": true
+        },
+        {
+          "id": "FaceMesh:eyeBlink_R",
+          "name": "eyeBlink_R",
+          "object": "FaceMesh",
+          "value": 0.0,
+          "slider_min": 0.0,
+          "slider_max": 1.0,
+          "mute": false,
+          "has_driver": true
+        },
+        {
+          "id": "FaceMesh:jawOpen",
+          "name": "jawOpen",
+          "object": "FaceMesh",
+          "value": 0.0,
+          "slider_min": 0.0,
+          "slider_max": 1.0,
+          "mute": false,
+          "has_driver": true
+        },
+        {
+          "id": "FaceMesh:mouthSmile_L",
+          "name": "mouthSmile_L",
+          "object": "FaceMesh",
+          "value": 0.0,
+          "slider_min": 0.0,
+          "slider_max": 1.0,
+          "mute": false,
+          "has_driver": true
+        },
+        {
+          "id": "FaceMesh:mouthSmile_R",
+          "name": "mouthSmile_R",
+          "object": "FaceMesh",
+          "value": 0.0,
+          "slider_min": 0.0,
+          "slider_max": 1.0,
+          "mute": false,
+          "has_driver": true
+        },
+        {
+          "id": "FaceMesh:mouthFunnel",
+          "name": "mouthFunnel",
+          "object": "FaceMesh",
+          "value": 0.0,
+          "slider_min": 0.0,
+          "slider_max": 1.0,
+          "mute": false,
+          "has_driver": true
+        },
+        {
+          "id": "FaceMesh:browUp_L",
+          "name": "browUp_L",
+          "object": "FaceMesh",
+          "value": 0.0,
+          "slider_min": 0.0,
+          "slider_max": 1.0,
+          "mute": false,
+          "has_driver": true
+        },
+        {
+          "id": "FaceMesh:browUp_R",
+          "name": "browUp_R",
+          "object": "FaceMesh",
+          "value": 0.0,
+          "slider_min": 0.0,
+          "slider_max": 1.0,
+          "mute": false,
+          "has_driver": true
+        },
+        {
+          "id": "FaceMesh:smileCombination",
+          "name": "smileCombination",
+          "object": "FaceMesh",
+          "value": 0.0,
+          "slider_min": 0.0,
+          "slider_max": 1.0,
+          "mute": false,
+          "has_driver": true
+        }
+      ]
+    }
+  ],
+  "drivers": [
+    {
+      "id": "FaceMesh:key_blocks[\"eyeBlink_L\"].value:0:0",
+      "owner": "FaceMesh",
+      "data_path": "key_blocks[\"eyeBlink_L\"].value",
+      "array_index": 0,
+      "expression": "var",
+      "muted": false,
+      "variables": [
+        {
+          "name": "var",
+          "type": "SINGLE_PROP",
+          "targets": [
+            {
+              "id": "FaceRig",
+              "data_path": "pose.bones[\"eyeBlink_L\"][\"value\"]",
+              "bone_target": null,
+              "transform_type": "LOC_X",
+              "transform_space": "WORLD_SPACE"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "FaceMesh:key_blocks[\"eyeBlink_R\"].value:0:1",
+      "owner": "FaceMesh",
+      "data_path": "key_blocks[\"eyeBlink_R\"].value",
+      "array_index": 0,
+      "expression": "var",
+      "muted": false,
+      "variables": [
+        {
+          "name": "var",
+          "type": "SINGLE_PROP",
+          "targets": [
+            {
+              "id": "FaceRig",
+              "data_path": "pose.bones[\"eyeBlink_R\"][\"value\"]",
+              "bone_target": null,
+              "transform_type": "LOC_X",
+              "transform_space": "WORLD_SPACE"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "FaceMesh:key_blocks[\"jawOpen\"].value:0:2",
+      "owner": "FaceMesh",
+      "data_path": "key_blocks[\"jawOpen\"].value",
+      "array_index": 0,
+      "expression": "var * 2",
+      "muted": false,
+      "variables": [
+        {
+          "name": "var",
+          "type": "SINGLE_PROP",
+          "targets": [
+            {
+              "id": "FaceRig",
+              "data_path": "pose.bones[\"jawOpen\"][\"value\"]",
+              "bone_target": null,
+              "transform_type": "LOC_X",
+              "transform_space": "WORLD_SPACE"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "FaceMesh:key_blocks[\"mouthSmile_L\"].value:0:3",
+      "owner": "FaceMesh",
+      "data_path": "key_blocks[\"mouthSmile_L\"].value",
+      "array_index": 0,
+      "expression": "var",
+      "muted": false,
+      "variables": [
+        {
+          "name": "var",
+          "type": "SINGLE_PROP",
+          "targets": [
+            {
+              "id": "FaceRig",
+              "data_path": "pose.bones[\"mouthSmile_L\"][\"value\"]",
+              "bone_target": null,
+              "transform_type": "LOC_X",
+              "transform_space": "WORLD_SPACE"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "FaceMesh:key_blocks[\"mouthSmile_R\"].value:0:4",
+      "owner": "FaceMesh",
+      "data_path": "key_blocks[\"mouthSmile_R\"].value",
+      "array_index": 0,
+      "expression": "var",
+      "muted": false,
+      "variables": [
+        {
+          "name": "var",
+          "type": "SINGLE_PROP",
+          "targets": [
+            {
+              "id": "FaceRig",
+              "data_path": "pose.bones[\"mouthSmile_R\"][\"value\"]",
+              "bone_target": null,
+              "transform_type": "LOC_X",
+              "transform_space": "WORLD_SPACE"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "FaceMesh:key_blocks[\"mouthFunnel\"].value:0:5",
+      "owner": "FaceMesh",
+      "data_path": "key_blocks[\"mouthFunnel\"].value",
+      "array_index": 0,
+      "expression": "var",
+      "muted": false,
+      "variables": [
+        {
+          "name": "var",
+          "type": "SINGLE_PROP",
+          "targets": [
+            {
+              "id": "FaceRig",
+              "data_path": "pose.bones[\"mouthFunnel\"][\"value\"]",
+              "bone_target": null,
+              "transform_type": "LOC_X",
+              "transform_space": "WORLD_SPACE"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "FaceMesh:key_blocks[\"browUp_L\"].value:0:6",
+      "owner": "FaceMesh",
+      "data_path": "key_blocks[\"browUp_L\"].value",
+      "array_index": 0,
+      "expression": "var",
+      "muted": false,
+      "variables": [
+        {
+          "name": "var",
+          "type": "SINGLE_PROP",
+          "targets": [
+            {
+              "id": "FaceRig",
+              "data_path": "pose.bones[\"browUp_L\"][\"value\"]",
+              "bone_target": null,
+              "transform_type": "LOC_X",
+              "transform_space": "WORLD_SPACE"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "FaceMesh:key_blocks[\"browUp_R\"].value:0:7",
+      "owner": "FaceMesh",
+      "data_path": "key_blocks[\"browUp_R\"].value",
+      "array_index": 0,
+      "expression": "var",
+      "muted": false,
+      "variables": [
+        {
+          "name": "var",
+          "type": "SINGLE_PROP",
+          "targets": [
+            {
+              "id": "FaceRig",
+              "data_path": "pose.bones[\"browUp_R\"][\"value\"]",
+              "bone_target": null,
+              "transform_type": "LOC_X",
+              "transform_space": "WORLD_SPACE"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "FaceMesh:key_blocks[\"smileCombination\"].value:0:8",
+      "owner": "FaceMesh",
+      "data_path": "key_blocks[\"smileCombination\"].value",
+      "array_index": 0,
+      "expression": "max(0, left + right - 1)",
+      "muted": false,
+      "variables": [
+        {
+          "name": "left",
+          "type": "SINGLE_PROP",
+          "targets": [
+            {
+              "id": "FaceRig",
+              "data_path": "pose.bones[\"mouthSmile_L\"][\"value\"]",
+              "bone_target": null,
+              "transform_type": "LOC_X",
+              "transform_space": "WORLD_SPACE"
+            }
+          ]
+        },
+        {
+          "name": "right",
+          "type": "SINGLE_PROP",
+          "targets": [
+            {
+              "id": "FaceRig",
+              "data_path": "pose.bones[\"mouthSmile_R\"][\"value\"]",
+              "bone_target": null,
+              "transform_type": "LOC_X",
+              "transform_space": "WORLD_SPACE"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "constraints": [
+    {
+      "id": "FaceRig:browUp_L:Brow Range",
+      "armature": "FaceRig",
+      "owner": "browUp_L",
+      "name": "Brow Range",
+      "type": "LIMIT_LOCATION",
+      "influence": 1.0,
+      "muted": false,
+      "target": null,
+      "settings": {
+        "use_min_x": false,
+        "use_min_y": false,
+        "use_min_z": true,
+        "use_max_x": false,
+        "use_max_y": false,
+        "use_max_z": true,
+        "min_x": 0.0,
+        "min_y": 0.0,
+        "min_z": 0.0,
+        "max_x": 0.0,
+        "max_y": 0.0,
+        "max_z": 0.25
+      }
+    },
+    {
+      "id": "FaceRig:browUp_R:Brow Range",
+      "armature": "FaceRig",
+      "owner": "browUp_R",
+      "name": "Brow Range",
+      "type": "LIMIT_LOCATION",
+      "influence": 1.0,
+      "muted": false,
+      "target": null,
+      "settings": {
+        "use_min_x": false,
+        "use_min_y": false,
+        "use_min_z": true,
+        "use_max_x": false,
+        "use_max_y": false,
+        "use_max_z": true,
+        "min_x": 0.0,
+        "min_y": 0.0,
+        "min_z": 0.0,
+        "max_x": 0.0,
+        "max_y": 0.0,
+        "max_z": 0.25
+      }
+    }
+  ],
+  "vertex_groups": [],
+  "dependencies": [
+    {
+      "source_type": "driver",
+      "source": "FaceMesh:key_blocks[\"eyeBlink_L\"].value:0:0",
+      "relationship": "drives",
+      "target_type": "shape_key",
+      "target": "eyeBlink_L",
+      "target_object": "FaceMesh",
+      "deterministic": true
+    },
+    {
+      "source_type": "bone",
+      "source": "eyeBlink_L",
+      "source_object": "FaceRig",
+      "relationship": "feeds",
+      "target_type": "driver",
+      "target": "FaceMesh:key_blocks[\"eyeBlink_L\"].value:0:0",
+      "deterministic": true
+    },
+    {
+      "source_type": "driver",
+      "source": "FaceMesh:key_blocks[\"eyeBlink_R\"].value:0:1",
+      "relationship": "drives",
+      "target_type": "shape_key",
+      "target": "eyeBlink_R",
+      "target_object": "FaceMesh",
+      "deterministic": true
+    },
+    {
+      "source_type": "bone",
+      "source": "eyeBlink_R",
+      "source_object": "FaceRig",
+      "relationship": "feeds",
+      "target_type": "driver",
+      "target": "FaceMesh:key_blocks[\"eyeBlink_R\"].value:0:1",
+      "deterministic": true
+    },
+    {
+      "source_type": "driver",
+      "source": "FaceMesh:key_blocks[\"jawOpen\"].value:0:2",
+      "relationship": "drives",
+      "target_type": "shape_key",
+      "target": "jawOpen",
+      "target_object": "FaceMesh",
+      "deterministic": true
+    },
+    {
+      "source_type": "bone",
+      "source": "jawOpen",
+      "source_object": "FaceRig",
+      "relationship": "feeds",
+      "target_type": "driver",
+      "target": "FaceMesh:key_blocks[\"jawOpen\"].value:0:2",
+      "deterministic": true
+    },
+    {
+      "source_type": "driver",
+      "source": "FaceMesh:key_blocks[\"mouthSmile_L\"].value:0:3",
+      "relationship": "drives",
+      "target_type": "shape_key",
+      "target": "mouthSmile_L",
+      "target_object": "FaceMesh",
+      "deterministic": true
+    },
+    {
+      "source_type": "bone",
+      "source": "mouthSmile_L",
+      "source_object": "FaceRig",
+      "relationship": "feeds",
+      "target_type": "driver",
+      "target": "FaceMesh:key_blocks[\"mouthSmile_L\"].value:0:3",
+      "deterministic": true
+    },
+    {
+      "source_type": "driver",
+      "source": "FaceMesh:key_blocks[\"mouthSmile_R\"].value:0:4",
+      "relationship": "drives",
+      "target_type": "shape_key",
+      "target": "mouthSmile_R",
+      "target_object": "FaceMesh",
+      "deterministic": true
+    },
+    {
+      "source_type": "bone",
+      "source": "mouthSmile_R",
+      "source_object": "FaceRig",
+      "relationship": "feeds",
+      "target_type": "driver",
+      "target": "FaceMesh:key_blocks[\"mouthSmile_R\"].value:0:4",
+      "deterministic": true
+    },
+    {
+      "source_type": "driver",
+      "source": "FaceMesh:key_blocks[\"mouthFunnel\"].value:0:5",
+      "relationship": "drives",
+      "target_type": "shape_key",
+      "target": "mouthFunnel",
+      "target_object": "FaceMesh",
+      "deterministic": true
+    },
+    {
+      "source_type": "bone",
+      "source": "mouthFunnel",
+      "source_object": "FaceRig",
+      "relationship": "feeds",
+      "target_type": "driver",
+      "target": "FaceMesh:key_blocks[\"mouthFunnel\"].value:0:5",
+      "deterministic": true
+    },
+    {
+      "source_type": "driver",
+      "source": "FaceMesh:key_blocks[\"browUp_L\"].value:0:6",
+      "relationship": "drives",
+      "target_type": "shape_key",
+      "target": "browUp_L",
+      "target_object": "FaceMesh",
+      "deterministic": true
+    },
+    {
+      "source_type": "bone",
+      "source": "browUp_L",
+      "source_object": "FaceRig",
+      "relationship": "feeds",
+      "target_type": "driver",
+      "target": "FaceMesh:key_blocks[\"browUp_L\"].value:0:6",
+      "deterministic": true
+    },
+    {
+      "source_type": "driver",
+      "source": "FaceMesh:key_blocks[\"browUp_R\"].value:0:7",
+      "relationship": "drives",
+      "target_type": "shape_key",
+      "target": "browUp_R",
+      "target_object": "FaceMesh",
+      "deterministic": true
+    },
+    {
+      "source_type": "bone",
+      "source": "browUp_R",
+      "source_object": "FaceRig",
+      "relationship": "feeds",
+      "target_type": "driver",
+      "target": "FaceMesh:key_blocks[\"browUp_R\"].value:0:7",
+      "deterministic": true
+    },
+    {
+      "source_type": "driver",
+      "source": "FaceMesh:key_blocks[\"smileCombination\"].value:0:8",
+      "relationship": "drives",
+      "target_type": "shape_key",
+      "target": "smileCombination",
+      "target_object": "FaceMesh",
+      "deterministic": true
+    },
+    {
+      "source_type": "bone",
+      "source": "mouthSmile_L",
+      "source_object": "FaceRig",
+      "relationship": "feeds",
+      "target_type": "driver",
+      "target": "FaceMesh:key_blocks[\"smileCombination\"].value:0:8",
+      "deterministic": true
+    },
+    {
+      "source_type": "bone",
+      "source": "mouthSmile_R",
+      "source_object": "FaceRig",
+      "relationship": "feeds",
+      "target_type": "driver",
+      "target": "FaceMesh:key_blocks[\"smileCombination\"].value:0:8",
+      "deterministic": true
+    }
+  ],
+  "likely_facial_controls": [
+    {
+      "name": "browUp_L",
+      "control_type": "brow",
+      "side": "left",
+      "confidence": 0.9,
+      "evidence": [
+        "name matches brow",
+        "feeds driver FaceMesh:key_blocks[\"browUp_L\"].value:0:6"
+      ],
+      "original_name": "browUp_L"
+    },
+    {
+      "name": "browUp_R",
+      "control_type": "brow",
+      "side": "right",
+      "confidence": 0.9,
+      "evidence": [
+        "name matches brow",
+        "feeds driver FaceMesh:key_blocks[\"browUp_R\"].value:0:7"
+      ],
+      "original_name": "browUp_R"
+    },
+    {
+      "name": "eyeBlink_L",
+      "control_type": "blink",
+      "side": "left",
+      "confidence": 0.9,
+      "evidence": [
+        "name matches blink",
+        "feeds driver FaceMesh:key_blocks[\"eyeBlink_L\"].value:0:0"
+      ],
+      "original_name": "eyeBlink_L"
+    },
+    {
+      "name": "eyeBlink_R",
+      "control_type": "blink",
+      "side": "right",
+      "confidence": 0.9,
+      "evidence": [
+        "name matches blink",
+        "feeds driver FaceMesh:key_blocks[\"eyeBlink_R\"].value:0:1"
+      ],
+      "original_name": "eyeBlink_R"
+    },
+    {
+      "name": "jawOpen",
+      "control_type": "jaw",
+      "side": null,
+      "confidence": 0.9,
+      "evidence": [
+        "name matches jaw",
+        "feeds driver FaceMesh:key_blocks[\"jawOpen\"].value:0:2"
+      ],
+      "original_name": "jawOpen"
+    },
+    {
+      "name": "mouthFunnel",
+      "control_type": "funnel",
+      "side": null,
+      "confidence": 0.9,
+      "evidence": [
+        "name matches funnel",
+        "feeds driver FaceMesh:key_blocks[\"mouthFunnel\"].value:0:5"
+      ],
+      "original_name": "mouthFunnel"
+    },
+    {
+      "name": "mouthSmile_L",
+      "control_type": "smile",
+      "side": "left",
+      "confidence": 0.9,
+      "evidence": [
+        "name matches smile",
+        "feeds driver FaceMesh:key_blocks[\"mouthSmile_L\"].value:0:3",
+        "feeds driver FaceMesh:key_blocks[\"smileCombination\"].value:0:8"
+      ],
+      "original_name": "mouthSmile_L"
+    },
+    {
+      "name": "mouthSmile_R",
+      "control_type": "smile",
+      "side": "right",
+      "confidence": 0.9,
+      "evidence": [
+        "name matches smile",
+        "feeds driver FaceMesh:key_blocks[\"mouthSmile_R\"].value:0:4",
+        "feeds driver FaceMesh:key_blocks[\"smileCombination\"].value:0:8"
+      ],
+      "original_name": "mouthSmile_R"
+    },
+    {
+      "name": "smileCombination",
+      "control_type": "smile",
+      "side": null,
+      "confidence": 0.7,
+      "evidence": [
+        "name matches smile"
+      ],
+      "original_name": "smileCombination"
+    }
+  ],
+  "unknown_controls": [
+    {
+      "name": "face_root",
+      "control_type": "unknown",
+      "side": null,
+      "confidence": 0.25,
+      "evidence": [
+        "no unique category match"
+      ],
+      "original_name": "face_root"
+    }
+  ],
+  "warnings": []
+}

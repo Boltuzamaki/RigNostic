@@ -1,0 +1,21 @@
+{
+  "case_id": "case_03",
+  "detected_defects": [
+    {
+      "defect_type": "cross_wired_drivers",
+      "affected_control": "mouthSmile_L",
+      "description": "The driver for shape key mouthSmile_L is controlled by bone mouthSmile_R, and vice versa for mouthSmile_R.",
+      "likely_root_cause": "The driver variables were incorrectly mapped during rig setup, swapping the left and right controls.",
+      "confidence": 0.95
+    }
+  ],
+  "suggested_repairs": [
+    "Reassign the driver variable for FaceMesh:key_blocks[\"mouthSmile_L\"].value to target pose.bones[\"mouthSmile_L\"][\"value\"] instead of mouthSmile_R.",
+    "Reassign the driver variable for FaceMesh:key_blocks[\"mouthSmile_R\"].value to target pose.bones[\"mouthSmile_R\"][\"value\"] instead of mouthSmile_L."
+  ],
+  "agent_actions": 15,
+  "runtime_seconds": 6.03696724200563,
+  "model_calls": 1,
+  "input_tokens": 5997,
+  "output_tokens": 225
+}

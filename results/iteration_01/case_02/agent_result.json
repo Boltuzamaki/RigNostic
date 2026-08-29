@@ -1,0 +1,20 @@
+{
+  "case_id": "case_02",
+  "detected_defects": [
+    {
+      "affected_control": "browUp_L",
+      "confidence": 0.85,
+      "description": "The LIMIT_LOCATION constraint on browUp_L restricts movement along the Z-axis with max 0.25, but bone drivers depend on LOC_X, rendering the location limit ineffective for controlling the driver input correctly.",
+      "likely_root_cause": "Constraint applied to the wrong transformation channel or axis mismatch between the bone's limit constraint and the driver's variable configuration.",
+      "defect_type": "Constraint Axis Mismatch"
+    }
+  ],
+  "suggested_repairs": [
+    "Align the LIMIT_LOCATION constraint axis to match the transform type used by the bone's driver (change the constrained axis to X or update the driver variable to read LOC_Z)."
+  ],
+  "agent_actions": 15,
+  "runtime_seconds": 6.283700804000546,
+  "model_calls": 1,
+  "input_tokens": 6003,
+  "output_tokens": 198
+}

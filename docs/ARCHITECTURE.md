@@ -35,3 +35,22 @@ same Stage 0 model client in a background thread, then writes run-local JSON and
 JSONL artifacts. Routes never import `bpy` or manipulate rigs. Jinja templates
 and locally bundled Tailwind/Three.js assets remain inside `rignostic.web` while
 backend services remain reusable by CLI commands.
+
+## Iteration 1 — Structured Rig Discovery
+
+```text
+Blender file
+    ↓
+Deterministic discovery tools
+    ↓
+Serializable RigInventory
+    ↓
+One general-purpose agent
+    ↓
+Same baseline-style inspection
+    ↓
+Structured defect report
+```
+
+Iteration 1 adds a structural map but still has no Dynamic Test Planner, interaction search,
+visual verifier, repair engine, rollback, or regression loop.

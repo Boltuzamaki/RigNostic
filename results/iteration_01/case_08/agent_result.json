@@ -1,0 +1,20 @@
+{
+  "case_id": "case_08",
+  "detected_defects": [
+    {
+      "affected_control": "browUp_L",
+      "confidence": 0.8,
+      "description": "The LIMIT_LOCATION constraint on browUp_L restricts translation to max_z: 0.25, but drivers evaluate bone location in world space or specific transform spaces where translation ranges might exceed or conflict with expected shape key ranges [0.0, 1.0].",
+      "likely_root_cause": "The limit location constraint restricts bone movement to a maximum of 0.25 units, which may restrict the associated shape key range or cause sudden clamping.",
+      "defect_type": "Constraint Range Limitation"
+    }
+  ],
+  "suggested_repairs": [
+    "Adjust the LIMIT_LOCATION constraint maximum values on brow bones to match the expected driver input range or rescale the driver expression."
+  ],
+  "agent_actions": 15,
+  "runtime_seconds": 5.889992022996012,
+  "model_calls": 1,
+  "input_tokens": 5997,
+  "output_tokens": 202
+}

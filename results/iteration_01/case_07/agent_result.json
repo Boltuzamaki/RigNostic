@@ -1,0 +1,20 @@
+{
+  "case_id": "case_07",
+  "detected_defects": [
+    {
+      "affected_control": "mouthFunnel",
+      "confidence": 0.95,
+      "description": "The driver for the mouthFunnel shape key is incorrectly targeted to the eyeBlink_R bone instead of the mouthFunnel bone.",
+      "likely_root_cause": "Driver variable configuration error during rig setup.",
+      "defect_type": "Driver Mismatched Target"
+    }
+  ],
+  "suggested_repairs": [
+    "Open the driver for FaceMesh key_blocks[\"mouthFunnel\"].value and update its variable target from pose.bones[\"eyeBlink_R\"] to pose.bones[\"mouthFunnel\"]."
+  ],
+  "agent_actions": 15,
+  "runtime_seconds": 5.88855440000043,
+  "model_calls": 1,
+  "input_tokens": 6001,
+  "output_tokens": 171
+}

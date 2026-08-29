@@ -1,0 +1,20 @@
+{
+  "case_id": "case_05",
+  "detected_defects": [
+    {
+      "defect_type": "Constraint Asymmetry",
+      "affected_control": "browUp_L",
+      "description": "The LIMIT_LOCATION constraint 'Brow Range' on bone browUp_L has an influence of 0.2, whereas the corresponding right-side bone browUp_R has an influence of 1.0.",
+      "likely_root_cause": "Asymmetric constraint configuration or accidental adjustment during rigging.",
+      "confidence": 0.95
+    }
+  ],
+  "suggested_repairs": [
+    "Set the influence of the 'Brow Range' constraint on bone browUp_L to 1.0 to match browUp_R and restore symmetry."
+  ],
+  "agent_actions": 15,
+  "runtime_seconds": 5.857405884999025,
+  "model_calls": 1,
+  "input_tokens": 6029,
+  "output_tokens": 173
+}

@@ -1,0 +1,20 @@
+{
+  "case_id": "case_04",
+  "detected_defects": [
+    {
+      "affected_control": "mouthFunnel",
+      "confidence": 0.85,
+      "description": "The shape key slider_max for mouthFunnel is set to 2.0, whereas standard shape key ranges are typically bounded between 0.0 and 1.0, which may lead to unexpected deformation scaling when fully driven.",
+      "likely_root_cause": "The shape key maximum limit was manually modified or incorrectly generated during shape key creation without adjusting the driver or bone limits accordingly.",
+      "defect_type": "Shape Key Range Mismatch"
+    }
+  ],
+  "suggested_repairs": [
+    "Reset the slider_max property of the mouthFunnel shape key back to 1.0 or adjust the corresponding driver expression to correctly handle values up to 2.0."
+  ],
+  "agent_actions": 15,
+  "runtime_seconds": 6.169151226997201,
+  "model_calls": 1,
+  "input_tokens": 5997,
+  "output_tokens": 198
+}
