@@ -22,7 +22,7 @@ class Defect:
                 raise ValueError(f"{name} is required")
 
     @classmethod
-    def from_dict(cls, value: dict[str, Any]) -> "Defect":
+    def from_dict(cls, value: dict[str, Any]) -> Defect:
         return cls(
             defect_type=value["defect_type"],
             affected_control=value["affected_control"],
@@ -47,7 +47,7 @@ class AgentResult:
         return asdict(self)
 
     @classmethod
-    def from_dict(cls, value: dict[str, Any]) -> "AgentResult":
+    def from_dict(cls, value: dict[str, Any]) -> AgentResult:
         return cls(
             case_id=value["case_id"],
             detected_defects=[Defect.from_dict(item) for item in value.get("detected_defects", [])],

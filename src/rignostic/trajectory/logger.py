@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timezone
 import json
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -17,7 +17,7 @@ class TrajectoryLogger:
     def log(self, event: str, **fields: Any) -> None:
         self.path.parent.mkdir(parents=True, exist_ok=True)
         record = {
-            "timestamp": datetime.now(timezone.utc).isoformat(),
+            "timestamp": datetime.now(UTC).isoformat(),
             "stage": self.stage,
             "case_id": self.case_id,
             "event": event,

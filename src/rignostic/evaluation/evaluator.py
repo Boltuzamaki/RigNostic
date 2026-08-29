@@ -2,12 +2,11 @@
 
 from __future__ import annotations
 
-from dataclasses import asdict, dataclass
 import json
+from dataclasses import asdict, dataclass
 from pathlib import Path
 
 from .schemas import AgentResult, Defect
-
 
 ALIASES = {
     "driver muted": "muted_driver",
@@ -47,7 +46,11 @@ def evaluate(results: list[AgentResult], gold_by_case: dict[str, list[Defect]]) 
         unmatched = list(gold_by_case.get(result.case_id, []))
         for found in result.detected_defects:
             match_index = next(
-                (index for index, expected in enumerate(unmatched) if defect_matches(found, expected)),
+                (
+                    index
+                    for index, expected in enumerate(unmatched)
+                    if defect_matches(found, expected)
+                ),
                 None,
             )
             if match_index is None:
@@ -66,4 +69,3 @@ def load_gold(path: Path) -> tuple[str, list[Defect]]:
 
 def metrics_dict(metrics: Metrics) -> dict[str, int | float]:
     return asdict(metrics)
-

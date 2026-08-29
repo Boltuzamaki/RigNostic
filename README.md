@@ -9,10 +9,9 @@ developed as measured iterations for an Agentic Workflows Hackathon.
 
 ## Current status
 
-Stage 0 is blocked before Blender-dependent implementation and evaluation:
-Blender is not installed in the current environment and no LLM credential is
-configured. The repository currently provides only tested, non-Blender
-infrastructure. It contains no fabricated rigs, results, or claims.
+Blender 4.5.13 LTS is installed project-locally and configured for headless use.
+Stage 0 benchmark development can proceed, but baseline model access has not yet
+been verified. The repository contains no fabricated results or claims.
 
 The intended Stage 0 baseline is one general-purpose LLM agent with basic Blender
 inspection and control-testing tools, a maximum of 15 tool calls, and a fixed
@@ -23,12 +22,14 @@ adaptive planner, repair, or multi-agent system belongs to Stage 0.
 ## Setup and status check
 
 ```bash
-python3 -m venv .venv
-.venv/bin/python -m pip install -e '.[test]'
+uv sync --dev
+uv run pre-commit install
 export BLENDER_EXECUTABLE=/absolute/path/to/blender
-.venv/bin/rignostic doctor
-.venv/bin/rignostic blender-version
-.venv/bin/python -m pytest
+uv run rignostic doctor
+uv run rignostic blender-version
+uv run pre-commit run --all-files
+uv run ruff check .
+uv run pytest
 ```
 
 See [reproduction instructions](docs/REPRODUCTION.md), [architecture](docs/ARCHITECTURE.md),

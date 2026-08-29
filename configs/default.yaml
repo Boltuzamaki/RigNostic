@@ -1,9 +1,8 @@
 # Stage 0 configuration. Environment variables override these values.
 blender:
-  executable: blender
+  executable: .tools/blender/blender
 baseline:
   model: gpt-5-mini
   temperature: 0
   max_tool_calls: 15
   max_output_tokens: 2000
-

@@ -26,7 +26,7 @@ def main(argv: list[str] | None = None) -> int:
         print(f"Blender: {resolved if resolved else 'NOT FOUND'}")
         return 0 if resolved else 1
     if resolved is None:
-        print("Blender not found. Set BLENDER_EXECUTABLE to Blender 4.3 LTS.")
+        print("Blender not found. Set BLENDER_EXECUTABLE to Blender 4.5.13 LTS.")
         return 1
     result = run_blender(executable=str(resolved))
     print(result.stdout, end="")
@@ -37,4 +37,3 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

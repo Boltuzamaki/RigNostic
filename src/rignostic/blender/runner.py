@@ -2,12 +2,12 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 import os
-from pathlib import Path
 import shutil
 import subprocess
 import time
+from dataclasses import dataclass
+from pathlib import Path
 
 
 class BlenderUnavailableError(RuntimeError):
@@ -27,7 +27,8 @@ def detect_blender(executable: str | None = None) -> Path | None:
     configured = executable or os.getenv("BLENDER_EXECUTABLE", "blender")
     candidate = Path(configured).expanduser()
     if candidate.parent != Path("."):
-        return candidate.resolve() if candidate.is_file() and os.access(candidate, os.X_OK) else None
+        is_executable = candidate.is_file() and os.access(candidate, os.X_OK)
+        return candidate.resolve() if is_executable else None
     resolved = shutil.which(configured)
     return Path(resolved).resolve() if resolved else None
 
@@ -42,7 +43,7 @@ def run_blender(
     resolved = detect_blender(executable)
     if resolved is None:
         raise BlenderUnavailableError(
-            "Blender was not found. Install Blender 4.3 LTS and/or set "
+            "Blender was not found. Install Blender 4.5.13 LTS and/or set "
             "BLENDER_EXECUTABLE to its executable path."
         )
     command = [str(resolved), "--background"]
@@ -61,4 +62,3 @@ def run_blender(
         exit_code=completed.returncode,
         runtime_seconds=time.monotonic() - started,
     )
-
