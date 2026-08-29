@@ -40,15 +40,13 @@ def _flat_yaml(path: Path) -> dict[str, str]:
         key, separator, value = line.strip().partition(":")
         if not separator or not section:
             raise ValueError(f"Unsupported config line: {raw_line}")
-        values[f"{section}.{key}"] = value.strip().strip('"\'')
+        values[f"{section}.{key}"] = value.strip().strip("\"'")
     return values
 
 
 def load_config(path: Path | str = Path("configs/default.yaml")) -> Config:
     values = _flat_yaml(Path(path))
-    executable = os.getenv(
-        "BLENDER_EXECUTABLE", values.get("blender.executable", "blender")
-    )
+    executable = os.getenv("BLENDER_EXECUTABLE", values.get("blender.executable", "blender"))
     model = os.getenv("RIGNOSTIC_MODEL", values.get("baseline.model", "gpt-5-mini"))
     return Config(
         blender=BlenderConfig(executable=executable),
@@ -59,4 +57,3 @@ def load_config(path: Path | str = Path("configs/default.yaml")) -> Config:
             max_output_tokens=int(values.get("baseline.max_output_tokens", "2000")),
         ),
     )
-

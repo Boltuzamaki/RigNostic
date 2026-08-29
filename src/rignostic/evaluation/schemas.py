@@ -58,4 +58,3 @@ class AgentResult:
             input_tokens=value.get("input_tokens"),
             output_tokens=value.get("output_tokens"),
         )
-

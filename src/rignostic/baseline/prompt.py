@@ -9,4 +9,3 @@ Identify any likely defect you observe.
 When possible, describe the likely cause and suggest a repair.
 
 Return your findings in structured form."""
-

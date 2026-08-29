@@ -18,12 +18,11 @@ Structured defect report
 Deterministic evaluator
 ```
 
-The checked-in scaffolding currently contains configuration, a headless process
-runner, result schemas, deterministic matching, and trajectory logging. Blender
-is unavailable in the development environment, so the Blender tools, synthetic
-rig, benchmark, and executable agent loop have not yet been implemented or run.
+The checked-in Stage 0 infrastructure contains configuration, a headless process
+runner, a deterministic synthetic rig and ten-case benchmark, coarse Blender
+tools, result schemas, deterministic matching, and trajectory logging. The
+executable LLM agent loop and evaluation remain blocked by missing model access.
 
 Stage 0 does not contain RigInventory, semantic control mapping, adaptive test
 planning, pairwise testing, repair, rollback, visual verification, or regression
 loops.
-

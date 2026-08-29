@@ -10,8 +10,9 @@ developed as measured iterations for an Agentic Workflows Hackathon.
 ## Current status
 
 Blender 4.5.13 LTS is installed project-locally and configured for headless use.
-Stage 0 benchmark development can proceed, but baseline model access has not yet
-been verified. The repository contains no fabricated results or claims.
+The synthetic reference rig and ten defective variants pass deterministic
+validation. Baseline model access is blocked, so agent results and metrics remain
+unmeasured. The repository contains no fabricated results or claims.
 
 The intended Stage 0 baseline is one general-purpose LLM agent with basic Blender
 inspection and control-testing tools, a maximum of 15 tool calls, and a fixed

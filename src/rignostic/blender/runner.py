@@ -39,6 +39,7 @@ def run_blender(
     *,
     executable: str | None = None,
     timeout_seconds: float = 120,
+    extra_args: list[str] | None = None,
 ) -> BlenderRun:
     resolved = detect_blender(executable)
     if resolved is None:
@@ -51,14 +52,22 @@ def run_blender(
         command.append(str(blend_file))
     if script is not None:
         command.extend(["--python", str(script)])
+    if extra_args:
+        command.extend(extra_args)
     started = time.monotonic()
     completed = subprocess.run(
         command, capture_output=True, text=True, timeout=timeout_seconds, check=False
     )
+    exit_code = completed.returncode
+    if (
+        exit_code == 0
+        and "Traceback (most recent call last):" in completed.stdout + completed.stderr
+    ):
+        exit_code = 1
     return BlenderRun(
         command=tuple(command),
         stdout=completed.stdout,
         stderr=completed.stderr,
-        exit_code=completed.returncode,
+        exit_code=exit_code,
         runtime_seconds=time.monotonic() - started,
     )

@@ -25,4 +25,3 @@ class TrajectoryLogger:
         }
         with self.path.open("a", encoding="utf-8") as stream:
             stream.write(json.dumps(record, sort_keys=True) + "\n")
-

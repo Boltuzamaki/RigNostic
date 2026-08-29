@@ -18,6 +18,6 @@ provider, and approximate cost when model pricing is configured.
 Gold files must only be opened by evaluator code after an agent run. They must
 never be included in prompts or Blender tool arguments.
 
-No baseline metrics exist yet. Blender and LLM credentials were unavailable, so
-no benchmark cases or agent runs could honestly be produced.
-
+No baseline metrics exist yet. The ten Blender cases pass deterministic benchmark
+validation, but no LLM credential is available, so no agent runs can honestly be
+produced.

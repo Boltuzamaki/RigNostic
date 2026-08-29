@@ -46,4 +46,3 @@ def test_load_gold(tmp_path) -> None:
     case_id, defects = load_gold(path)
     assert case_id == "case_01"
     assert defects == [defect()]
-

@@ -12,4 +12,3 @@ def test_detects_executable(tmp_path: Path) -> None:
     executable.write_text("#!/bin/sh\n", encoding="utf-8")
     executable.chmod(0o755)
     assert detect_blender(str(executable)) == executable.resolve()
-

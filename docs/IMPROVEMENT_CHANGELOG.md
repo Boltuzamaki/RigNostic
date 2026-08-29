@@ -4,8 +4,9 @@
 
 ### What We Tried
 
-Stage 0 initialization began with configuration, headless Blender runner
-contracts, result schemas, deterministic evaluation matching, and JSONL logging.
+Stage 0 now includes configuration, a reproducible synthetic Blender rig, ten
+validated defective cases, coarse baseline tool contracts, deterministic
+evaluation matching, and JSONL logging.
 
 ### Why
 
@@ -13,7 +14,8 @@ These components are required for a reproducible simple baseline.
 
 ### Evaluation
 
-Not run. Blender is not installed and no LLM credential is available.
+Benchmark validation passed for the clean reference and all ten cases. The LLM
+baseline was not run because no model credential is available.
 
 ### Result
 
@@ -26,6 +28,5 @@ benchmark and baseline runs.
 
 ### Decision
 
-Stage 0 is incomplete. Resume it after installing the pinned Blender version and
-providing model access. No later iteration is justified yet.
-
+Stage 0 is incomplete. Resume it after providing model access. No later iteration
+is justified yet.
