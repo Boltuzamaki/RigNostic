@@ -5,5 +5,10 @@ __pycache__/
 .venv/
 .tools/
 .env
+*.blend1
 dist/
 build/
+node_modules/
+instance/
+demo_asset/rain_v01.blend
+demo_asset/*.glb

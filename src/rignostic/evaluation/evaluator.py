@@ -21,13 +21,9 @@ def normalize(value: str) -> str:
 
 
 def defect_matches(found: Defect, expected: Defect) -> bool:
-    return all(
-        normalize(left) == normalize(right)
-        for left, right in (
-            (found.defect_type, expected.defect_type),
-            (found.affected_control, expected.affected_control),
-            (found.root_cause, expected.root_cause),
-        )
+    return (
+        normalize(found.defect_type) == normalize(expected.defect_type)
+        and normalize(found.affected_control) == normalize(expected.affected_control)
     )
 
 
@@ -37,14 +33,30 @@ class Metrics:
     correctly_detected: int
     false_positives: int
     defect_detection_recall: float
+    affected_control_accuracy: float
+    root_cause_accuracy: float
 
 
 def evaluate(results: list[AgentResult], gold_by_case: dict[str, list[Defect]]) -> Metrics:
     correct = 0
     false_positives = 0
+    control_matches = 0
+    cause_matches = 0
+    predictions = 0
     for result in results:
         unmatched = list(gold_by_case.get(result.case_id, []))
         for found in result.detected_defects:
+            predictions += 1
+            gold = gold_by_case.get(result.case_id, [])
+            control_matches += int(
+                any(
+                    normalize(found.affected_control) == normalize(item.affected_control)
+                    for item in gold
+                )
+            )
+            cause_matches += int(
+                any(normalize(found.root_cause) == normalize(item.root_cause) for item in gold)
+            )
             match_index = next(
                 (
                     index
@@ -59,7 +71,14 @@ def evaluate(results: list[AgentResult], gold_by_case: dict[str, list[Defect]]) 
                 correct += 1
                 unmatched.pop(match_index)
     total = sum(len(items) for items in gold_by_case.values())
-    return Metrics(total, correct, false_positives, correct / total if total else 0.0)
+    return Metrics(
+        total,
+        correct,
+        false_positives,
+        correct / total if total else 0.0,
+        control_matches / predictions if predictions else 0.0,
+        cause_matches / predictions if predictions else 0.0,
+    )
 
 
 def load_gold(path: Path) -> tuple[str, list[Defect]]:

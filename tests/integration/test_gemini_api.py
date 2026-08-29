@@ -28,4 +28,3 @@ def test_configured_gemini_model_responds() -> None:
     assert response.text.strip() == "RIGNOSTIC_MODEL_OK"
     assert response.input_tokens is None or response.input_tokens > 0
     assert response.output_tokens is None or response.output_tokens > 0
-

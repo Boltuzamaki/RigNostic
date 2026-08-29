@@ -1,0 +1,20 @@
+{
+  "case_id": "case_06",
+  "detected_defects": [
+    {
+      "defect_type": "Driver Variable Mapping Error",
+      "affected_control": "smileCombination",
+      "description": "The driver expression for 'smileCombination' references variables named 'left' and 'right', but these variables are not mapped to the corresponding bone locations or shape key values in the driver's variable collection.",
+      "likely_root_cause": "The driver expression was written referencing 'left' and 'right' identifiers, but the actual driver variables were either deleted, renamed, or never created to point to 'mouthSmile_L' and 'mouthSmile_R'.",
+      "confidence": 0.95
+    }
+  ],
+  "suggested_repairs": [
+    "Open the drivers editor for the 'smileCombination' shape key, add driver variables named 'left' and 'right', and assign them to target the bone locations or shape key values of 'mouthSmile_L' and 'mouthSmile_R'."
+  ],
+  "agent_actions": 7,
+  "runtime_seconds": 3.995564316999662,
+  "model_calls": 1,
+  "input_tokens": 753,
+  "output_tokens": 229
+}

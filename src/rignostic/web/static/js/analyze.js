@@ -1,0 +1,2 @@
+const panel=document.querySelector("#run-status");
+if(panel){const poll=async()=>{const response=await fetch(panel.dataset.eventsUrl);if(!response.ok)return;const run=await response.json();panel.querySelector("[data-status]").textContent=run.status;panel.querySelector("[data-step]").textContent=run.current_step;panel.querySelector("[data-error]").textContent=run.error||"";if(["PENDING","RUNNING"].includes(run.status)){setTimeout(poll,1200)}else{window.location.reload()}};setTimeout(poll,600)}

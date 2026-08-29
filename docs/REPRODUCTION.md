@@ -65,6 +65,20 @@ RIGNOSTIC_RUN_LIVE_MODEL_TESTS=1 \
   uv run pytest tests/integration/test_gemini_api.py -q
 ```
 
+## Run the local web interface
+
+```bash
+npm install
+npm run build
+uv run python -m rignostic.web
+```
+
+Then open `http://127.0.0.1:5000`. For Flask's development command, use:
+
+```bash
+uv run flask --app rignostic.web run
+```
+
 Install the repository hook once per clone:
 
 ```bash
@@ -85,6 +99,19 @@ uv run rignostic doctor
   --python benchmark/scripts/validate_benchmark.py
 ```
 
-The validator must print `RIGNOSTIC_BENCHMARK_VALID=True`. Baseline run and
-evaluation commands are not documented yet because model access is blocked and
-the executable agent loop has not been run.
+The validator must print `RIGNOSTIC_BENCHMARK_VALID=True`.
+
+## Run and evaluate the Stage 0 baseline
+
+```bash
+uv run rignostic baseline-run
+uv run rignostic baseline-evaluate
+```
+
+Or run both steps:
+
+```bash
+uv run rignostic baseline-all
+```
+
+Gold labels are opened only by `baseline-evaluate`, after all agent runs finish.

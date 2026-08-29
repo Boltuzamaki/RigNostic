@@ -1,0 +1,252 @@
+{
+  "stage": "baseline",
+  "model": "gemini-3.5-flash-lite",
+  "aggregate": {
+    "total_gold_defects": 11,
+    "correctly_detected": 2,
+    "false_positives": 4,
+    "defect_detection_recall": 0.18181818181818182,
+    "affected_control_accuracy": 0.6666666666666666,
+    "root_cause_accuracy": 0.0,
+    "cases_attempted": 10,
+    "average_agent_actions": 7,
+    "average_runtime_seconds": 3.566358537799897,
+    "total_runtime_seconds": 35.66358537799897,
+    "model_calls": 10,
+    "input_tokens": 7549,
+    "output_tokens": 1087,
+    "approximate_cost_usd": null
+  },
+  "cases": [
+    {
+      "case_id": "case_01",
+      "gold_defects": 1,
+      "matched_defects": 1,
+      "predicted_defects": 1,
+      "passed": true
+    },
+    {
+      "case_id": "case_02",
+      "gold_defects": 1,
+      "matched_defects": 0,
+      "predicted_defects": 1,
+      "passed": false
+    },
+    {
+      "case_id": "case_03",
+      "gold_defects": 1,
+      "matched_defects": 0,
+      "predicted_defects": 0,
+      "passed": false
+    },
+    {
+      "case_id": "case_04",
+      "gold_defects": 1,
+      "matched_defects": 0,
+      "predicted_defects": 0,
+      "passed": false
+    },
+    {
+      "case_id": "case_05",
+      "gold_defects": 1,
+      "matched_defects": 0,
+      "predicted_defects": 1,
+      "passed": false
+    },
+    {
+      "case_id": "case_06",
+      "gold_defects": 1,
+      "matched_defects": 0,
+      "predicted_defects": 1,
+      "passed": false
+    },
+    {
+      "case_id": "case_07",
+      "gold_defects": 1,
+      "matched_defects": 0,
+      "predicted_defects": 0,
+      "passed": false
+    },
+    {
+      "case_id": "case_08",
+      "gold_defects": 1,
+      "matched_defects": 0,
+      "predicted_defects": 0,
+      "passed": false
+    },
+    {
+      "case_id": "case_09",
+      "gold_defects": 1,
+      "matched_defects": 0,
+      "predicted_defects": 0,
+      "passed": false
+    },
+    {
+      "case_id": "case_10",
+      "gold_defects": 2,
+      "matched_defects": 1,
+      "predicted_defects": 2,
+      "passed": false
+    }
+  ],
+  "results": [
+    {
+      "case_id": "case_01",
+      "detected_defects": [
+        {
+          "defect_type": "Muted Driver",
+          "affected_control": "eyeBlink_L",
+          "root_cause": "The driver was manually muted during testing or debugging and was not unmuted.",
+          "description": "The driver controlling the shape key 'eyeBlink_L' on the 'FaceMesh' object is currently muted.",
+          "confidence": 1.0
+        }
+      ],
+      "suggested_repairs": [
+        "Unmute the driver controlling the 'eyeBlink_L' shape key on the 'FaceMesh' object."
+      ],
+      "agent_actions": 7,
+      "runtime_seconds": 3.66712680099954,
+      "model_calls": 1,
+      "input_tokens": 753,
+      "output_tokens": 195
+    },
+    {
+      "case_id": "case_02",
+      "detected_defects": [
+        {
+          "defect_type": "Driver Variable Error",
+          "affected_control": "smileCombination",
+          "root_cause": "Variables mapping to 'mouthSmile_L' and 'mouthSmile_R' were not created in the driver setup.",
+          "description": "The driver expression for shape key 'smileCombination' references variables 'left' and 'right', but no corresponding variables are defined in the driver's variable list.",
+          "confidence": 0.95
+        }
+      ],
+      "suggested_repairs": [
+        "Open the Graph Editor or Drivers panel for the 'smileCombination' shape key, add two variables named 'left' and 'right', and map them to the corresponding property values of 'mouthSmile_L' and 'mouthSmile_R'."
+      ],
+      "agent_actions": 7,
+      "runtime_seconds": 4.036357199998747,
+      "model_calls": 1,
+      "input_tokens": 756,
+      "output_tokens": 157
+    },
+    {
+      "case_id": "case_03",
+      "detected_defects": [],
+      "suggested_repairs": [],
+      "agent_actions": 7,
+      "runtime_seconds": 3.4815913579986955,
+      "model_calls": 1,
+      "input_tokens": 753,
+      "output_tokens": 16
+    },
+    {
+      "case_id": "case_04",
+      "detected_defects": [],
+      "suggested_repairs": [],
+      "agent_actions": 7,
+      "runtime_seconds": 3.240718540000671,
+      "model_calls": 1,
+      "input_tokens": 753,
+      "output_tokens": 21
+    },
+    {
+      "case_id": "case_05",
+      "detected_defects": [
+        {
+          "defect_type": "Constraint Influence Mismatch",
+          "affected_control": "browUp_L",
+          "root_cause": "Asymmetry introduced accidentally during rig setup or constraint configuration.",
+          "description": "The Limit Location constraint named 'Brow Range' on bone 'browUp_L' has an influence of 0.2, whereas the corresponding right-side bone 'browUp_R' has an influence of 1.0.",
+          "confidence": 0.95
+        }
+      ],
+      "suggested_repairs": [
+        "Select the 'browUp_L' bone, go to the Bone Constraints properties panel, and set the influence of the 'Brow Range' constraint to 1.0 to match 'browUp_R'."
+      ],
+      "agent_actions": 7,
+      "runtime_seconds": 3.515958022002451,
+      "model_calls": 1,
+      "input_tokens": 769,
+      "output_tokens": 150
+    },
+    {
+      "case_id": "case_06",
+      "detected_defects": [
+        {
+          "defect_type": "Driver Variable Mapping Error",
+          "affected_control": "smileCombination",
+          "root_cause": "The driver expression was written referencing 'left' and 'right' identifiers, but the actual driver variables were either deleted, renamed, or never created to point to 'mouthSmile_L' and 'mouthSmile_R'.",
+          "description": "The driver expression for 'smileCombination' references variables named 'left' and 'right', but these variables are not mapped to the corresponding bone locations or shape key values in the driver's variable collection.",
+          "confidence": 0.95
+        }
+      ],
+      "suggested_repairs": [
+        "Open the drivers editor for the 'smileCombination' shape key, add driver variables named 'left' and 'right', and assign them to target the bone locations or shape key values of 'mouthSmile_L' and 'mouthSmile_R'."
+      ],
+      "agent_actions": 7,
+      "runtime_seconds": 3.995564316999662,
+      "model_calls": 1,
+      "input_tokens": 753,
+      "output_tokens": 229
+    },
+    {
+      "case_id": "case_07",
+      "detected_defects": [],
+      "suggested_repairs": [],
+      "agent_actions": 7,
+      "runtime_seconds": 3.3777977429999737,
+      "model_calls": 1,
+      "input_tokens": 753,
+      "output_tokens": 16
+    },
+    {
+      "case_id": "case_08",
+      "detected_defects": [],
+      "suggested_repairs": [],
+      "agent_actions": 7,
+      "runtime_seconds": 3.388686267000594,
+      "model_calls": 1,
+      "input_tokens": 753,
+      "output_tokens": 21
+    },
+    {
+      "case_id": "case_09",
+      "detected_defects": [],
+      "suggested_repairs": [],
+      "agent_actions": 7,
+      "runtime_seconds": 3.2675217500000144,
+      "model_calls": 1,
+      "input_tokens": 753,
+      "output_tokens": 16
+    },
+    {
+      "case_id": "case_10",
+      "detected_defects": [
+        {
+          "defect_type": "Muted Driver",
+          "affected_control": "browUp_R",
+          "root_cause": "The driver was manually disabled during testing or debugging and was not re-enabled.",
+          "description": "The driver controlling the shape key 'browUp_R' on the mesh 'FaceMesh' is currently muted.",
+          "confidence": 1.0
+        },
+        {
+          "defect_type": "Inactive Constraint",
+          "affected_control": "browUp_R",
+          "root_cause": "The constraint influence was zeroed out, rendering it ineffective.",
+          "description": "The 'Brow Range' limit location constraint on bone 'browUp_R' has an influence of 0.0.",
+          "confidence": 1.0
+        }
+      ],
+      "suggested_repairs": [
+        "Unmute the driver for the 'browUp_R' shape key on 'FaceMesh'.",
+        "Increase the influence of the 'Brow Range' constraint on the 'browUp_R' bone to 1.0."
+      ],
+      "agent_actions": 7,
+      "runtime_seconds": 3.6922633799986215,
+      "model_calls": 1,
+      "input_tokens": 753,
+      "output_tokens": 266
+    }
+  ]
+}

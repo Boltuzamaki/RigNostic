@@ -1,0 +1,1 @@
+{% macro metric(label, value, note='') %}<article class="panel"><p class="label">{{ label }}</p><p class="mt-2 text-2xl font-semibold">{{ value }}</p>{% if note %}<p class="mt-2 text-xs text-blackice-muted">{{ note }}</p>{% endif %}</article>{% endmacro %}

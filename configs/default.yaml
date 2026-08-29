@@ -1,4 +1,5 @@
 # Stage 0 configuration. Environment variables override these values.
+# Logging: set RIGNOSTIC_LOG_LEVEL=DEBUG for tool payloads and model request/response details.
 blender:
   executable: .tools/blender/blender
 baseline:

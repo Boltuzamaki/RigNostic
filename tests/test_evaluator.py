@@ -32,6 +32,10 @@ def test_transparent_normalization_and_matching() -> None:
     assert defect_matches(defect(defect_type="muted driver"), defect())
 
 
+def test_detection_matching_does_not_require_root_cause_match() -> None:
+    assert defect_matches(defect(root_cause="free text explanation"), defect())
+
+
 def test_evaluation_does_not_double_match() -> None:
     result = AgentResult(case_id="case_01", detected_defects=[defect(), defect()])
     metrics = evaluate([result], {"case_01": [defect()]})

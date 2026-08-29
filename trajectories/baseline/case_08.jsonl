@@ -1,0 +1,15 @@
+{"case_id": "case_08", "event": "observation", "observation": "Received an unfamiliar Blender facial rig.", "stage": "baseline", "timestamp": "2026-08-29T22:59:00.778179+00:00"}
+{"case_id": "case_08", "event": "tool_call", "stage": "baseline", "timestamp": "2026-08-29T22:59:00.778264+00:00", "tool": "scene_summary", "tool_arguments": {}}
+{"case_id": "case_08", "event": "tool_result", "stage": "baseline", "timestamp": "2026-08-29T22:59:01.095323+00:00", "tool": "scene_summary", "tool_result_summary": {"item_count": 2}}
+{"case_id": "case_08", "event": "tool_call", "stage": "baseline", "timestamp": "2026-08-29T22:59:01.095461+00:00", "tool": "basic_rig_info", "tool_arguments": {}}
+{"case_id": "case_08", "event": "tool_result", "stage": "baseline", "timestamp": "2026-08-29T22:59:01.413464+00:00", "tool": "basic_rig_info", "tool_result_summary": {"item_count": 2}}
+{"case_id": "case_08", "event": "tool_call", "stage": "baseline", "timestamp": "2026-08-29T22:59:01.413598+00:00", "tool": "bone_names", "tool_arguments": {}}
+{"case_id": "case_08", "event": "tool_result", "stage": "baseline", "timestamp": "2026-08-29T22:59:01.733486+00:00", "tool": "bone_names", "tool_result_summary": {"item_count": 1}}
+{"case_id": "case_08", "event": "tool_call", "stage": "baseline", "timestamp": "2026-08-29T22:59:01.733623+00:00", "tool": "shape_key_names", "tool_arguments": {}}
+{"case_id": "case_08", "event": "tool_result", "stage": "baseline", "timestamp": "2026-08-29T22:59:02.041404+00:00", "tool": "shape_key_names", "tool_result_summary": {"item_count": 1}}
+{"case_id": "case_08", "event": "tool_call", "stage": "baseline", "timestamp": "2026-08-29T22:59:02.041535+00:00", "tool": "driver_summary", "tool_arguments": {}}
+{"case_id": "case_08", "event": "tool_result", "stage": "baseline", "timestamp": "2026-08-29T22:59:02.357864+00:00", "tool": "driver_summary", "tool_result_summary": {"item_count": 9}}
+{"case_id": "case_08", "event": "tool_call", "stage": "baseline", "timestamp": "2026-08-29T22:59:02.358029+00:00", "tool": "constraint_summary", "tool_arguments": {}}
+{"case_id": "case_08", "event": "tool_result", "stage": "baseline", "timestamp": "2026-08-29T22:59:02.669636+00:00", "tool": "constraint_summary", "tool_result_summary": {"item_count": 2}}
+{"agent_decision_summary": "Use the fixed baseline prompt to assess coarse tool outputs.", "case_id": "case_08", "event": "decision", "next_action": "Generate structured defect report.", "stage": "baseline", "timestamp": "2026-08-29T22:59:02.669768+00:00"}
+{"case_id": "case_08", "event": "final_output", "final_output": {"agent_actions": 7, "case_id": "case_08", "detected_defects": [], "input_tokens": 753, "model_calls": 1, "output_tokens": 21, "runtime_seconds": 3.388686267000594, "suggested_repairs": []}, "model_usage": {"input_tokens": 753, "model_calls": 1, "output_tokens": 21}, "runtime_seconds": 3.388686267000594, "stage": "baseline", "timestamp": "2026-08-29T22:59:04.166896+00:00"}

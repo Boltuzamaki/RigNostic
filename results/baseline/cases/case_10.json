@@ -1,0 +1,28 @@
+{
+  "case_id": "case_10",
+  "detected_defects": [
+    {
+      "defect_type": "Muted Driver",
+      "affected_control": "browUp_R",
+      "description": "The driver controlling the shape key 'browUp_R' on the mesh 'FaceMesh' is currently muted.",
+      "likely_root_cause": "The driver was manually disabled during testing or debugging and was not re-enabled.",
+      "confidence": 1.0
+    },
+    {
+      "defect_type": "Inactive Constraint",
+      "affected_control": "browUp_R",
+      "description": "The 'Brow Range' limit location constraint on bone 'browUp_R' has an influence of 0.0.",
+      "likely_root_cause": "The constraint influence was zeroed out, rendering it ineffective.",
+      "confidence": 1.0
+    }
+  ],
+  "suggested_repairs": [
+    "Unmute the driver for the 'browUp_R' shape key on 'FaceMesh'.",
+    "Increase the influence of the 'Brow Range' constraint on the 'browUp_R' bone to 1.0."
+  ],
+  "agent_actions": 7,
+  "runtime_seconds": 3.6922633799986215,
+  "model_calls": 1,
+  "input_tokens": 753,
+  "output_tokens": 266
+}

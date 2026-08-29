@@ -1,0 +1,10 @@
+{
+  "case_id": "case_04",
+  "detected_defects": [],
+  "suggested_repairs": [],
+  "agent_actions": 7,
+  "runtime_seconds": 3.240718540000671,
+  "model_calls": 1,
+  "input_tokens": 753,
+  "output_tokens": 21
+}

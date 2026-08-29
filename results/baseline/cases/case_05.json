@@ -1,0 +1,20 @@
+{
+  "case_id": "case_05",
+  "detected_defects": [
+    {
+      "defect_type": "Constraint Influence Mismatch",
+      "affected_control": "browUp_L",
+      "description": "The Limit Location constraint named 'Brow Range' on bone 'browUp_L' has an influence of 0.2, whereas the corresponding right-side bone 'browUp_R' has an influence of 1.0.",
+      "likely_root_cause": "Asymmetry introduced accidentally during rig setup or constraint configuration.",
+      "confidence": 0.95
+    }
+  ],
+  "suggested_repairs": [
+    "Select the 'browUp_L' bone, go to the Bone Constraints properties panel, and set the influence of the 'Brow Range' constraint to 1.0 to match 'browUp_R'."
+  ],
+  "agent_actions": 7,
+  "runtime_seconds": 3.515958022002451,
+  "model_calls": 1,
+  "input_tokens": 769,
+  "output_tokens": 150
+}

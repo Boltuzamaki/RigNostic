@@ -1,0 +1,1 @@
+{% extends 'base.html' %}{% from 'components/trajectory_step.html' import trajectory_step %}{% block content %}<div class="page-head"><div><p class="eyebrow">Run {{ run.id[:8] }}</p><h1>Trajectory</h1></div></div><ol class="panel">{% for event in run.events %}{{ trajectory_step(event) }}{% else %}<li class="copy">No events recorded.</li>{% endfor %}</ol>{% endblock %}

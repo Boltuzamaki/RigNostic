@@ -1,0 +1,9 @@
+<!doctype html><html lang="en" class="h-full bg-blackice-bg"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{% block title %}RigNostic{% endblock %}</title>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
+</head><body class="min-h-full bg-blackice-bg text-blackice-text antialiased">
+<div class="min-h-screen lg:grid lg:grid-cols-[16rem_1fr]">{% include 'components/sidebar.html' %}
+<main class="min-w-0"><header class="border-b border-white/8 px-6 py-4"><p class="font-mono text-xs uppercase tracking-[.2em] text-blackice-muted">Facial Rig QA / Stage 0</p></header>
+<div class="mx-auto max-w-7xl p-6 lg:p-8">{% block content %}{% endblock %}</div></main></div>
+<script src="{{ url_for('static', filename='js/app.js') }}" defer></script>{% block scripts %}{% endblock %}</body></html>

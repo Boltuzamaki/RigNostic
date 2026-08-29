@@ -11,8 +11,9 @@ developed as measured iterations for an Agentic Workflows Hackathon.
 
 Blender 4.5.13 LTS is installed project-locally and configured for headless use.
 The synthetic reference rig and ten defective variants pass deterministic
-validation. Baseline model access is blocked, so agent results and metrics remain
-unmeasured. The repository contains no fabricated results or claims.
+validation. The recorded Stage 0 baseline detected 2 of 11 defects (18.2%
+recall) with 4 false positives. Complete results and trajectories are checked in
+under `results/baseline` and `trajectories/baseline`.
 
 The intended Stage 0 baseline is one general-purpose LLM agent with basic Blender
 inspection and control-testing tools, a maximum of 15 tool calls, and a fixed
@@ -39,3 +40,16 @@ uv run pytest
 
 See [reproduction instructions](docs/REPRODUCTION.md), [architecture](docs/ARCHITECTURE.md),
 and the [evaluation contract](docs/EVALUATION.md).
+
+## Local web interface
+
+The Flask/Jinja interface uses locally built Tailwind CSS and vanilla JavaScript:
+
+```bash
+npm install
+npm run build
+uv run python -m rignostic.web
+```
+
+Open `http://127.0.0.1:5000`. Uploaded `.blend` files are isolated under the
+ignored Flask instance directory and limited to 250 MB.
