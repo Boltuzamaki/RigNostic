@@ -15,4 +15,3 @@ def test_reference_opens_and_basic_tools_execute() -> None:
 def test_shape_key_can_be_changed_and_reset() -> None:
     assert call_basic_tool(RIG, "set_shape_key", name="eyeBlink_L", value=0.5)["success"]
     assert call_basic_tool(RIG, "reset_shape_keys")["success"]
-

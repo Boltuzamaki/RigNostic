@@ -5,7 +5,21 @@
 - Python 3.11 or newer (development environment: Python 3.14.4)
 - uv 0.11 or newer
 - Blender 4.5.13 LTS
-- An OpenAI API key for the configured baseline model (not currently available)
+- A Gemini or OpenAI API key for the configured baseline model
+
+## Configure the model
+
+The Stage 0 default is Gemini `gemini-3.5-flash-lite` with temperature `0`, a
+2,000-token output limit, and at most 15 tool calls. Create the local secret file:
+
+```bash
+cp .env.example .env
+```
+
+Then set `GEMINI_API_KEY` in `.env`. To use OpenAI instead, set
+`RIGNOSTIC_MODEL` to an OpenAI model name and provide `OPENAI_API_KEY`. Provider
+selection is automatic from the model name or explicit through
+`RIGNOSTIC_PROVIDER=gemini|openai`.
 
 Blender 4.5.13 LTS is pinned for Stage 0. The benchmark development executable is:
 
@@ -42,6 +56,13 @@ output. It has not succeeded in this environment because Blender is absent.
 ```bash
 uv run ruff check .
 uv run pytest
+```
+
+Run the opt-in live model smoke test (one potentially billable API call):
+
+```bash
+RIGNOSTIC_RUN_LIVE_MODEL_TESTS=1 \
+  uv run pytest tests/integration/test_gemini_api.py -q
 ```
 
 Install the repository hook once per clone:

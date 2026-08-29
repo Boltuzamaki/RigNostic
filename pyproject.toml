@@ -8,7 +8,11 @@ version = "0.0.1"
 description = "Incremental agentic facial-rig QA for Blender"
 readme = "README.md"
 requires-python = ">=3.11"
-dependencies = []
+dependencies = [
+    "google-genai>=1,<2",
+    "openai>=1,<3",
+    "python-dotenv>=1,<2",
+]
 
 [dependency-groups]
 dev = [
@@ -26,6 +30,7 @@ where = ["src"]
 [tool.pytest.ini_options]
 pythonpath = ["src"]
 testpaths = ["tests"]
+markers = ["live_model: makes a real, potentially billable model API call"]
 
 [tool.ruff]
 target-version = "py311"

@@ -20,6 +20,10 @@ prompt. It will be evaluated on ten deterministic defective variants of a
 synthetic facial rig. No structured RigInventory, specialized discovery phase,
 adaptive planner, repair, or multi-agent system belongs to Stage 0.
 
+Gemini is the default provider using `gemini-3.5-flash-lite`. OpenAI remains
+supported through the same provider factory. Copy `.env.example` to `.env` and
+set `GEMINI_API_KEY`; the application loads `.env` automatically.
+
 ## Setup and status check
 
 ```bash
