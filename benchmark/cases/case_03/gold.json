@@ -1,0 +1,11 @@
+{
+  "case_id": "case_03",
+  "defects": [
+    {
+      "defect_type": "swapped_controls",
+      "affected_control": "mouthSmile_L",
+      "root_cause": "driver_targets_swapped",
+      "repairable": true
+    }
+  ]
+}

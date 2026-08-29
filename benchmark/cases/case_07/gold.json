@@ -1,0 +1,11 @@
+{
+  "case_id": "case_07",
+  "defects": [
+    {
+      "defect_type": "wrong_shape_key_target",
+      "affected_control": "eyeBlink_R",
+      "root_cause": "driver_targets_wrong_shape_key",
+      "repairable": true
+    }
+  ]
+}

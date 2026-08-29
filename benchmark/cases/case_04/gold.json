@@ -1,0 +1,11 @@
+{
+  "case_id": "case_04",
+  "defects": [
+    {
+      "defect_type": "excessive_range",
+      "affected_control": "mouthFunnel",
+      "root_cause": "shape_key_slider_max",
+      "repairable": true
+    }
+  ]
+}

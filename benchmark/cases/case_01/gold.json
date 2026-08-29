@@ -1,0 +1,11 @@
+{
+  "case_id": "case_01",
+  "defects": [
+    {
+      "defect_type": "muted_driver",
+      "affected_control": "eyeBlink_L",
+      "root_cause": "driver_muted",
+      "repairable": true
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "case_id": "case_06",
+  "defects": [
+    {
+      "defect_type": "reversed_direction",
+      "affected_control": "jawOpen",
+      "root_cause": "reversed_driver_sign",
+      "repairable": true
+    }
+  ]
+}

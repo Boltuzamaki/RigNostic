@@ -1,0 +1,59 @@
+{
+  "reference": {
+    "passed": true,
+    "errors": []
+  },
+  "cases": [
+    {
+      "case_id": "case_01",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "case_id": "case_02",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "case_id": "case_03",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "case_id": "case_04",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "case_id": "case_05",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "case_id": "case_06",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "case_id": "case_07",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "case_id": "case_08",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "case_id": "case_09",
+      "passed": true,
+      "errors": []
+    },
+    {
+      "case_id": "case_10",
+      "passed": true,
+      "errors": []
+    }
+  ],
+  "passed": true
+}

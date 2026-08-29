@@ -51,6 +51,19 @@ uv run pre-commit install
 uv run pre-commit run --all-files
 ```
 
-Commands for generating the rig and cases, running the baseline, and evaluating
-it are intentionally not documented yet because those commands do not exist or
-work until the Blender and model prerequisites are available.
+## Regenerate and validate the benchmark
+
+```bash
+uv run rignostic doctor
+.tools/blender/blender --background --factory-startup \
+  --python benchmark/scripts/create_reference_rig.py -- \
+  --output benchmark/clean_reference/rig.blend
+.tools/blender/blender --background \
+  --python benchmark/scripts/create_cases.py
+.tools/blender/blender --background --factory-startup \
+  --python benchmark/scripts/validate_benchmark.py
+```
+
+The validator must print `RIGNOSTIC_BENCHMARK_VALID=True`. Baseline run and
+evaluation commands are not documented yet because model access is blocked and
+the executable agent loop has not been run.

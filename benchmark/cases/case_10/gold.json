@@ -1,0 +1,17 @@
+{
+  "case_id": "case_10",
+  "defects": [
+    {
+      "defect_type": "muted_driver",
+      "affected_control": "browUp_R",
+      "root_cause": "driver_muted",
+      "repairable": true
+    },
+    {
+      "defect_type": "constraint_influence",
+      "affected_control": "browUp_R",
+      "root_cause": "constraint_influence_incorrect",
+      "repairable": true
+    }
+  ]
+}

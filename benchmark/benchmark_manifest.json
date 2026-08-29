@@ -1,0 +1,46 @@
+{
+  "benchmark_version": 1,
+  "reference": "clean_reference/rig.blend",
+  "cases": [
+    {
+      "case_id": "case_01",
+      "rig": "cases/case_01/rig.blend"
+    },
+    {
+      "case_id": "case_02",
+      "rig": "cases/case_02/rig.blend"
+    },
+    {
+      "case_id": "case_03",
+      "rig": "cases/case_03/rig.blend"
+    },
+    {
+      "case_id": "case_04",
+      "rig": "cases/case_04/rig.blend"
+    },
+    {
+      "case_id": "case_05",
+      "rig": "cases/case_05/rig.blend"
+    },
+    {
+      "case_id": "case_06",
+      "rig": "cases/case_06/rig.blend"
+    },
+    {
+      "case_id": "case_07",
+      "rig": "cases/case_07/rig.blend"
+    },
+    {
+      "case_id": "case_08",
+      "rig": "cases/case_08/rig.blend"
+    },
+    {
+      "case_id": "case_09",
+      "rig": "cases/case_09/rig.blend"
+    },
+    {
+      "case_id": "case_10",
+      "rig": "cases/case_10/rig.blend"
+    }
+  ]
+}

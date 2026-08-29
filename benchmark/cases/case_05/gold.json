@@ -1,0 +1,11 @@
+{
+  "case_id": "case_05",
+  "defects": [
+    {
+      "defect_type": "constraint_influence",
+      "affected_control": "browUp_L",
+      "root_cause": "constraint_influence_incorrect",
+      "repairable": true
+    }
+  ]
+}

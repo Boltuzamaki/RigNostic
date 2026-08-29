@@ -1,0 +1,11 @@
+{
+  "case_id": "case_02",
+  "defects": [
+    {
+      "defect_type": "excessive_multiplier",
+      "affected_control": "jawOpen",
+      "root_cause": "driver_multiplier_too_high",
+      "repairable": true
+    }
+  ]
+}

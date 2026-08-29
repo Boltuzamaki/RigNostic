@@ -1,0 +1,11 @@
+{
+  "case_id": "case_09",
+  "defects": [
+    {
+      "defect_type": "combination_overdeformation",
+      "affected_control": "mouthSmile_L+mouthSmile_R",
+      "root_cause": "corrective_shape_excessive",
+      "repairable": true
+    }
+  ]
+}
