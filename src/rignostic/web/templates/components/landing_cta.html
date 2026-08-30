@@ -1,0 +1,4 @@
+<section class="landing-cta">
+  <div><p class="eyebrow">Run the test</p><h2 class="text-2xl">Find the broken control before the animator does.</h2><p class="copy">Start with the bundled full-body defect fixture or inspect your own Blender file.</p></div>
+  <div class="flex flex-wrap gap-3">{% if current_user.is_authenticated %}<form method="post" action="{{ url_for('pages.demo') }}"><button class="button" type="submit">Break a Demo Rig</button></form><a class="button-secondary" href="{{ url_for('pages.analyze') }}">Upload .blend</a><a class="landing-link self-center" href="{{ url_for('pages.dashboard') }}">Open dashboard →</a>{% else %}<a class="button" href="{{ url_for('pages.signup') }}">Break a Demo Rig</a><a class="button-secondary" href="{{ url_for('pages.signup') }}">Upload .blend</a><a class="landing-link self-center" href="{{ url_for('pages.login') }}">Sign in →</a>{% endif %}</div>
+</section>

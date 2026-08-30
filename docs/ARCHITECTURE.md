@@ -54,3 +54,16 @@ Structured defect report
 
 Iteration 1 adds a structural map but still has no Dynamic Test Planner, interaction search,
 visual verifier, repair engine, rollback, or regression loop.
+
+## Guarded Reference Repair
+
+The first repair capability is deliberately separate from the low-recall diagnostic agent. A user
+supplies a defective rig and a trusted clean reference with matching object/control topology. The
+pipeline snapshots supported Blender properties, emits a dry-run diff, and only mutates a temporary
+copy after explicit `--apply`. It compares the saved copy with the reference and atomically publishes
+the requested output only when no supported differences remain. Inputs are never overwritten.
+
+Supported properties are driver mute state, expression and variables; shape-key slider bounds and
+coordinates; and constraint mute state and influence. Missing reference topology blocks repair
+rather than being created or silently skipped, so this mechanism is restoration from a known-good
+rig rather than unrestricted repair.

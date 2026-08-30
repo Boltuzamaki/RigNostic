@@ -12,6 +12,7 @@ from .config import load_config
 from .discovery import build_inventory
 from .evaluation.report import evaluate_saved
 from .iteration_01.runner import run_benchmark as run_iteration_01
+from .repair import heal_rig, plan_repairs
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -29,6 +30,11 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers.add_parser("iteration-01-run", help="run Structured Rig Discovery benchmark")
     subparsers.add_parser("iteration-01-evaluate", help="evaluate Iteration 1 results")
     subparsers.add_parser("iteration-01-all", help="run and evaluate Iteration 1")
+    repair_parser = subparsers.add_parser("repair", help="plan or apply guarded repairs")
+    repair_parser.add_argument("blend_file", type=Path)
+    repair_parser.add_argument("--reference", type=Path, required=True)
+    repair_parser.add_argument("--output", type=Path)
+    repair_parser.add_argument("--apply", action="store_true")
     return parser
 
 
@@ -36,6 +42,18 @@ def main(argv: list[str] | None = None) -> int:
     args = build_parser().parse_args(argv)
     config = load_config(args.config)
     root = Path.cwd()
+    if args.command == "repair":
+        if args.apply and args.output is None:
+            raise SystemExit("repair --apply requires --output")
+        if args.output is not None and not args.apply:
+            raise SystemExit("--output requires --apply")
+        report = (
+            heal_rig(args.blend_file, args.reference, args.output)
+            if args.apply
+            else plan_repairs(args.blend_file, args.reference)
+        )
+        print(json.dumps(report, indent=2))
+        return 0
     if args.command == "inspect":
         inventory = build_inventory(args.blend_file.resolve()).to_dict()
         serialized = json.dumps(inventory, indent=2) + "\n"

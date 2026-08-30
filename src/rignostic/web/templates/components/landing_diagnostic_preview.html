@@ -1,0 +1,25 @@
+<div class="diagnostic-window" data-live-diagnostic aria-label="Animated RigNostic 3D rig test">
+  <div class="diagnostic-titlebar"><span>RUN / DEMO-FACE-07</span><span class="status-badge status-warn" data-live-run-status>LOADING 3D RIG</span></div>
+  <div class="live-diagnostic-body grid lg:grid-cols-[1.1fr_.9fr]">
+    <div class="diagnostic-viewport live-viewport" data-broken-model-url="{{ url_for('static', filename='models/demo_full_body_broken.glb') }}?v=6" data-clean-model-url="{{ url_for('static', filename='models/demo_full_body_clean.glb') }}?v=1">
+      <canvas data-live-canvas class="block h-80 w-full"></canvas>
+      <div class="live-scanline"></div>
+      <div class="absolute left-4 top-4 font-mono text-[10px] tracking-widest text-blackice-muted">3D VIEWPORT · <span data-live-frame>FRAME 001</span></div>
+      <div class="absolute right-4 top-4 font-mono text-[9px] text-blackice-muted">DemoCharacterRig / Lips</div>
+      <div class="live-version-badge" data-live-version>BEFORE · BROKEN COPY</div>
+      <div class="rig-path-overlay"><span data-live-control-node>jawOpen</span><b>→</b><span data-live-driver-node>driver: var</span><b>→</b><span data-live-shape-node>Lips.jawOpen</span></div>
+      <div class="diagnostic-controls"><span data-control="Neutral">Reset</span><span data-control="jawOpen" class="is-active">jawOpen</span><span data-control="mouthSmile">mouthSmile</span><span data-control="eyeBlink">eyeBlink</span></div>
+    </div>
+    <div class="live-diagnostic-details divide-y divide-white/8 bg-blackice-surface">
+      <div class="p-5"><p class="label">Rig control test</p><div class="mt-3 flex items-end justify-between"><strong class="text-xl" data-live-control>jawOpen</strong><span class="font-mono text-blackice-primary" data-live-value>0.75</span></div><div class="mt-3 h-1 bg-blackice-bg"><div class="live-value-bar h-full bg-blackice-primary" data-live-bar style="width:75%"></div></div></div>
+      <div class="p-5"><div class="flex items-center justify-between"><p class="label" data-live-result-label>Rig fault</p><span class="status-badge status-bad" data-live-status>Review</span></div><p class="mt-3 text-sm font-medium" data-live-finding>Driver multiplier exceeds expected range</p><dl class="technical-list mt-4"><div><dt>Blender evidence</dt><dd data-live-evidence>ctrl * 2.5</dd></div><div><dt>Confidence</dt><dd data-live-confidence>0.92</dd></div></dl></div>
+      <div class="p-5"><p class="label">Diagnostic agent</p><p class="mt-3 font-mono text-xs text-blackice-primary-soft" data-live-tool>→ inspect_driver_summary</p><p class="mt-2 text-xs leading-5 text-blackice-muted" data-live-activity>Jaw displacement is an outlier. Tracing its Blender driver expression.</p></div>
+    </div>
+  </div>
+  <div class="repair-journey" aria-label="Diagnostic and repair steps">
+    {% for phase, label in [('inspect', 'Inspect'), ('test', 'Test'), ('diagnose', 'Diagnose'), ('repair', 'Repair'), ('retest', 'Retest'), ('verified', 'Verified')] %}
+      <div data-journey-phase="{{ phase }}"{% if loop.first %} class="is-active"{% endif %}><span>{{ '%02d'|format(loop.index) }}</span><strong>{{ label }}</strong></div>
+      {% if not loop.last %}<b>→</b>{% endif %}
+    {% endfor %}
+  </div>
+</div>

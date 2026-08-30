@@ -1,0 +1,53 @@
+services:
+  app:
+    build:
+      context: .
+      target: development
+    container_name: rignostic-app
+    depends_on:
+      postgres:
+        condition: service_healthy
+    env_file:
+      - .env
+    environment:
+      DATABASE_URL: postgresql+psycopg://rignostic:rignostic@postgres:5432/rignostic
+      BLENDER_EXECUTABLE: /opt/blender/blender
+      RIGNOSTIC_HOST: 0.0.0.0
+      RIGNOSTIC_DEBUG: "1"
+      RIGNOSTIC_RUN_ROOT: /data/runs
+    ports:
+      - "127.0.0.1:5000:5000"
+    volumes:
+      - .:/app
+      - rignostic-venv:/app/.venv
+      - rignostic-node-modules:/app/node_modules
+      - rignostic-run-data:/data/runs
+    healthcheck:
+      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:5000/"]
+      interval: 5s
+      timeout: 3s
+      retries: 20
+    init: true
+
+  postgres:
+    image: postgres:17-alpine
+    container_name: rignostic-postgres
+    environment:
+      POSTGRES_DB: rignostic
+      POSTGRES_USER: rignostic
+      POSTGRES_PASSWORD: rignostic
+    ports:
+      - "127.0.0.1:5432:5432"
+    volumes:
+      - rignostic-postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U rignostic -d rignostic"]
+      interval: 2s
+      timeout: 3s
+      retries: 15
+
+volumes:
+  rignostic-postgres-data:
+  rignostic-venv:
+  rignostic-node-modules:
+  rignostic-run-data:

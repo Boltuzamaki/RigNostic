@@ -102,12 +102,13 @@ def connect_driver(obj, key_name, rig, control=None):
     variable.targets[0].data_path = f'pose.bones["{control or key_name}"]["value"]'
 
 
-def add_studio(scene):
+def add_studio(scene, camera_location=(0, -6.2, 0.05), camera_target=(0, 0, 0)):
     camera_data = bpy.data.cameras.new("DemoCamera")
     camera = bpy.data.objects.new("DemoCamera", camera_data)
     bpy.context.collection.objects.link(camera)
-    camera.location = (0, -6.2, 0.05)
-    camera.rotation_euler = (-camera.location).to_track_quat("-Z", "Y").to_euler()
+    camera.location = camera_location
+    direction = Vector(camera_target) - camera.location
+    camera.rotation_euler = direction.to_track_quat("-Z", "Y").to_euler()
     camera.data.lens = 58
     scene.camera = camera
     for name, location, energy, size, color in (
@@ -124,12 +125,20 @@ def add_studio(scene):
 
 
 def make_lips(mat):
+    # Outer and inner contours form a real opening.  The previous demo used one
+    # closed surface, which hid the mouth interior and made jawOpen hard to read.
     vertices = [
         (-0.58, -1.0, -0.32), (-0.28, -1.06, -0.25), (0, -1.08, -0.23),
         (0.28, -1.06, -0.25), (0.58, -1.0, -0.32), (0.28, -1.07, -0.42),
         (0, -1.09, -0.45), (-0.28, -1.07, -0.42),
+        (-0.43, -1.075, -0.33), (-0.22, -1.09, -0.30), (0, -1.10, -0.29),
+        (0.22, -1.09, -0.30), (0.43, -1.075, -0.33), (0.22, -1.10, -0.38),
+        (0, -1.11, -0.40), (-0.22, -1.10, -0.38),
     ]
-    faces = [(0, 1, 7), (1, 2, 6, 7), (2, 3, 5, 6), (3, 4, 5)]
+    faces = [
+        (0, 1, 9, 8), (1, 2, 10, 9), (2, 3, 11, 10), (3, 4, 12, 11),
+        (4, 5, 13, 12), (5, 6, 14, 13), (6, 7, 15, 14), (7, 0, 8, 15),
+    ]
     mesh = bpy.data.meshes.new("LipsData")
     mesh.from_pydata(vertices, [], faces)
     obj = bpy.data.objects.new("Lips", mesh)
@@ -151,7 +160,7 @@ def main():
     brow_mat = material("Brows", (0.035, 0.018, 0.012, 1), roughness=0.8)
     neck_mat = skin
 
-    head = uv_sphere("DemoHead", (0, 0, 0), (1.15, 0.92, 1.48), skin)
+    uv_sphere("DemoHead", (0, 0, 0), (1.15, 0.92, 1.48), skin)
     uv_sphere("Ear_L", (-1.12, 0, 0.05), (0.2, 0.13, 0.38), skin_light, 32, 20)
     uv_sphere("Ear_R", (1.12, 0, 0.05), (0.2, 0.13, 0.38), skin_light, 32, 20)
     uv_sphere("Neck", (0, 0.23, -1.55), (0.48, 0.42, 0.65), neck_mat, 40, 24)
@@ -169,34 +178,42 @@ def main():
         connect_driver(brow, f"browUp_{side}", rig)
 
     lips = make_lips(lip_mat)
+    # One continuous light surface fills the opening and deforms with the lips.
+    mouth_fill = uv_sphere(
+        "MouthFill", (0, -0.965, -0.35), (0.45, 0.05, 0.18), skin, 40, 24
+    )
     add_key(
         lips,
         "mouthSmile_L",
-        lambda i, co: co + (Vector((-0.08, 0, 0.27)) if i in {0, 1, 7} else Vector()),
+        lambda i, co: co
+        + (Vector((-0.08, 0, 0.27)) if i in {0, 1, 7, 8, 9, 15} else Vector()),
     )
     add_key(
         lips,
         "mouthSmile_R",
-        lambda i, co: co + (Vector((0.08, 0, 0.27)) if i in {3, 4, 5} else Vector()),
+        lambda i, co: co
+        + (Vector((0.08, 0, 0.27)) if i in {3, 4, 5, 11, 12, 13} else Vector()),
     )
     add_key(lips, "mouthFunnel", lambda _i, co: Vector((co.x * 0.53, co.y - 0.16, co.z)))
     add_key(
         lips,
         "jawOpen",
         lambda i, co: co
-        + (Vector((0, 0, -0.38)) if i in {5, 6, 7} else Vector((0, 0, -0.08))),
+        + (
+            Vector((0, 0, -0.38))
+            if i in {5, 6, 7, 13, 14, 15}
+            else Vector((0, 0, -0.08))
+        ),
     )
     for name in ("mouthSmile_L", "mouthSmile_R", "mouthFunnel", "jawOpen"):
         connect_driver(lips, name, rig)
 
-    # A subtle chin response makes jawOpen readable from both front and profile views.
     add_key(
-        head,
-        "jawOpen",
-        lambda _i, co: co
-        + (Vector((0, 0.05, -0.16)) if co.z < -0.48 and co.y < 0 else Vector()),
+        mouth_fill,
+        "mouthFillJawFollow",
+        lambda _i, co: co + Vector((0, 0.01, -0.08 - ((0.20 - co.z) / 0.40) * 0.30)),
     )
-    connect_driver(head, "jawOpen", rig)
+    connect_driver(mouth_fill, "mouthFillJawFollow", rig, control="jawOpen")
 
     bpy.context.scene["rignostic_fixture"] = "demo_face_v2"
     bpy.context.scene["rignostic_controls"] = ",".join(CONTROLS)

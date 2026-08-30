@@ -1,0 +1,24 @@
+{
+  "good": "rignostic_demo_full_body_v1.blend",
+  "broken": "rignostic_demo_full_body_v1_broken.blend",
+  "defects": [
+    {
+      "defect_type": "missing_deformation",
+      "affected_control": "eyeBlink_L",
+      "expected": "left eye closes",
+      "actual": "no vertex deformation"
+    },
+    {
+      "defect_type": "reversed_direction",
+      "affected_control": "mouthSmile_R",
+      "expected": "right mouth corner rises",
+      "actual": "right mouth corner moves downward"
+    },
+    {
+      "defect_type": "excessive_range",
+      "affected_control": "jawOpen",
+      "expected": "controlled jaw opening",
+      "actual": "lower lip displacement is 1.9 times the clean value"
+    }
+  ]
+}

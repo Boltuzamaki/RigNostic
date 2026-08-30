@@ -1,0 +1,10 @@
+<div class="agent-console">
+  <div class="agent-loop">
+    {% for item in ['Observe','Choose tool','Inspect','Evaluate result','Choose next action'] %}<div><span>{{ loop.index|string|replace('1','01') if loop.index == 1 else '0' ~ loop.index }}</span>{{ item }}</div>{% if not loop.last %}<b>↓</b>{% endif %}{% endfor %}
+  </div>
+  <div class="border-t border-white/8 p-5 lg:border-l lg:border-t-0">
+    <p class="label">Example trajectory summary</p>
+    <div class="mt-4 space-y-4 text-xs"><div><span class="agent-key">Observation</span><p>jawOpen moves significantly farther than other mouth controls.</p></div><div><span class="agent-key">Next action</span><code>get_driver_summary</code></div><div><span class="agent-key">Result</span><code>ctrl * 2.5</code></div><div><span class="agent-key">Decision</span><p class="text-blackice-danger">Flag likely excessive driver multiplier.</p></div></div>
+  </div>
+</div>
+<div class="mt-3 flex flex-wrap gap-2">{% for tool in ['get_driver_summary','set_shape_key','render_preview','get_constraint_summary'] %}<code class="tool-chip">{{ tool }}</code>{% endfor %}</div>

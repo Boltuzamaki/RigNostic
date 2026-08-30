@@ -3,7 +3,8 @@
 <title>{% block title %}RigNostic{% endblock %}</title>
 <link rel="stylesheet" href="{{ url_for('static', filename='css/output.css') }}">
 </head><body class="min-h-full bg-blackice-bg text-blackice-text antialiased">
-<div class="min-h-screen lg:grid lg:grid-cols-[16rem_1fr]">{% include 'components/sidebar.html' %}
-<main class="min-w-0"><header class="border-b border-white/8 px-6 py-4"><p class="font-mono text-xs uppercase tracking-[.2em] text-blackice-muted">Facial Rig QA / Stage 0</p></header>
-<div class="mx-auto max-w-7xl p-6 lg:p-8">{% block content %}{% endblock %}</div></main></div>
+{% set app_shell = current_user.is_authenticated and request.endpoint != 'pages.overview' %}
+<div class="min-h-screen {% if app_shell %}lg:grid lg:grid-cols-[16rem_1fr]{% endif %}">{% if app_shell %}{% include 'components/sidebar.html' %}{% endif %}
+<main class="min-w-0">{% if request.endpoint == 'pages.overview' %}{% include 'components/landing_header.html' %}{% else %}<header class="flex items-center justify-between border-b border-white/8 px-6 py-4"><a href="{{ url_for('pages.overview') }}" class="font-semibold"><span class="text-blackice-primary">Rig</span>Nostic</a>{% if current_user.is_authenticated %}<div class="flex items-center gap-3 text-sm"><span class="text-blackice-muted">{{ current_user.username }}</span><form method="post" action="{{ url_for('pages.logout') }}"><button class="button-secondary" type="submit">Log out</button></form></div>{% else %}<a class="button-secondary" href="{{ url_for('pages.login') }}">Log in</a>{% endif %}</header>{% endif %}
+<div class="{% if request.endpoint == 'pages.overview' %}landing-shell{% else %}mx-auto max-w-7xl p-6 lg:p-8{% endif %}">{% block content %}{% endblock %}</div></main></div>
 <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>{% block scripts %}{% endblock %}</body></html>

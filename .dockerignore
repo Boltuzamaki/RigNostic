@@ -1,0 +1,14 @@
+.git
+.venv
+.tools
+.pytest_cache
+__pycache__
+*.pyc
+.env
+node_modules
+src/instance
+results
+trajectories
+benchmark/cases
+benchmark/clean_reference
+demo_asset/*.blend

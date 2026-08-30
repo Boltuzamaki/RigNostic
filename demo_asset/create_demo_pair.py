@@ -42,7 +42,7 @@ def main() -> None:
     lip_basis = lips.data.shape_keys.key_blocks["Basis"]
     for index, point in enumerate(smile.data):
         point.co = lip_basis.data[index].co
-        if index in {3, 4, 5}:
+        if index in {3, 4, 5, 11, 12, 13}:
             point.co += Vector((0.12, 0, -0.30))
 
     jaw = lips.data.shape_keys.key_blocks["jawOpen"]
@@ -50,7 +50,8 @@ def main() -> None:
         delta = point.co - lip_basis.data[index].co
         point.co = lip_basis.data[index].co + delta * 1.9
 
-    bpy.context.scene["rignostic_fixture"] = "demo_face_v2_broken"
+    fixture = "demo_full_body_v1_broken" if "full_body" in good.stem else "demo_face_v2_broken"
+    bpy.context.scene["rignostic_fixture"] = fixture
     bpy.context.scene["rignostic_demo_defects"] = (
         "eyeBlink_L_no_deformation,mouthSmile_R_reversed,jawOpen_excessive"
     )

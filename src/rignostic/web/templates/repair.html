@@ -1,0 +1,9 @@
+{% extends 'base.html' %}{% block title %}Repair Rig · RigNostic{% endblock %}{% block content %}
+<div class="page-head"><div><p class="eyebrow">Guarded healing</p><h1>Repair and compare</h1></div></div>
+{% if error %}<div class="alert">{{ error }}</div>{% endif %}
+<form method="post" enctype="multipart/form-data" class="panel max-w-2xl">
+<label class="label" for="broken_rig">Broken rig</label><input id="broken_rig" name="broken_rig" type="file" accept=".blend" required class="file-input">
+<label class="label mt-5 block" for="reference_rig">Trusted clean reference</label><input id="reference_rig" name="reference_rig" type="file" accept=".blend" required class="file-input">
+<p class="copy">Matching topology is required. Original uploads are preserved and repair is written to a new file only after validation.</p>
+<button class="button mt-5" type="submit" {% if not blender %}disabled{% endif %}>Heal and build comparison</button>
+</form>{% endblock %}

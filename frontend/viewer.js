@@ -64,8 +64,10 @@ if (root) {
     gltf.scene.traverse((object) => {
       if (!object.isMesh || !object.morphTargetDictionary) return;
       Object.entries(object.morphTargetDictionary).forEach(([name, index]) => {
-        if (!morphs.has(name)) morphs.set(name, []);
-        morphs.get(name).push({ object, index });
+        const controlName = name === "mouthFillJawFollow"
+          ? "jawOpen" : name;
+        if (!morphs.has(controlName)) morphs.set(controlName, []);
+        morphs.get(controlName).push({ object, index });
       });
     });
     controlsPanel.innerHTML = morphs.size ? "" : '<p class="copy">No exported shape keys were found.</p>';

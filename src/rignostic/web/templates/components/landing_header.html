@@ -1,0 +1,19 @@
+<header class="landing-header">
+  <a href="{{ url_for('pages.overview') }}" class="flex items-center gap-3">
+    <span class="text-lg font-semibold"><span class="text-blackice-primary">Rig</span>Nostic</span>
+    <span class="hidden border-l border-white/10 pl-3 font-mono text-[10px] uppercase tracking-[.14em] text-blackice-muted sm:block">Blender facial rig tests</span>
+  </a>
+  <nav class="hidden items-center gap-6 text-xs text-blackice-muted lg:flex">
+    <a href="#how-it-works" class="hover:text-blackice-text">How it works</a>
+  </nav>
+  <div class="flex items-center gap-2">
+    {% if current_user.is_authenticated %}
+      <span class="hidden text-xs text-blackice-muted sm:inline">{{ current_user.username }}</span>
+      <a class="button-secondary" href="{{ url_for('pages.dashboard') }}">Dashboard</a>
+      <form method="post" action="{{ url_for('pages.logout') }}"><button class="landing-link" type="submit">Log out</button></form>
+    {% else %}
+      <a class="landing-link" href="{{ url_for('pages.login') }}">Sign in</a>
+      <a class="button" href="{{ url_for('pages.signup') }}">Try demo</a>
+    {% endif %}
+  </div>
+</header>

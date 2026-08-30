@@ -17,6 +17,8 @@ def main():
     path = Path(args[0] if args else default_path).resolve()
     bpy.ops.wm.open_mainfile(filepath=str(path))
     rig = bpy.data.objects.get("DemoFaceRig")
+    if rig is None:
+        rig = bpy.data.objects.get("DemoCharacterRig")
     assert rig and rig.type == "ARMATURE", "DemoFaceRig armature is missing"
     assert EXPECTED <= set(rig.pose.bones.keys()), "One or more control bones are missing"
     discovered = set()
@@ -39,6 +41,8 @@ def main():
     assert EXPECTED <= discovered, f"Missing shape keys: {sorted(EXPECTED - discovered)}"
     assert EXPECTED <= nonzero, f"Shape keys without deformation: {sorted(EXPECTED - nonzero)}"
     assert driver_count >= len(EXPECTED), "Expected driven shape keys"
+    for object_name in ("MouthFill",):
+        assert bpy.data.objects.get(object_name), f"{object_name} is missing"
     for control in EXPECTED:
         rig.pose.bones[control]["value"] = 1.0
     bpy.context.view_layer.update()

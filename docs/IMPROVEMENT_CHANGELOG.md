@@ -129,3 +129,18 @@ REVISE.
 The deterministic data is correct, but the full representation overwhelms the current single-call
 agent. Keep all artifacts, stop before Iteration 2, and evaluate compact presentation only as a future
 approved revision.
+
+## Guarded Self-Healing Pipeline
+
+### Scope
+
+Added an opt-in, trusted-reference repair path without coupling mutations to the low-recall model
+diagnosis. Dry-run is the default; apply requires a distinct output path.
+
+### Safety and Validation
+
+Repairs are written to a temporary Blender file, reopened, compared against the reference, and only
+then atomically published. The input and reference cannot be output targets. All ten benchmark cases
+were exercised through the apply path: 12 property repairs addressed all 11 injected defects, and
+each healed output had zero remaining supported differences. This validates benchmark restoration,
+not autonomous diagnosis or safe generalization to unrelated production rigs.
