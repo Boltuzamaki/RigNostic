@@ -23,7 +23,7 @@ Verified locally on 2026-08-31:
 External actions that cannot be completed from repository code:
 
 - [x] Confirm the public GitHub URL is accessible while signed out (HTTP 200 verified)
-- [x] Push the final repository package to GitHub (`168b81c` verified remotely)
+- [x] Push the final repository package to GitHub (remote HEAD verified)
 - [ ] Upload the final video and confirm platform playback/subtitles
 - [ ] Upload the clean ZIP if the form requests it
 - [x] Re-run install, tests, and frontend build from a fresh public GitHub clone
