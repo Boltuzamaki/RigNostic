@@ -17,6 +17,7 @@ Representative machine-readable traces are committed under:
 - `trajectories/baseline/`: frozen Stage 0 observations, calls, results, and reports.
 - `results/iteration_01/*/trajectory.jsonl`: discovery and classification decisions.
 - `trajectories/final/`: final adaptive tool decisions, results, and final report.
+- `results/final_benchmark/case_*/trajectory.jsonl`: formal final ten-case traces.
 
 Human checkpoints are explicit: upload/select the source rig, request repair,
 review the before/after comparison, and choose whether to download the verified

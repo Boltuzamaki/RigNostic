@@ -95,3 +95,14 @@ reference upload. The repair code independently verifies supported structural
 defects, writes changes to a temporary copy, reruns those checks, and atomically
 publishes the repaired `.blend` only when no supported finding remains. The model
 does not directly edit Blender data.
+
+## Final evidence gate
+
+Before accepting a final report, the adaptive workflow always collects detailed
+driver/shape-key/constraint structure and deformation summaries. A deterministic
+validation layer normalizes only directly supported findings: muted or malformed
+drivers, reciprocal swaps, unrelated targets, peer-relative range/constraint
+outliers, mirrored deformation anomalies, and combined-control overdeformation.
+Model-selected inspections remain adaptive, but unsupported model findings are
+not published. This separation reduced the fixed benchmark from 22 false
+positives in the rejected trial to zero in the committed final run.

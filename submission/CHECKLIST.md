@@ -7,6 +7,7 @@ Verified locally on 2026-08-31:
 - [x] Fixed benchmark rigs, gold labels, validation report, and recorded results committed
 - [x] Baseline and structured-discovery trajectories committed
 - [x] Representative final adaptive trajectory committed
+- [x] Formal final benchmark committed: 11/11 recall and 0 false positives
 - [x] Coding-agent and external-tool use disclosed
 - [x] Representative Codex prompts and outcomes disclosed
 - [x] Representative machine-readable Codex trajectory disclosed

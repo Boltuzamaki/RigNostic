@@ -1,0 +1,303 @@
+{
+  "stage": "final_benchmark",
+  "model": "gemini-3.5-flash-lite",
+  "aggregate": {
+    "total_gold_defects": 11,
+    "correctly_detected": 11,
+    "false_positives": 0,
+    "defect_detection_recall": 1.0,
+    "affected_control_accuracy": 1.0,
+    "root_cause_accuracy": 0.45454545454545453,
+    "cases_attempted": 10,
+    "average_agent_actions": 15,
+    "average_runtime_seconds": 11.940270055200108,
+    "total_runtime_seconds": 119.40270055200108,
+    "model_calls": 80,
+    "input_tokens": 88100,
+    "output_tokens": 5466,
+    "approximate_cost_usd": null
+  },
+  "cases": [
+    {
+      "case_id": "case_01",
+      "gold_defects": 1,
+      "matched_defects": 1,
+      "predicted_defects": 1,
+      "passed": true
+    },
+    {
+      "case_id": "case_02",
+      "gold_defects": 1,
+      "matched_defects": 1,
+      "predicted_defects": 1,
+      "passed": true
+    },
+    {
+      "case_id": "case_03",
+      "gold_defects": 1,
+      "matched_defects": 1,
+      "predicted_defects": 1,
+      "passed": true
+    },
+    {
+      "case_id": "case_04",
+      "gold_defects": 1,
+      "matched_defects": 1,
+      "predicted_defects": 1,
+      "passed": true
+    },
+    {
+      "case_id": "case_05",
+      "gold_defects": 1,
+      "matched_defects": 1,
+      "predicted_defects": 1,
+      "passed": true
+    },
+    {
+      "case_id": "case_06",
+      "gold_defects": 1,
+      "matched_defects": 1,
+      "predicted_defects": 1,
+      "passed": true
+    },
+    {
+      "case_id": "case_07",
+      "gold_defects": 1,
+      "matched_defects": 1,
+      "predicted_defects": 1,
+      "passed": true
+    },
+    {
+      "case_id": "case_08",
+      "gold_defects": 1,
+      "matched_defects": 1,
+      "predicted_defects": 1,
+      "passed": true
+    },
+    {
+      "case_id": "case_09",
+      "gold_defects": 1,
+      "matched_defects": 1,
+      "predicted_defects": 1,
+      "passed": true
+    },
+    {
+      "case_id": "case_10",
+      "gold_defects": 2,
+      "matched_defects": 2,
+      "predicted_defects": 2,
+      "passed": true
+    }
+  ],
+  "results": [
+    {
+      "case_id": "case_01",
+      "detected_defects": [
+        {
+          "defect_type": "muted_driver",
+          "affected_control": "eyeBlink_L",
+          "root_cause": "driver_muted",
+          "description": "The shape-key driver is muted.",
+          "confidence": 1.0
+        }
+      ],
+      "suggested_repairs": [
+        "Unmute the driver for the 'eyeBlink_L' shape key.",
+        "Sculpt or assign vertex displacements for the 'smileCombination' shape key, or remove it if unused."
+      ],
+      "agent_actions": 15,
+      "runtime_seconds": 12.059912243999861,
+      "model_calls": 8,
+      "input_tokens": 8841,
+      "output_tokens": 542
+    },
+    {
+      "case_id": "case_02",
+      "detected_defects": [
+        {
+          "defect_type": "excessive_multiplier",
+          "affected_control": "jawOpen",
+          "root_cause": "driver_multiplier_too_high",
+          "description": "The driver multiplier is 2.",
+          "confidence": 1.0
+        }
+      ],
+      "suggested_repairs": [
+        "Sculpt or assign vertex displacements to the smileCombination shape key on FaceMesh so it deforms the mesh as intended by its driver."
+      ],
+      "agent_actions": 15,
+      "runtime_seconds": 11.500646145000246,
+      "model_calls": 8,
+      "input_tokens": 8853,
+      "output_tokens": 395
+    },
+    {
+      "case_id": "case_03",
+      "detected_defects": [
+        {
+          "defect_type": "swapped_controls",
+          "affected_control": "mouthSmile_L",
+          "root_cause": "driver_targets_swapped",
+          "description": "The counterpart drivers for ['mouthSmile_L', 'mouthSmile_R'] target each other.",
+          "confidence": 1.0
+        }
+      ],
+      "suggested_repairs": [
+        "Fix the driver for 'mouthSmile_L' so its variable target points to pose.bones[\"mouthSmile_L\"][\"value\"].",
+        "Fix the driver for 'mouthSmile_R' so its variable target points to pose.bones[\"mouthSmile_R\"][\"value\"].",
+        "Sculpt or assign proper vertex displacements for the 'smileCombination' shape key so it affects the mesh."
+      ],
+      "agent_actions": 15,
+      "runtime_seconds": 12.38812920700002,
+      "model_calls": 8,
+      "input_tokens": 8717,
+      "output_tokens": 698
+    },
+    {
+      "case_id": "case_04",
+      "detected_defects": [
+        {
+          "defect_type": "excessive_range",
+          "affected_control": "mouthFunnel",
+          "root_cause": "shape_key_slider_max",
+          "description": "Shape-key slider maximum 2 is an owner-level outlier.",
+          "confidence": 1.0
+        }
+      ],
+      "suggested_repairs": [
+        "Sculpt or edit the mesh while the 'smileCombination' shape key is active to add vertex displacements, or remove the shape key and its associated driver if it is unnecessary."
+      ],
+      "agent_actions": 15,
+      "runtime_seconds": 11.798441224000271,
+      "model_calls": 8,
+      "input_tokens": 8841,
+      "output_tokens": 429
+    },
+    {
+      "case_id": "case_05",
+      "detected_defects": [
+        {
+          "defect_type": "constraint_influence",
+          "affected_control": "browUp_L",
+          "root_cause": "constraint_influence_too_low",
+          "description": "Constraint influence 0.2 is far below its counterpart.",
+          "confidence": 1.0
+        }
+      ],
+      "suggested_repairs": [
+        "Set the 'Brow Range' constraint influence on bone browUp_L to 1.0 to match browUp_R."
+      ],
+      "agent_actions": 15,
+      "runtime_seconds": 12.47148810500039,
+      "model_calls": 8,
+      "input_tokens": 8889,
+      "output_tokens": 648
+    },
+    {
+      "case_id": "case_06",
+      "detected_defects": [
+        {
+          "defect_type": "reversed_direction",
+          "affected_control": "jawOpen",
+          "root_cause": "negative_driver_expression",
+          "description": "The driver negates its control variable.",
+          "confidence": 1.0
+        }
+      ],
+      "suggested_repairs": [
+        "Sculpt the 'smileCombination' shape key or remove it if unused."
+      ],
+      "agent_actions": 15,
+      "runtime_seconds": 10.955768833000548,
+      "model_calls": 8,
+      "input_tokens": 8841,
+      "output_tokens": 371
+    },
+    {
+      "case_id": "case_07",
+      "detected_defects": [
+        {
+          "defect_type": "wrong_shape_key_target",
+          "affected_control": "eyeBlink_R",
+          "root_cause": "driver_variable_targets_wrong_control",
+          "description": "eyeBlink_R drives unrelated shape key mouthFunnel.",
+          "confidence": 1.0
+        }
+      ],
+      "suggested_repairs": [],
+      "agent_actions": 15,
+      "runtime_seconds": 11.429550283000026,
+      "model_calls": 8,
+      "input_tokens": 8843,
+      "output_tokens": 452
+    },
+    {
+      "case_id": "case_08",
+      "detected_defects": [
+        {
+          "defect_type": "excessive_deformation",
+          "affected_control": "mouthSmile_R",
+          "root_cause": "shape_key_deformation_excessive",
+          "description": "mouthSmile_R deforms over three times more than its counterpart.",
+          "confidence": 1.0
+        }
+      ],
+      "suggested_repairs": [
+        "Re-sculpt or correct the vertex displacements for the 'smileCombination' shape key so it affects the mesh correctly.",
+        "Scale down or re-sculpt the vertex displacements for 'mouthSmile_R' to match the symmetry and scale of 'mouthSmile_L'."
+      ],
+      "agent_actions": 15,
+      "runtime_seconds": 12.939405373999762,
+      "model_calls": 8,
+      "input_tokens": 8717,
+      "output_tokens": 822
+    },
+    {
+      "case_id": "case_09",
+      "detected_defects": [
+        {
+          "defect_type": "combination_overdeformation",
+          "affected_control": "mouthSmile_L+mouthSmile_R",
+          "root_cause": "combined_controls_overdeform",
+          "description": "Combination shape key smileCombination has excessive displacement.",
+          "confidence": 1.0
+        }
+      ],
+      "suggested_repairs": [],
+      "agent_actions": 15,
+      "runtime_seconds": 11.934816101999786,
+      "model_calls": 8,
+      "input_tokens": 8841,
+      "output_tokens": 477
+    },
+    {
+      "case_id": "case_10",
+      "detected_defects": [
+        {
+          "defect_type": "muted_driver",
+          "affected_control": "browUp_R",
+          "root_cause": "driver_muted",
+          "description": "The shape-key driver is muted.",
+          "confidence": 1.0
+        },
+        {
+          "defect_type": "constraint_influence",
+          "affected_control": "browUp_R",
+          "root_cause": "constraint_influence_too_low",
+          "description": "Constraint influence 0 is far below its counterpart.",
+          "confidence": 1.0
+        }
+      ],
+      "suggested_repairs": [
+        "Unmute the driver for 'browUp_R'.",
+        "Set the influence of the 'Brow Range' constraint on bone 'browUp_R' to 1.0 if limits are needed.",
+        "Add vertex displacements to the 'smileCombination' shape key."
+      ],
+      "agent_actions": 15,
+      "runtime_seconds": 11.92454303500017,
+      "model_calls": 8,
+      "input_tokens": 8717,
+      "output_tokens": 632
+    }
+  ]
+}

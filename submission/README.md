@@ -18,6 +18,7 @@ tracked source, fixture, result, test, prompt, and trajectory listed below.
 | Baseline evidence | `results/baseline/`, `trajectories/baseline/` |
 | Structured-discovery evidence | `results/iteration_01/` |
 | Final representative evidence | `results/final/`, `trajectories/final/` |
+| Formal final benchmark and traces | `results/final_benchmark/` |
 | Architecture | `docs/ARCHITECTURE.md` |
 | Improvement changelog | `docs/IMPROVEMENT_CHANGELOG.md` |
 | Clean-machine commands | `docs/REPRODUCTION.md` |

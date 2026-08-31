@@ -1,0 +1,25 @@
+{
+  "case_id": "case_08",
+  "detected_defects": [
+    {
+      "defect_type": "excessive_deformation",
+      "affected_control": "mouthSmile_R",
+      "description": "mouthSmile_R deforms over three times more than its counterpart.",
+      "likely_root_cause": "shape_key_deformation_excessive",
+      "confidence": 1.0,
+      "evidence_source": "deterministic_validation"
+    }
+  ],
+  "suggested_repairs": [
+    "Re-sculpt or correct the vertex displacements for the 'smileCombination' shape key so it affects the mesh correctly.",
+    "Scale down or re-sculpt the vertex displacements for 'mouthSmile_R' to match the symmetry and scale of 'mouthSmile_L'."
+  ],
+  "agent_actions": 15,
+  "runtime_seconds": 12.939405373999762,
+  "model_calls": 8,
+  "tool_calls": 7,
+  "input_tokens": 8717,
+  "output_tokens": 822,
+  "model": "gemini/gemini-3.5-flash-lite",
+  "provider": "gemini"
+}

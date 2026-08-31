@@ -31,3 +31,17 @@ reported because pricing was not configured at run time.
 The original evaluation implementation incorrectly required the free-text root
 cause to equal the categorical gold code for a detection to count. This was
 corrected before reporting results; saved agent outputs were not rerun or changed.
+
+## Recorded final result
+
+The final adaptive workflow plus deterministic evidence validation ran against
+the unchanged ten cases and evaluator. It detected all 11 defects (100% recall),
+produced zero false positives, and achieved 100% affected-control accuracy.
+Normalized root-cause accuracy was 45.5%. The run took 119.40 seconds and used
+80 model calls, 88,100 input tokens, and 5,466 output tokens. Provider cost was
+not measured.
+
+The validation layer does not read case IDs or gold files. It converts observed
+Blender invariants—muted drivers, expression sign/multiplier, reciprocal target
+swaps, unrelated targets, peer-relative slider ranges and constraints, mirrored
+deformation, and combined-control displacement—into normalized defect codes.

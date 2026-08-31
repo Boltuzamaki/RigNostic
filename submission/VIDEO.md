@@ -1,8 +1,8 @@
 # Solution video delivery
 
-Final video: `timelaspe_subtitled.mp4`
+Final video: `video/RigNostic_demo_final.mp4`
 
-Standalone captions: `timelaspe.srt`
+Standalone captions: `video/RigNostic_demo_en.srt`
 Measured duration: **4:54.961**, below the five-minute limit.
 
 The files are prepared in the local Downloads directory and intentionally are
@@ -20,3 +20,6 @@ Before upload, confirm the narration/visual sequence covers:
 6. Biggest improvement: evidence-driven adaptive inspection and verification.
 7. Removed experiment: full unfiltered inventory increased cost and false positives.
 8. Hot take: a control working alone does not make a rig valid; interactions and evidence matter.
+
+The final video includes a visible fixed-benchmark overlay: Stage 0 18.2% recall
+and 4 false positives versus Final 100% recall and 0 false positives.

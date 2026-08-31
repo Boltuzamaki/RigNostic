@@ -1,0 +1,22 @@
+{
+  "case_id": "case_07",
+  "detected_defects": [
+    {
+      "defect_type": "wrong_shape_key_target",
+      "affected_control": "eyeBlink_R",
+      "description": "eyeBlink_R drives unrelated shape key mouthFunnel.",
+      "likely_root_cause": "driver_variable_targets_wrong_control",
+      "confidence": 1.0,
+      "evidence_source": "deterministic_validation"
+    }
+  ],
+  "suggested_repairs": [],
+  "agent_actions": 15,
+  "runtime_seconds": 11.429550283000026,
+  "model_calls": 8,
+  "tool_calls": 7,
+  "input_tokens": 8843,
+  "output_tokens": 452,
+  "model": "gemini/gemini-3.5-flash-lite",
+  "provider": "gemini"
+}

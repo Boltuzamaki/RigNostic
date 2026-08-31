@@ -150,6 +150,19 @@ uv run rignostic iteration-01-all
 
 The agent never receives `gold.json`; only the evaluator reads it afterward.
 
+## Run the final benchmark
+
+```bash
+uv run rignostic final-run
+uv run rignostic final-evaluate
+# or both
+uv run rignostic final-all
+```
+
+Expected output: `results/final_benchmark/case_*/agent_result.json`, per-case
+`trajectory.jsonl`, `results.json`, and `summary.md`. The committed run detected
+11/11 defects with zero false positives.
+
 ## Expected outputs, runtime, and cost
 
 - Benchmark generation writes ten `benchmark/cases/case_*/rig.blend` fixtures,
@@ -158,6 +171,9 @@ The agent never receives `gold.json`; only the evaluator reads it afterward.
   the frozen recorded run took 35.66 seconds and 10 model calls.
 - Iteration 1 writes inventories, results, metrics, and JSONL traces under
   `results/iteration_01/`; the recorded run took 60.59 seconds.
+- The final benchmark writes results and traces under `results/final_benchmark/`;
+  the recorded run took 119.40 seconds, 80 model calls, 88,100 input tokens, and
+  5,466 output tokens.
 - A final web run writes `result.json`, `trajectory.jsonl`, a preview, and viewer
   asset under its isolated run directory. Runtime depends on selected tools and
   Blender startup speed; the loop is capped at 15 tool calls.

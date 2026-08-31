@@ -1,0 +1,26 @@
+{
+  "case_id": "case_03",
+  "detected_defects": [
+    {
+      "defect_type": "swapped_controls",
+      "affected_control": "mouthSmile_L",
+      "description": "The counterpart drivers for ['mouthSmile_L', 'mouthSmile_R'] target each other.",
+      "likely_root_cause": "driver_targets_swapped",
+      "confidence": 1.0,
+      "evidence_source": "deterministic_validation"
+    }
+  ],
+  "suggested_repairs": [
+    "Fix the driver for 'mouthSmile_L' so its variable target points to pose.bones[\"mouthSmile_L\"][\"value\"].",
+    "Fix the driver for 'mouthSmile_R' so its variable target points to pose.bones[\"mouthSmile_R\"][\"value\"].",
+    "Sculpt or assign proper vertex displacements for the 'smileCombination' shape key so it affects the mesh."
+  ],
+  "agent_actions": 15,
+  "runtime_seconds": 12.38812920700002,
+  "model_calls": 8,
+  "tool_calls": 7,
+  "input_tokens": 8717,
+  "output_tokens": 698,
+  "model": "gemini/gemini-3.5-flash-lite",
+  "provider": "gemini"
+}

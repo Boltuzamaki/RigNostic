@@ -1,0 +1,24 @@
+{
+  "case_id": "case_04",
+  "detected_defects": [
+    {
+      "defect_type": "excessive_range",
+      "affected_control": "mouthFunnel",
+      "description": "Shape-key slider maximum 2 is an owner-level outlier.",
+      "likely_root_cause": "shape_key_slider_max",
+      "confidence": 1.0,
+      "evidence_source": "deterministic_validation"
+    }
+  ],
+  "suggested_repairs": [
+    "Sculpt or edit the mesh while the 'smileCombination' shape key is active to add vertex displacements, or remove the shape key and its associated driver if it is unnecessary."
+  ],
+  "agent_actions": 15,
+  "runtime_seconds": 11.798441224000271,
+  "model_calls": 8,
+  "tool_calls": 7,
+  "input_tokens": 8841,
+  "output_tokens": 429,
+  "model": "gemini/gemini-3.5-flash-lite",
+  "provider": "gemini"
+}

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import json
+import re
 import statistics
 from collections import Counter
 from collections.abc import Callable
@@ -21,6 +22,7 @@ AGENT_TOOLS = {
     "driver_summary": "drivers",
     "constraint_summary": "constraints",
     "shape_key_deformation_summary": "shape_key_deformation",
+    "structural_details": "structural_details",
 }
 
 ActionCallback = Callable[[dict[str, Any]], None]
@@ -81,12 +83,130 @@ def _add_structural_findings(
     report: dict[str, Any], observations: dict[str, Any]
 ) -> dict[str, Any]:
     """Add only findings directly proven by numeric Blender output."""
-    findings = report["detected_defects"]
-    for finding in findings:
-        finding.setdefault("evidence_source", "agent")
-    controls = {str(item.get("affected_control", "")) for item in findings}
+    findings: list[dict[str, Any]] = []
+    controls: set[str] = set()
+    details = observations.get("structural_details", {})
+    detail_drivers = details.get("drivers", []) if isinstance(details, dict) else []
+    detail_keys = details.get("shape_keys", []) if isinstance(details, dict) else []
+    detail_constraints = details.get("constraints", []) if isinstance(details, dict) else []
+
+    def add(defect_type: str, control: str, description: str, cause: str) -> None:
+        key = f"{defect_type}:{control}"
+        if key in controls:
+            return
+        controls.add(key)
+        findings.append({
+            "defect_type": defect_type,
+            "affected_control": control,
+            "description": description,
+            "likely_root_cause": cause,
+            "confidence": 1.0,
+            "evidence_source": "deterministic_validation",
+        })
+
+    driver_targets: dict[str, list[str]] = {}
+    identity_targets: dict[str, str] = {}
+
+    def target_control(target: dict[str, Any]) -> str:
+        bone = str(target.get("bone_target") or "")
+        if bone:
+            return bone
+        match = re.search(r'pose\.bones\["([^"]+)"\]', str(target.get("data_path") or ""))
+        return match.group(1) if match else ""
+
+    for driver in detail_drivers:
+        match = re.search(r'key_blocks\["([^"]+)"\]', str(driver.get("data_path", "")))
+        if not match:
+            continue
+        driven_control = match.group(1)
+        expression = str(driver.get("expression", "")).replace(" ", "")
+        targets = [
+            target_control(target)
+            for variable in driver.get("variables", [])
+            for target in variable.get("targets", [])
+            if target_control(target)
+        ]
+        driver_targets[driven_control] = targets
+        if driver.get("muted"):
+            add("muted_driver", driven_control, "The shape-key driver is muted.", "driver_muted")
+        if re.fullmatch(r"-var", expression):
+            add(
+                "reversed_direction", driven_control,
+                "The driver negates its control variable.", "negative_driver_expression",
+            )
+        multiplier = re.fullmatch(r"var\*([0-9]+(?:\.[0-9]+)?)", expression)
+        if multiplier and float(multiplier.group(1)) > 1.5:
+            add(
+                "excessive_multiplier", driven_control,
+                f"The driver multiplier is {multiplier.group(1)}.", "driver_multiplier_too_high",
+            )
+        if expression == "var" and len(targets) == 1:
+            identity_targets[driven_control] = targets[0]
+
+    key_names = {str(item.get("name", "")) for item in detail_keys}
+    handled_swaps: set[frozenset[str]] = set()
+    for driven_control, target_name in identity_targets.items():
+        if target_name == driven_control or target_name.endswith(f"{driven_control}_ctrl"):
+            continue
+        pair = frozenset((driven_control, target_name))
+        if (
+            _counterpart(driven_control) == target_name
+            and identity_targets.get(target_name) == driven_control
+        ):
+            if pair in handled_swaps:
+                continue
+            handled_swaps.add(pair)
+            affected = next(
+                (name for name in pair if name.endswith(("_L", ".L"))),
+                sorted(pair)[0],
+            )
+            add(
+                "swapped_controls", affected,
+                f"The counterpart drivers for {sorted(pair)} target each other.",
+                "driver_targets_swapped",
+            )
+        elif target_name in key_names:
+            add(
+                "wrong_shape_key_target", target_name,
+                f"{target_name} drives unrelated shape key {driven_control}.",
+                "driver_variable_targets_wrong_control",
+            )
+
+    keys_by_owner: dict[str, list[dict[str, Any]]] = {}
+    for key in detail_keys:
+        keys_by_owner.setdefault(str(key.get("owner", "")), []).append(key)
+    for owner_keys in keys_by_owner.values():
+        typical_max = statistics.median(float(key.get("slider_max", 1.0)) for key in owner_keys)
+        for key in owner_keys:
+            slider_max = float(key.get("slider_max", 1.0))
+            if typical_max > 0 and slider_max > typical_max * 1.5:
+                add(
+                    "excessive_range", str(key.get("name", "")),
+                    f"Shape-key slider maximum {slider_max:g} is an owner-level outlier.",
+                    "shape_key_slider_max",
+                )
+
+    constraint_lookup = {
+        (str(item.get("owner", "")), str(item.get("name", "")), str(item.get("type", ""))): item
+        for item in detail_constraints
+    }
+    for constraint in detail_constraints:
+        owner = str(constraint.get("owner", ""))
+        counterpart = _counterpart(owner)
+        peer = constraint_lookup.get(
+            (counterpart or "", str(constraint.get("name", "")), str(constraint.get("type", "")))
+        )
+        influence = float(constraint.get("influence", 1.0))
+        if peer is not None and influence < 0.5 and float(peer.get("influence", 1.0)) > 0.9:
+            add(
+                "constraint_influence", owner,
+                f"Constraint influence {influence:.3g} is far below its counterpart.",
+                "constraint_influence_too_low",
+            )
+
     rows = observations.get("shape_key_deformation", [])
     if not isinstance(rows, list):
+        report["detected_defects"] = findings
         return report
 
     keyed = {
@@ -95,16 +215,24 @@ def _add_structural_findings(
         if isinstance(row, dict)
     }
     for (owner, control), row in keyed.items():
-        if row.get("affected_vertex_count") == 0 and control not in controls:
-            findings.append({
-                "defect_type": "Zero Affected Vertices",
-                "affected_control": control,
-                "description": f"{control} does not move any vertices on {owner}.",
-                "likely_root_cause": "The shape key contains no deformation delta.",
-                "confidence": 1.0,
-                "evidence_source": "deterministic_guard",
-            })
-            controls.add(control)
+        if row.get("affected_vertex_count") == 0 and "combination" not in control.lower():
+            add(
+                "zero_affected_vertices", control,
+                f"{control} does not move any vertices on {owner}.",
+                "shape_key_contains_no_deformation",
+            )
+
+        if (
+            "combination" in control.lower()
+            and float(row.get("relative_displacement", 0) or 0) > 0.5
+        ):
+            targets = driver_targets.get(control, [])
+            affected = "+".join(targets) if len(targets) >= 2 else control
+            add(
+                "combination_overdeformation", affected,
+                f"Combination shape key {control} has excessive displacement.",
+                "combined_controls_overdeform",
+            )
 
         pair_name = _counterpart(control)
         pair = keyed.get((owner, pair_name or ""))
@@ -122,24 +250,30 @@ def _add_structural_findings(
         own_z, pair_z = float(own_delta[2]), float(pair_delta[2])
         if own_z * pair_z < 0 and max(abs(own_z), abs(pair_z)) > 0.01:
             affected = control if own_z < pair_z else pair_name
-            if affected not in controls:
-                findings.append({
-                    "defect_type": "Asymmetric Movement",
-                    "affected_control": affected,
-                    "description": (
-                        f"{control} and {pair_name} move in opposite vertical directions."
-                    ),
-                    "likely_root_cause": "One mirrored shape-key deformation is reversed.",
-                    "confidence": 0.97,
-                    "evidence_source": "deterministic_guard",
-                })
-                controls.add(affected)
+            add(
+                "asymmetric_movement", affected,
+                f"{control} and {pair_name} move in opposite vertical directions.",
+                "mirrored_shape_key_deformation_reversed",
+            )
+
+        if pair is not None and pair_name and control < pair_name:
+            own_relative = float(row.get("relative_displacement", 0) or 0)
+            pair_relative = float(pair.get("relative_displacement", 0) or 0)
+            smaller = min(own_relative, pair_relative)
+            larger = max(own_relative, pair_relative)
+            if smaller > 0 and larger / smaller > 3 and larger > 0.5:
+                affected = control if own_relative > pair_relative else pair_name
+                add(
+                    "excessive_deformation", affected,
+                    f"{affected} deforms over three times more than its counterpart.",
+                    "shape_key_deformation_excessive",
+                )
 
     by_owner: dict[str, list[dict[str, Any]]] = {}
     for row in keyed.values():
         if float(row.get("relative_displacement", 0) or 0) > 0:
             by_owner.setdefault(str(row.get("owner", "")), []).append(row)
-    for owner, owner_rows in by_owner.items():
+    for _owner, owner_rows in by_owner.items():
         if len(owner_rows) < 3:
             continue
         values = [float(row["relative_displacement"]) for row in owner_rows]
@@ -149,20 +283,17 @@ def _add_structural_findings(
             control = str(row["shape_key"])
             peers = [candidate for candidate in values if candidate != value]
             peer_typical = statistics.median(peers) if peers else typical
-            if value > peer_typical * 2 and control not in controls:
-                findings.append({
-                    "defect_type": "Excessive Deformation",
-                    "affected_control": control,
-                    "description": (
-                        f"{control} moves more than twice the typical control range on {owner}."
-                    ),
-                    "likely_root_cause": (
-                        "The shape-key displacement or driven range is unusually large."
-                    ),
-                    "confidence": 0.95,
-                    "evidence_source": "deterministic_guard",
-                })
-                controls.add(control)
+            if (
+                value > peer_typical * 2.2
+                and value > 0.5
+                and "combination" not in control.lower()
+            ):
+                add(
+                    "excessive_deformation", control,
+                    f"{control} moves over 2.2 times the typical owner-level range.",
+                    "shape_key_deformation_excessive",
+                )
+    report["detected_defects"] = findings
     return report
 
 
@@ -249,6 +380,7 @@ def analyze_rig_agent(
     input_tokens = 0
     output_tokens = 0
     report: dict[str, Any] | None = None
+    required_evidence = ("structural_details", "shape_key_deformation_summary")
 
     def record(event: dict[str, Any]) -> None:
         trajectory.append(event)
@@ -262,6 +394,23 @@ def analyze_rig_agent(
         output_tokens += response.output_tokens or 0
         action = _parse_json(response.text)
         if action.get("action") == "report":
+            missing = next((tool for tool in required_evidence if tool not in used_tools), None)
+            if missing is not None:
+                record({
+                    "type": "decision",
+                    "action": "use_tool",
+                    "tool": missing,
+                    "summary": "Required deterministic evidence before final report",
+                })
+                value = tool_runner(source, missing)
+                observations[AGENT_TOOLS[missing]] = value
+                used_tools.append(missing)
+                record({
+                    "type": "tool_result",
+                    "tool": missing,
+                    "summary": f"Stored {AGENT_TOOLS[missing]}",
+                })
+                continue
             report = _validate_report(action)
             record({"type": "decision", "action": "report", "summary": "Diagnosis complete"})
             break
@@ -284,6 +433,24 @@ def analyze_rig_agent(
         observations[AGENT_TOOLS[tool]] = value
         used_tools.append(tool)
         record({"type": "tool_result", "tool": tool, "summary": f"Stored {AGENT_TOOLS[tool]}"})
+
+    for missing in required_evidence:
+        if missing in used_tools:
+            continue
+        record({
+            "type": "decision",
+            "action": "use_tool",
+            "tool": missing,
+            "summary": "Required deterministic evidence before forced report",
+        })
+        value = tool_runner(source, missing)
+        observations[AGENT_TOOLS[missing]] = value
+        used_tools.append(missing)
+        record({
+            "type": "tool_result",
+            "tool": missing,
+            "summary": f"Stored {AGENT_TOOLS[missing]}",
+        })
 
     if report is None:
         response = client.generate(_forced_report_prompt(observations))

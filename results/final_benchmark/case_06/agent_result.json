@@ -1,0 +1,24 @@
+{
+  "case_id": "case_06",
+  "detected_defects": [
+    {
+      "defect_type": "reversed_direction",
+      "affected_control": "jawOpen",
+      "description": "The driver negates its control variable.",
+      "likely_root_cause": "negative_driver_expression",
+      "confidence": 1.0,
+      "evidence_source": "deterministic_validation"
+    }
+  ],
+  "suggested_repairs": [
+    "Sculpt the 'smileCombination' shape key or remove it if unused."
+  ],
+  "agent_actions": 15,
+  "runtime_seconds": 10.955768833000548,
+  "model_calls": 8,
+  "tool_calls": 7,
+  "input_tokens": 8841,
+  "output_tokens": 371,
+  "model": "gemini/gemini-3.5-flash-lite",
+  "provider": "gemini"
+}

@@ -40,6 +40,71 @@ def drivers():
     return rows
 
 
+def structural_details():
+    driver_rows = []
+    driven = set()
+    for obj in bpy.data.objects:
+        keys = getattr(obj.data, "shape_keys", None)
+        animation = getattr(keys, "animation_data", None)
+        for curve in animation.drivers if animation else []:
+            variables = []
+            for variable in curve.driver.variables:
+                variables.append(
+                    {
+                        "name": variable.name,
+                        "targets": [
+                            {
+                                "id": getattr(target.id, "name", None),
+                                "data_path": target.data_path or None,
+                                "bone_target": target.bone_target or None,
+                                "transform_type": target.transform_type,
+                            }
+                            for target in variable.targets
+                        ],
+                    }
+                )
+            row = {
+                "owner": obj.name,
+                "data_path": curve.data_path,
+                "expression": curve.driver.expression,
+                "muted": curve.mute,
+                "variables": variables,
+            }
+            driver_rows.append(row)
+            driven.add((obj.name, curve.data_path))
+    key_rows = []
+    for obj in bpy.data.objects:
+        keys = getattr(obj.data, "shape_keys", None)
+        if not keys:
+            continue
+        for key in keys.key_blocks[1:]:
+            path = f'key_blocks["{key.name}"].value'
+            key_rows.append(
+                {
+                    "owner": obj.name,
+                    "name": key.name,
+                    "slider_min": key.slider_min,
+                    "slider_max": key.slider_max,
+                    "muted": key.mute,
+                    "has_driver": (obj.name, path) in driven,
+                }
+            )
+    constraint_rows = [
+        {
+            "owner": bone.name,
+            "name": constraint.name,
+            "type": constraint.type,
+            "influence": constraint.influence,
+            "muted": constraint.mute,
+        }
+        for rig in bpy.data.objects
+        if rig.type == "ARMATURE"
+        for bone in rig.pose.bones
+        for constraint in bone.constraints
+    ]
+    return {"drivers": driver_rows, "shape_keys": key_rows, "constraints": constraint_rows}
+
+
 def shape_key_deformation_summary():
     rows = []
     for obj in bpy.data.objects:
@@ -117,6 +182,8 @@ def main():
             for bone in rig.pose.bones
             for c in bone.constraints
         ]
+    elif operation == "structural_details":
+        output = structural_details()
     elif operation == "shape_key_deformation_summary":
         output = shape_key_deformation_summary()
     elif operation == "render_preview":

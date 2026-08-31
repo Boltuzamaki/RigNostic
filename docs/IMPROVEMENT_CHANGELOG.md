@@ -178,6 +178,14 @@ same-file coarse run found 0/3 with one false positive. This was kept, but the
 result is explicitly a demo-fixture comparison, not a claim about the ten-case
 formal benchmark.
 
+### Revision After Formal Benchmark Feedback
+
+The first formal final run exposed 22 false positives. Two broad heuristics were
+treating an intentionally empty combination key and a valid jaw displacement as
+defects. We removed those assumptions, required detailed structural and
+deformation evidence before every report, and added peer/counterpart validation
+for driver targets, expressions, slider ranges, constraints, and deformation.
+
 ## Iteration 4 — Interaction Testing Experiment (Removed)
 
 ### What We Tried and Why
@@ -204,6 +212,15 @@ The shipped workflow combines bounded adaptive inspection, structured Blender
 evidence, trace persistence, deterministic structural guards, sandboxed repair,
 retesting, and before/after review. Automatic repair remains deliberately
 narrower than detection.
+
+### Final Measured Result
+
+The unchanged ten-case benchmark contains 11 defects. Final RigNostic detected
+11/11 (100% recall) with zero false positives and 100% affected-control accuracy.
+The run took 119.40 seconds and used 80 model calls, 88,100 input tokens, and
+5,466 output tokens. Provider cost was not measured. We kept the adaptive tool
+selection and revised the evidence gate: model findings are not published unless
+deterministic Blender evidence supports a normalized defect.
 
 **Final hot take:** a facial control working by itself does not make a rig valid.
 Rig QA should be treated as evidence-backed behavioral testing, not a checklist

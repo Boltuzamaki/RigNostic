@@ -69,12 +69,12 @@ def test_structural_guard_adds_only_directly_supported_findings() -> None:
         for item in guarded["detected_defects"]
     }
     assert actual == {
-        ("Zero Affected Vertices", "eyeBlink_L"),
-        ("Asymmetric Movement", "mouthSmile_R"),
-        ("Excessive Deformation", "jawOpen"),
+        ("zero_affected_vertices", "eyeBlink_L"),
+        ("asymmetric_movement", "mouthSmile_R"),
+        ("excessive_deformation", "jawOpen"),
     }
     assert all(
-        item["evidence_source"] == "deterministic_guard"
+        item["evidence_source"] == "deterministic_validation"
         for item in guarded["detected_defects"]
     )
 
@@ -95,6 +95,8 @@ def test_agent_selects_tools_then_reports(monkeypatch, tmp_path: Path) -> None:
         {"action": "use_tool", "tool": "driver_summary", "reason": "Trace the failed control"},
         {"action": "report", "detected_defects": [finding("Zero affected vertices")],
          "suggested_repairs": ["Restore from counterpart"]},
+        {"action": "report", "detected_defects": [finding("Zero affected vertices")],
+         "suggested_repairs": ["Restore from counterpart"]},
     ])
     monkeypatch.setattr("rignostic.baseline.agent.create_model_client", lambda _config: client)
     calls = []
@@ -102,19 +104,26 @@ def test_agent_selects_tools_then_reports(monkeypatch, tmp_path: Path) -> None:
 
     def tool_runner(_source: Path, operation: str):
         calls.append(operation)
+        if operation == "shape_key_deformation_summary":
+            return [{"owner": "Eye_L", "shape_key": "eyeBlink_L",
+                     "affected_vertex_count": 0, "relative_displacement": 0,
+                     "average_delta": [0, 0, 0]}]
+        if operation == "structural_details":
+            return {"drivers": [], "shape_keys": [], "constraints": []}
         return [{"operation": operation}]
 
     result, usage = analyze_rig_agent(
         tmp_path / "rig.blend", BaselineConfig(), tool_runner, events.append
     )
 
-    assert calls == ["shape_key_deformation_summary", "driver_summary"]
-    assert usage["tool_calls"] == 2
-    assert usage["model_calls"] == 3
+    assert calls == ["shape_key_deformation_summary", "driver_summary", "structural_details"]
+    assert usage["tool_calls"] == 3
+    assert usage["model_calls"] == 4
     assert usage["provider"] == "gemini"
-    assert result["findings"][0]["defect_type"] == "Zero affected vertices"
+    assert result["findings"][0]["defect_type"] == "zero_affected_vertices"
     assert [event["type"] for event in events] == [
-        "decision", "tool_result", "decision", "tool_result", "decision"
+        "decision", "tool_result", "decision", "tool_result", "decision",
+        "tool_result", "decision",
     ]
 
 
@@ -122,6 +131,8 @@ def test_agent_rejects_repeated_tool_without_running_it_twice(monkeypatch, tmp_p
     client = FakeClient([
         {"action": "use_tool", "tool": "driver_summary", "reason": "Read drivers"},
         {"action": "use_tool", "tool": "driver_summary", "reason": "Repeat"},
+        {"action": "report", "detected_defects": [], "suggested_repairs": []},
+        {"action": "report", "detected_defects": [], "suggested_repairs": []},
         {"action": "report", "detected_defects": [], "suggested_repairs": []},
     ])
     monkeypatch.setattr("rignostic.baseline.agent.create_model_client", lambda _config: client)
@@ -134,6 +145,6 @@ def test_agent_rejects_repeated_tool_without_running_it_twice(monkeypatch, tmp_p
         events.append,
     )
     assert result["findings"] == []
-    assert usage["tool_calls"] == 1
-    assert calls == ["driver_summary"]
+    assert usage["tool_calls"] == 3
+    assert calls == ["driver_summary", "structural_details", "shape_key_deformation_summary"]
     assert any(event["type"] == "rejected_action" for event in events)

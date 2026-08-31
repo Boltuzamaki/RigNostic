@@ -50,7 +50,8 @@ docker compose logs -f app
      Docker Compose setup, and deterministic verification gate.
 
 7. **Required evidence, 45 seconds**
-   - Show the baseline/final comparison and the committed result files.
+   - Show the fixed-benchmark comparison: Stage 0 18.2% recall / 4 false
+     positives versus Final 100% recall / 0 false positives.
    - Name adaptive evidence selection as the biggest improvement.
    - Name the removed full-inventory experiment: it increased false positives
      and input tokens without improving formal recall.

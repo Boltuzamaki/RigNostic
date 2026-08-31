@@ -1,0 +1,22 @@
+{
+  "case_id": "case_09",
+  "detected_defects": [
+    {
+      "defect_type": "combination_overdeformation",
+      "affected_control": "mouthSmile_L+mouthSmile_R",
+      "description": "Combination shape key smileCombination has excessive displacement.",
+      "likely_root_cause": "combined_controls_overdeform",
+      "confidence": 1.0,
+      "evidence_source": "deterministic_validation"
+    }
+  ],
+  "suggested_repairs": [],
+  "agent_actions": 15,
+  "runtime_seconds": 11.934816101999786,
+  "model_calls": 8,
+  "tool_calls": 7,
+  "input_tokens": 8841,
+  "output_tokens": 477,
+  "model": "gemini/gemini-3.5-flash-lite",
+  "provider": "gemini"
+}

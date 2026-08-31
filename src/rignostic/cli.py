@@ -11,6 +11,7 @@ from .blender.runner import detect_blender, run_blender
 from .config import load_config
 from .discovery import build_inventory
 from .evaluation.report import evaluate_saved
+from .final_benchmark import run_benchmark as run_final_benchmark
 from .iteration_01.runner import run_benchmark as run_iteration_01
 from .repair import heal_rig, plan_repairs
 
@@ -30,6 +31,9 @@ def build_parser() -> argparse.ArgumentParser:
     subparsers.add_parser("iteration-01-run", help="run Structured Rig Discovery benchmark")
     subparsers.add_parser("iteration-01-evaluate", help="evaluate Iteration 1 results")
     subparsers.add_parser("iteration-01-all", help="run and evaluate Iteration 1")
+    subparsers.add_parser("final-run", help="run the shipped adaptive-agent benchmark")
+    subparsers.add_parser("final-evaluate", help="evaluate saved final benchmark results")
+    subparsers.add_parser("final-all", help="run and evaluate the final benchmark")
     repair_parser = subparsers.add_parser("repair", help="plan or apply guarded repairs")
     repair_parser.add_argument("blend_file", type=Path)
     repair_parser.add_argument("--reference", type=Path, required=True)
@@ -69,6 +73,14 @@ def main(argv: list[str] | None = None) -> int:
             return 0
     if args.command in {"iteration-01-evaluate", "iteration-01-all"}:
         report = evaluate_saved(root, "iteration_01")
+        print(json.dumps(report["aggregate"], indent=2))
+        return 0
+    if args.command in {"final-run", "final-all"}:
+        run_final_benchmark(root, config)
+        if args.command == "final-run":
+            return 0
+    if args.command in {"final-evaluate", "final-all"}:
+        report = evaluate_saved(root, "final_benchmark")
         print(json.dumps(report["aggregate"], indent=2))
         return 0
     if args.command in {"baseline-run", "baseline-all"}:

@@ -177,6 +177,29 @@ results are retained under [`results/baseline`](results/baseline) and
 [`trajectories/baseline`](trajectories/baseline); they are not replaced with
 marketing estimates.
 
+| Workflow | Recall | False positives | Runtime | Model calls |
+| --- | ---: | ---: | ---: | ---: |
+| Stage 0 baseline | 18.2% (2/11) | 4 | 35.66s | 10 |
+| Iteration 1 discovery | 18.2% (2/11) | 10 | 60.59s | 10 |
+| Final adaptive + deterministic validation | **100% (11/11)** | **0** | 119.40s | 80 |
+
+The final run used the unchanged cases and evaluator. The agent never received
+gold labels; deterministic validation used only Blender driver, constraint,
+shape-key range, target, and deformation evidence. Per-case results and traces
+are committed under [`results/final_benchmark`](results/final_benchmark).
+
+Run the recorded workflows with:
+
+```bash
+uv run rignostic baseline-all       # frozen Stage 0
+uv run rignostic iteration-01-all   # structured discovery
+uv run rignostic final-all          # shipped adaptive workflow
+```
+
+Each `*-run` command finishes before its matching evaluator opens the committed
+gold labels. See the [reproduction guide](docs/REPRODUCTION.md) for benchmark
+generation and separate run/evaluate commands.
+
 ## Stack
 
 - Flask, Jinja2, and Tailwind CSS
@@ -212,7 +235,9 @@ lockfiles. See [the full disclosure](docs/PRE_EXISTING_WORK.md).
 
 Recorded Stage 0 execution took 35.66 seconds for ten model calls and used 7,549
 input plus 1,087 output tokens. Cost was not measured at run time and is not
-retroactively estimated. Local deterministic tests take about 12 seconds on the
+retroactively estimated. The final benchmark took 119.40 seconds, 80 model calls,
+88,100 input tokens, and 5,466 output tokens; provider cost was not measured.
+Local deterministic tests take about 12 seconds on the
 documented development machine; benchmark generation and Blender timings vary
 by CPU. Exact baseline, final web, benchmark, evaluation, and test commands are
 in the [clean-machine reproduction guide](docs/REPRODUCTION.md).

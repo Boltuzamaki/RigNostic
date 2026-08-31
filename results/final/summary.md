@@ -12,8 +12,9 @@ The final bounded diagnostic agent was run on
 - Agent wall time before preview/export: approximately 11 seconds
 - Provider cost: not measured
 
-This is representative final-workflow evidence, not a rerun of the fixed ten-case
-benchmark. Formal cross-iteration claims remain the committed Stage 0 and
-Iteration 1 results. The raw result and trace are in `results/final/demo_face/`;
+This is representative final-workflow demo evidence. The separate formal
+ten-case run is committed under `results/final_benchmark/` and achieved 11/11
+recall with zero false positives. The raw demo result and trace are in
+`results/final/demo_face/`;
 the judge-facing trace with instruction and human checkpoints is
 `trajectories/final/demo_face.jsonl`.

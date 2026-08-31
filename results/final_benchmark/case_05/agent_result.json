@@ -1,0 +1,24 @@
+{
+  "case_id": "case_05",
+  "detected_defects": [
+    {
+      "defect_type": "constraint_influence",
+      "affected_control": "browUp_L",
+      "description": "Constraint influence 0.2 is far below its counterpart.",
+      "likely_root_cause": "constraint_influence_too_low",
+      "confidence": 1.0,
+      "evidence_source": "deterministic_validation"
+    }
+  ],
+  "suggested_repairs": [
+    "Set the 'Brow Range' constraint influence on bone browUp_L to 1.0 to match browUp_R."
+  ],
+  "agent_actions": 15,
+  "runtime_seconds": 12.47148810500039,
+  "model_calls": 8,
+  "tool_calls": 7,
+  "input_tokens": 8889,
+  "output_tokens": 648,
+  "model": "gemini/gemini-3.5-flash-lite",
+  "provider": "gemini"
+}
