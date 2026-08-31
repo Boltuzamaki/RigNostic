@@ -2,6 +2,7 @@ from io import BytesIO
 from pathlib import Path
 
 import pytest
+from conftest import requires_blender
 
 from rignostic.services.analysis import AnalysisRun
 from rignostic.web import create_app
@@ -87,6 +88,7 @@ def test_public_landing_signup_login_and_logout(app) -> None:
     assert b"Analysis runs" in response.data
 
 
+@requires_blender
 def test_invalid_upload(client) -> None:
     response = client.post(
         "/analyze",
@@ -97,6 +99,7 @@ def test_invalid_upload(client) -> None:
     assert b"Only .blend files" in response.data
 
 
+@requires_blender
 def test_valid_upload_uses_server_filename(app, client, tmp_path) -> None:
     response = client.post(
         "/analyze",

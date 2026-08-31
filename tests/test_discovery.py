@@ -1,12 +1,15 @@
 import json
 from pathlib import Path
 
+from conftest import requires_blender
+
 from rignostic.discovery import build_inventory, call_discovery_tool
 from rignostic.discovery.classifier import classify, side_for
 
 RIG = Path("benchmark/clean_reference/rig.blend")
 
 
+@requires_blender
 def test_all_discovery_list_tools() -> None:
     expected_nonempty = {
         "list_armatures", "list_bones", "list_shape_keys", "list_drivers",
@@ -20,6 +23,7 @@ def test_all_discovery_list_tools() -> None:
     assert groups == {"success": True, "result": []}
 
 
+@requires_blender
 def test_targeted_discovery_tools() -> None:
     shape = call_discovery_tool(RIG, "get_shape_key_info", name="jawOpen")
     assert shape["result"][0]["vertex_delta_summary"]["affected_vertex_count"] > 0
@@ -31,6 +35,7 @@ def test_targeted_discovery_tools() -> None:
     assert len(constraint["result"]) == 1
 
 
+@requires_blender
 def test_inventory_serialization_and_classification() -> None:
     inventory = build_inventory(RIG)
     payload = json.loads(json.dumps(inventory.to_dict()))
