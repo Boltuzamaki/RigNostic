@@ -35,6 +35,10 @@ decisions required to reproduce behavior.
 Representative user-authored Codex instructions and their observable outcomes
 are recorded in `submission/CODEX_PROMPTS.md`. This is intentionally labeled as
 a representative record rather than a fabricated complete transcript.
+The machine-readable representative coding-agent trajectory is committed at
+`trajectories/codex/submission_packaging.jsonl`; it records instructions,
+observations, tool calls, results, retry feedback, human checkpoints, and the
+final outcome without private hidden reasoning.
 
 External tools used: Blender 4.5.13 LTS, Python/uv, LiteLLM with Gemini, Flask,
 PostgreSQL, Node/npm, Tailwind CSS, Three.js, Docker Compose, Git, Ruff, Pytest,

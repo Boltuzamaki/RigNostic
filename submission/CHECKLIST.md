@@ -9,6 +9,7 @@ Verified locally on 2026-08-31:
 - [x] Representative final adaptive trajectory committed
 - [x] Coding-agent and external-tool use disclosed
 - [x] Representative Codex prompts and outcomes disclosed
+- [x] Representative machine-readable Codex trajectory disclosed
 - [x] `uv run ruff check .` passes
 - [x] `uv run pytest -q` passes: 46 passed, 1 opt-in live-model test skipped
 - [x] `npm run build` passes

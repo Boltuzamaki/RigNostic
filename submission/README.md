@@ -25,6 +25,7 @@ tracked source, fixture, result, test, prompt, and trajectory listed below.
 | Pre-existing-work disclosure | `docs/PRE_EXISTING_WORK.md` |
 | Coding-agent disclosure | `submission/AGENT_USE.md` |
 | Representative Codex prompts | `submission/CODEX_PROMPTS.md` |
+| Representative Codex trajectory | `trajectories/codex/submission_packaging.jsonl` |
 | Video plan | `submission/VIDEO.md` |
 | Final qualification checklist | `submission/CHECKLIST.md` |
 
