@@ -11,7 +11,7 @@ from threading import Lock, Thread
 from typing import Any
 from uuid import uuid4
 
-from rignostic.baseline.agent import analyze_observations
+from rignostic.baseline.agent import analyze_rig_agent
 from rignostic.blender.tools import call_basic_tool
 from rignostic.config import load_config
 from rignostic.database import RunRecord, db
@@ -36,7 +36,7 @@ class AnalysisRun:
     error: str | None = None
     user_id: int | None = None
     progress: int = 0
-    events: list[dict[str, str]] = field(default_factory=list)
+    events: list[dict[str, Any]] = field(default_factory=list)
 
     def public(self) -> dict[str, Any]:
         value = asdict(self)
@@ -171,42 +171,43 @@ class AnalysisService:
             stream.write(json.dumps({"stage": "baseline", **event}) + "\n")
         self._persist(run)
 
+    def _agent_action(self, run: AnalysisRun, event: dict[str, Any]) -> None:
+        timestamp = datetime.now(UTC).isoformat()
+        tool = event.get("tool")
+        if event["type"] == "decision" and tool:
+            run.current_step = f"Agent selected {tool.replace('_', ' ')}"
+            run.progress = min(65, 18 + len(run.events) * 3)
+        elif event["type"] == "decision":
+            run.current_step = "Agent completed diagnosis"
+            run.progress = 70
+        stored = {"timestamp": timestamp, **event}
+        run.events.append(stored)
+        assert run.trajectory_path
+        with run.trajectory_path.open("a", encoding="utf-8") as stream:
+            stream.write(json.dumps({"stage": "agent", **stored}) + "\n")
+        self._persist(run)
+
     def _execute(self, run: AnalysisRun) -> None:
         try:
             run.status = "RUNNING"
             run.started_at = datetime.now(UTC).isoformat()
             self._event(run, "Loading Blender", 5)
-            self._event(run, "Inspecting scene", 12)
-            scene = call_basic_tool(run.source_path, "scene_summary")
-            self._event(run, "Reading controls", 25)
-            bones = call_basic_tool(run.source_path, "bone_names")
-            shapes = call_basic_tool(run.source_path, "shape_key_names")
-            drivers = call_basic_tool(run.source_path, "driver_summary")
-            constraints = call_basic_tool(run.source_path, "constraint_summary")
-            deformation = call_basic_tool(run.source_path, "shape_key_deformation_summary")
-            observations = {
-                "scene": scene,
-                "bones": bones,
-                "shape_keys": shapes,
-                "drivers": drivers,
-                "constraints": constraints,
-                "shape_key_deformation": deformation,
-            }
-            self._event(run, "Rendering preview", 55)
+            self._event(run, "Starting diagnostic agent", 12)
+            config = load_config().baseline
+            result, usage = analyze_rig_agent(
+                run.source_path,
+                config,
+                call_basic_tool,
+                on_action=lambda event: self._agent_action(run, event),
+            )
+            self._event(run, "Rendering preview", 74)
             assert run.preview_path
             call_basic_tool(run.source_path, "render_preview", output=run.preview_path)
-            self._event(run, "Preparing interactive viewer", 68)
+            self._event(run, "Preparing interactive viewer", 84)
             assert run.viewer_path
             call_basic_tool(run.source_path, "export_viewer", output=run.viewer_path)
-            self._event(run, "Analyzing result", 82)
-            diagnosis, usage = analyze_observations(observations, load_config().baseline)
             self._event(run, "Generating report", 94)
-            result = {
-                **observations,
-                **diagnosis,
-                "findings": diagnosis["detected_defects"],
-                **usage,
-            }
+            result.update(usage)
             assert run.result_path
             run.result_path.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
             run.status = "COMPLETE"
@@ -222,3 +223,4 @@ class AnalysisService:
             logger.exception("analysis_failed run_id=%s", run.id)
         finally:
             run.finished_at = datetime.now(UTC).isoformat()
+            self._persist(run)

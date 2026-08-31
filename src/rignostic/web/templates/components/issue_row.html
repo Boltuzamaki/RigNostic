@@ -1,1 +1,1 @@
-{% macro issue_row(issue) %}<tr><td>{{ issue.affected_control }}</td><td>{{ issue.defect_type }}</td><td>{{ issue.likely_root_cause }}</td><td>{{ issue.confidence }}</td></tr>{% endmacro %}
+{% macro issue_row(issue) %}<tr><td>{{ issue.affected_control }}</td><td>{{ issue.defect_type }}</td><td>{{ issue.likely_root_cause }}</td><td><span class="status-badge {{ 'status-warn' if issue.evidence_source == 'agent' else 'status-ok' }}">{{ issue.evidence_source|default('agent')|replace('_', ' ') }}</span></td><td>{{ issue.confidence }}</td></tr>{% endmacro %}

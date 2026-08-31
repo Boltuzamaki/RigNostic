@@ -30,11 +30,31 @@ loops.
 ## Web boundary
 
 Flask routes validate requests and delegate analysis to `AnalysisService`. The
-service runs existing coarse Blender tools, a local preview/GLB export, and the
-same Stage 0 model client in a background thread, then writes run-local JSON and
-JSONL artifacts. Routes never import `bpy` or manipulate rigs. Jinja templates
-and locally bundled Tailwind/Three.js assets remain inside `rignostic.web` while
-backend services remain reusable by CLI commands.
+service starts a bounded diagnostic loop in a background thread. On each turn,
+the model sees the evidence collected so far and either selects one unused tool
+from a fixed allowlist or returns the final report. Tool decisions, short reasons,
+and results are written to the run trajectory. Repeated or unavailable tools are
+rejected, and `max_tool_calls` bounds the loop. Preview and GLB export remain
+deterministic post-analysis steps.
+
+Routes never import `bpy` or manipulate rigs. Jinja templates and locally bundled
+Tailwind/Three.js assets remain inside `rignostic.web`, while backend services
+remain reusable by CLI commands.
+
+```text
+Observe collected Blender evidence
+              |
+              v
+      Select allowed tool  <----+
+              |                  |
+              v                  |
+       Run headless Blender      |
+              |                  |
+              +---- evaluate ----+
+              |
+              v
+       Structured report
+```
 
 ## Iteration 1 — Structured Rig Discovery
 
@@ -67,3 +87,11 @@ Supported properties are driver mute state, expression and variables; shape-key 
 coordinates; and constraint mute state and influence. Missing reference topology blocks repair
 rather than being created or silently skipped, so this mechanism is restoration from a known-good
 rig rather than unrestricted repair.
+
+## Reference-free web repair
+
+Completed web analyses can run a narrower confidence-gated repair without a
+reference upload. The repair code independently verifies supported structural
+defects, writes changes to a temporary copy, reruns those checks, and atomically
+publishes the repaired `.blend` only when no supported finding remains. The model
+does not directly edit Blender data.

@@ -46,6 +46,8 @@ if (root) {
     light.position.set(3, -4, 5);
     scene.add(light);
     const camera = new THREE.PerspectiveCamera(42, 1, 0.01, 1000);
+    camera.up.set(0, 1, 0);
+    camera.position.set(0, 1.5, 6);
     const orbit = new OrbitControls(camera, canvas);
     orbit.enableDamping = true;
     const viewer = { element, renderer, scene, camera, orbit, morphs: new Map(), ready: false };
@@ -85,7 +87,7 @@ if (root) {
       const extent = Math.max(size.x, size.y, size.z, 0.01);
       const distance = extent * 1.45 / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2)));
       orbit.target.copy(center);
-      camera.position.set(center.x, center.y - distance, center.z + extent * 0.08);
+      camera.position.set(center.x, center.y + extent * 0.04, center.z + distance);
       orbit.update();
       viewer.ready = true;
       element.querySelector("[data-viewer-status]").textContent = "Drag to orbit · Cameras synchronized";

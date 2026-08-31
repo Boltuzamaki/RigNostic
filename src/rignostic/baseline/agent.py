@@ -3,12 +3,28 @@
 from __future__ import annotations
 
 import json
+import statistics
 from collections import Counter
+from collections.abc import Callable
+from pathlib import Path
 from typing import Any
 
 from rignostic.baseline.prompt import BASELINE_PROMPT
 from rignostic.config import BaselineConfig
 from rignostic.models import create_model_client
+from rignostic.models.factory import litellm_model_name
+
+AGENT_TOOLS = {
+    "scene_summary": "scene",
+    "bone_names": "bones",
+    "shape_key_names": "shape_keys",
+    "driver_summary": "drivers",
+    "constraint_summary": "constraints",
+    "shape_key_deformation_summary": "shape_key_deformation",
+}
+
+ActionCallback = Callable[[dict[str, Any]], None]
+ToolRunner = Callable[[Path, str], Any]
 
 
 def _parse_json(text: str) -> dict[str, Any]:
@@ -16,8 +32,17 @@ def _parse_json(text: str) -> dict[str, Any]:
     if value.startswith("```"):
         value = value.split("\n", 1)[1].rsplit("```", 1)[0]
     parsed = json.loads(value)
-    if not isinstance(parsed, dict) or not isinstance(parsed.get("detected_defects"), list):
-        raise ValueError("model output does not match the baseline result shape")
+    if not isinstance(parsed, dict):
+        raise ValueError("model output must be a JSON object")
+    return parsed
+
+
+def _validate_report(parsed: dict[str, Any]) -> dict[str, Any]:
+    if not isinstance(parsed.get("detected_defects"), list):
+        raise ValueError("model output does not match the diagnosis result shape")
+    if not isinstance(parsed.get("suggested_repairs", []), list):
+        raise ValueError("model suggested_repairs must be a list")
+    parsed.setdefault("suggested_repairs", [])
     return parsed
 
 
@@ -45,6 +70,102 @@ def _remove_unsupported_driver_conflicts(
     return result
 
 
+def _counterpart(name: str) -> str | None:
+    for suffix, replacement in (("_L", "_R"), ("_R", "_L"), (".L", ".R"), (".R", ".L")):
+        if name.endswith(suffix):
+            return name[: -len(suffix)] + replacement
+    return None
+
+
+def _add_structural_findings(
+    report: dict[str, Any], observations: dict[str, Any]
+) -> dict[str, Any]:
+    """Add only findings directly proven by numeric Blender output."""
+    findings = report["detected_defects"]
+    for finding in findings:
+        finding.setdefault("evidence_source", "agent")
+    controls = {str(item.get("affected_control", "")) for item in findings}
+    rows = observations.get("shape_key_deformation", [])
+    if not isinstance(rows, list):
+        return report
+
+    keyed = {
+        (str(row.get("owner", "")), str(row.get("shape_key", ""))): row
+        for row in rows
+        if isinstance(row, dict)
+    }
+    for (owner, control), row in keyed.items():
+        if row.get("affected_vertex_count") == 0 and control not in controls:
+            findings.append({
+                "defect_type": "Zero Affected Vertices",
+                "affected_control": control,
+                "description": f"{control} does not move any vertices on {owner}.",
+                "likely_root_cause": "The shape key contains no deformation delta.",
+                "confidence": 1.0,
+                "evidence_source": "deterministic_guard",
+            })
+            controls.add(control)
+
+        pair_name = _counterpart(control)
+        pair = keyed.get((owner, pair_name or ""))
+        if pair is None or not pair_name or control > pair_name:
+            continue
+        own_delta = row.get("average_delta")
+        pair_delta = pair.get("average_delta")
+        if not (
+            isinstance(own_delta, list)
+            and isinstance(pair_delta, list)
+            and len(own_delta) == 3
+            and len(pair_delta) == 3
+        ):
+            continue
+        own_z, pair_z = float(own_delta[2]), float(pair_delta[2])
+        if own_z * pair_z < 0 and max(abs(own_z), abs(pair_z)) > 0.01:
+            affected = control if own_z < pair_z else pair_name
+            if affected not in controls:
+                findings.append({
+                    "defect_type": "Asymmetric Movement",
+                    "affected_control": affected,
+                    "description": (
+                        f"{control} and {pair_name} move in opposite vertical directions."
+                    ),
+                    "likely_root_cause": "One mirrored shape-key deformation is reversed.",
+                    "confidence": 0.97,
+                    "evidence_source": "deterministic_guard",
+                })
+                controls.add(affected)
+
+    by_owner: dict[str, list[dict[str, Any]]] = {}
+    for row in keyed.values():
+        if float(row.get("relative_displacement", 0) or 0) > 0:
+            by_owner.setdefault(str(row.get("owner", "")), []).append(row)
+    for owner, owner_rows in by_owner.items():
+        if len(owner_rows) < 3:
+            continue
+        values = [float(row["relative_displacement"]) for row in owner_rows]
+        typical = statistics.median(values)
+        for row in owner_rows:
+            value = float(row["relative_displacement"])
+            control = str(row["shape_key"])
+            peers = [candidate for candidate in values if candidate != value]
+            peer_typical = statistics.median(peers) if peers else typical
+            if value > peer_typical * 2 and control not in controls:
+                findings.append({
+                    "defect_type": "Excessive Deformation",
+                    "affected_control": control,
+                    "description": (
+                        f"{control} moves more than twice the typical control range on {owner}."
+                    ),
+                    "likely_root_cause": (
+                        "The shape-key displacement or driven range is unusually large."
+                    ),
+                    "confidence": 0.95,
+                    "evidence_source": "deterministic_guard",
+                })
+                controls.add(control)
+    return report
+
+
 def analyze_observations(
     observations: dict[str, Any], config: BaselineConfig
 ) -> tuple[dict[str, Any], dict[str, int | None]]:
@@ -69,9 +190,122 @@ TOOL OUTPUTS:
 {json.dumps(observations, sort_keys=True)}
 """
     response = create_model_client(config).generate(prompt)
-    result = _remove_unsupported_driver_conflicts(_parse_json(response.text), observations)
+    result = _remove_unsupported_driver_conflicts(
+        _validate_report(_parse_json(response.text)), observations
+    )
     return result, {
         "model_calls": 1,
         "input_tokens": response.input_tokens,
         "output_tokens": response.output_tokens,
+    }
+
+
+def _agent_prompt(observations: dict[str, Any], used_tools: list[str]) -> str:
+    available = [tool for tool in AGENT_TOOLS if tool not in used_tools]
+    return f"""You are diagnosing a Blender facial rig. Decide which inspection to run next based
+on the evidence already collected. Do not assume a defect exists. Do not invent visual evidence.
+
+Available tools: {json.dumps(available)}
+Tools already used: {json.dumps(used_tools)}
+Evidence: {json.dumps(observations, sort_keys=True)}
+
+Return JSON only. Choose exactly one form:
+{{"action":"use_tool","tool":"one available tool","reason":"short evidence-based reason"}}
+or, once the evidence is sufficient:
+{{"action":"report","detected_defects":[{{"defect_type":"...","affected_control":"...","description":"...","likely_root_cause":"...","confidence":0.0}}],"suggested_repairs":["..."]}}
+
+A shape key with zero affected vertices cannot deform its mesh. Shape keys on different objects or
+different data paths are not driver conflicts. Compare left/right deformation direction and
+magnitude. Use relative_displacement only for clear owner-level outliers. Prefer another tool over
+an uncertain report. Before reporting, audit every deformation entry for: zero affected vertices,
+opposite vertical directions in named left/right pairs, and displacement more than twice the typical
+value for other controls on the same owner. Include every issue directly supported by those checks.
+Keep reasons and findings concise."""
+
+
+def _forced_report_prompt(observations: dict[str, Any]) -> str:
+    return f"""Produce the final Blender facial-rig diagnosis from the collected evidence below.
+Do not invent missing evidence. Return JSON only with this shape:
+{{"action":"report","detected_defects":[{{"defect_type":"...","affected_control":"...","description":"...","likely_root_cause":"...","confidence":0.0}}],"suggested_repairs":["..."]}}
+
+Audit every deformation entry for zero affected vertices, opposite vertical directions in named
+left/right pairs, and displacement more than twice the typical value for the same owner.
+
+Evidence: {json.dumps(observations, sort_keys=True)}"""
+
+
+def analyze_rig_agent(
+    source: Path,
+    config: BaselineConfig,
+    tool_runner: ToolRunner,
+    on_action: ActionCallback | None = None,
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    """Run a bounded observe/select-tool/evaluate loop over an isolated rig copy."""
+    client = create_model_client(config)
+    observations: dict[str, Any] = {}
+    used_tools: list[str] = []
+    trajectory: list[dict[str, Any]] = []
+    model_calls = 0
+    input_tokens = 0
+    output_tokens = 0
+    report: dict[str, Any] | None = None
+
+    def record(event: dict[str, Any]) -> None:
+        trajectory.append(event)
+        if on_action:
+            on_action(event)
+
+    for _ in range(config.max_tool_calls + 1):
+        response = client.generate(_agent_prompt(observations, used_tools))
+        model_calls += 1
+        input_tokens += response.input_tokens or 0
+        output_tokens += response.output_tokens or 0
+        action = _parse_json(response.text)
+        if action.get("action") == "report":
+            report = _validate_report(action)
+            record({"type": "decision", "action": "report", "summary": "Diagnosis complete"})
+            break
+        tool = action.get("tool")
+        if action.get("action") != "use_tool" or tool not in AGENT_TOOLS:
+            record({"type": "rejected_action", "summary": f"Rejected unavailable tool: {tool!r}"})
+            continue
+        if tool in used_tools:
+            record({
+                "type": "rejected_action",
+                "tool": tool,
+                "summary": "Rejected repeated tool call",
+            })
+            continue
+        if len(used_tools) >= config.max_tool_calls:
+            break
+        reason = str(action.get("reason", "Inspecting additional Blender state"))[:240]
+        record({"type": "decision", "action": "use_tool", "tool": tool, "summary": reason})
+        value = tool_runner(source, tool)
+        observations[AGENT_TOOLS[tool]] = value
+        used_tools.append(tool)
+        record({"type": "tool_result", "tool": tool, "summary": f"Stored {AGENT_TOOLS[tool]}"})
+
+    if report is None:
+        response = client.generate(_forced_report_prompt(observations))
+        model_calls += 1
+        input_tokens += response.input_tokens or 0
+        output_tokens += response.output_tokens or 0
+        report = _validate_report(_parse_json(response.text))
+        record({"type": "decision", "action": "report", "summary": "Tool limit reached"})
+
+    report = _remove_unsupported_driver_conflicts(report, observations)
+    report = _add_structural_findings(report, observations)
+    report.pop("action", None)
+    return {
+        **observations,
+        **report,
+        "findings": report["detected_defects"],
+        "trajectory": trajectory,
+    }, {
+        "model_calls": model_calls,
+        "tool_calls": len(used_tools),
+        "input_tokens": input_tokens,
+        "output_tokens": output_tokens,
+        "model": litellm_model_name(config),
+        "provider": litellm_model_name(config).split("/", 1)[0],
     }

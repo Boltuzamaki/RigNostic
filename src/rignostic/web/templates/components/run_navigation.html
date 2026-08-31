@@ -1,0 +1,8 @@
+{% macro run_navigation(run, active) %}
+<nav class="mb-5 flex flex-wrap gap-2" aria-label="Run navigation">
+  <a class="button-secondary" href="{{ url_for('pages.analysis', run_id=run.id) }}">Back to analysis</a>
+  <a class="nav-link {{ 'bg-blackice-elevated text-blackice-primary' if active == 'controls' }}" href="{{ url_for('pages.controls', run_id=run.id) }}">Controls</a>
+  <a class="nav-link {{ 'bg-blackice-elevated text-blackice-primary' if active == 'findings' }}" href="{{ url_for('pages.issues', run_id=run.id) }}">Findings</a>
+  <a class="nav-link {{ 'bg-blackice-elevated text-blackice-primary' if active == 'trajectory' }}" href="{{ url_for('pages.trajectory', run_id=run.id) }}">Agent trajectory</a>
+</nav>
+{% endmacro %}

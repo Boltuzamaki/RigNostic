@@ -7,6 +7,10 @@
 RigNostic opens a sandboxed copy of a `.blend` file, exercises facial controls,
 records Blender evidence, proposes supported repairs, and repeats the failed test.
 
+The diagnostic agent selects each Blender inspection from a fixed allowlist based
+on the evidence collected so far. Every selection, tool result, and final report
+is stored with the run.
+
 [Quick start](#quick-start) · [How it works](#how-it-works) · [Demo rigs](#demo-rigs) · [Documentation](#documentation)
 
 </div>
@@ -162,7 +166,7 @@ uv run ruff check .
 uv run pytest
 ```
 
-Current automated test result: **42 passed, 1 skipped**. The skipped test is the
+Current automated test result: **46 passed, 1 skipped**. The skipped test is the
 opt-in live model call, which can incur provider usage.
 
 ## Evaluation status
@@ -188,6 +192,7 @@ marketing estimates.
 - [Reproduction instructions](docs/REPRODUCTION.md)
 - [Evaluation contract](docs/EVALUATION.md)
 - [Improvement changelog](docs/IMPROVEMENT_CHANGELOG.md)
+- [Hackathon demo script](docs/DEMO_SCRIPT.md)
 
 ---
 

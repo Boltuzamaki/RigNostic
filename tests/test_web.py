@@ -175,6 +175,27 @@ def test_completed_analysis_has_integrated_repair_action(app, client, tmp_path) 
     assert b'action="/analysis/complete/repair"' in response.data
 
 
+def test_run_detail_pages_have_shared_navigation(app, client, tmp_path) -> None:
+    service = app.extensions["analysis_service"]
+    run_dir = tmp_path / "navigation"
+    run_dir.mkdir()
+    run = AnalysisRun("navigation", "face.blend", tmp_path / "face.blend", run_dir)
+    run.status = "COMPLETE"
+    run.result_path = run_dir / "result.json"
+    run.result_path.write_text(
+        '{"bones":[],"shape_keys":[],"findings":[],"model_calls":1}'
+    )
+    service.runs[run.id] = run
+
+    for path in ("controls", "issues", "trajectory"):
+        response = client.get(f"/{path}/{run.id}")
+        assert response.status_code == 200
+        assert b"Back to analysis" in response.data
+        assert b"Controls" in response.data
+        assert b"Findings" in response.data
+        assert b"Agent trajectory" in response.data
+
+
 def test_analysis_failure_renders(app, client, tmp_path) -> None:
     service = app.extensions["analysis_service"]
     run = AnalysisRun("failed", "broken.blend", tmp_path / "broken.blend", tmp_path)
