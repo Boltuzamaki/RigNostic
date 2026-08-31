@@ -21,12 +21,11 @@ Verified locally on 2026-08-31:
 External actions that cannot be completed from repository code:
 
 - [x] Confirm the public GitHub URL is accessible while signed out (HTTP 200 verified)
-- [ ] Push the final commit to GitHub
+- [x] Push the final repository package to GitHub (`168b81c` verified remotely)
 - [ ] Upload the final video and confirm platform playback/subtitles
 - [ ] Upload the clean ZIP if the form requests it
 - [x] Re-run install, tests, and frontend build from a fresh public GitHub clone
   (46 passed, 1 skipped; npm build passed)
 
-Important: the fresh public clone currently does not contain `submission/`,
-`results/final/`, or `trajectories/final/`. Commit and push the prepared local
-changes before treating the GitHub repository as the final submission source.
+The pushed public repository now contains `submission/`, `results/final/`, and
+`trajectories/final/`.
