@@ -333,7 +333,7 @@ TOOL OUTPUTS:
 
 def _agent_prompt(observations: dict[str, Any], used_tools: list[str]) -> str:
     available = [tool for tool in AGENT_TOOLS if tool not in used_tools]
-    return f"""You are diagnosing a Blender facial rig. Decide which inspection to run next based
+    return f"""You are diagnosing a Blender rig. Decide which inspection to run next based
 on the evidence already collected. Do not assume a defect exists. Do not invent visual evidence.
 
 Available tools: {json.dumps(available)}
@@ -355,7 +355,7 @@ Keep reasons and findings concise."""
 
 
 def _forced_report_prompt(observations: dict[str, Any]) -> str:
-    return f"""Produce the final Blender facial-rig diagnosis from the collected evidence below.
+    return f"""Produce the final Blender rig diagnosis from the collected evidence below.
 Do not invent missing evidence. Return JSON only with this shape:
 {{"action":"report","detected_defects":[{{"defect_type":"...","affected_control":"...","description":"...","likely_root_cause":"...","confidence":0.0}}],"suggested_repairs":["..."]}}
 

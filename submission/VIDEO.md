@@ -1,18 +1,19 @@
 # Solution video delivery
 
+Published video: https://www.youtube.com/watch?v=_eIpQpXOycI
+
 Final video: `video/RigNostic_demo_final.mp4`
 
 Standalone captions: `video/RigNostic_demo_en.srt`
 Measured duration: **4:54.961**, below the five-minute limit.
 
 The files are prepared in the local Downloads directory and intentionally are
-not committed because the MP4 is about 267 MB. The subtitle-enabled MP4 retains
-the original H.264 video and AAC audio without re-encoding and adds a default
-English `mov_text` subtitle stream.
+not committed because the MP4 is a separate submission artifact. The final MP4
+contains H.264 video, AAC audio, and a default English `mov_text` subtitle stream.
 
 Before upload, confirm the narration/visual sequence covers:
 
-1. Facial-rig QA problem and why it matters.
+1. Rig QA problem and why it matters, demonstrated with facial-rig benchmark cases.
 2. Baseline execution and its limitations.
 3. Iteration/changelog progression.
 4. Realistic final RigNostic execution and trajectory.

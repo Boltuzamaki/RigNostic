@@ -1,5 +1,7 @@
 # RigNostic submission package
 
+Solution video: [watch the 4:55 RigNostic demo](https://www.youtube.com/watch?v=_eIpQpXOycI).
+
 This folder is the judge-facing index for the complete repository. The archive
 created by `scripts/create_submission_archive.sh` contains this folder and every
 tracked source, fixture, result, test, prompt, and trajectory listed below.

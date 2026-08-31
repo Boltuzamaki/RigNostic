@@ -23,7 +23,7 @@ def run_case(case_id: str, rig_path: Path, config: Config, root: Path) -> dict[s
     trajectory_path.unlink(missing_ok=True)
     logger = TrajectoryLogger(trajectory_path, case_id, stage="iteration_01")
     started = time.monotonic()
-    logger.log("observation", observation="Received an unfamiliar Blender facial rig.")
+    logger.log("observation", observation="Received an unfamiliar Blender rig.")
     logger.log("tool_call", tool="build_inventory", tool_arguments={})
     inventory = build_inventory(rig_path)
     inventory_dict = inventory.to_dict()

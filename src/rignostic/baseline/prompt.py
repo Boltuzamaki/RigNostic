@@ -1,8 +1,8 @@
 """The fixed Stage 0 prompt."""
 
-BASELINE_PROMPT = """You are inspecting a Blender facial rig for defects.
+BASELINE_PROMPT = """You are inspecting a Blender rig for defects.
 
-Use the available Blender tools to inspect the rig and test important facial controls.
+Use the available Blender tools to inspect the rig and test important controls.
 
 Identify any likely defect you observe.
 

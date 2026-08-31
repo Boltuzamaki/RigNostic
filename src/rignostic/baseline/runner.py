@@ -31,7 +31,7 @@ def run_case(
     logger = TrajectoryLogger(trajectory_path, case_id)
     started = time.monotonic()
     observations: dict[str, Any] = {}
-    logger.log("observation", observation="Received an unfamiliar Blender facial rig.")
+    logger.log("observation", observation="Received an unfamiliar Blender rig.")
     for operation in TOOL_OPERATIONS:
         logger.log("tool_call", tool=operation, tool_arguments={})
         value = call_basic_tool(rig_path, operation)

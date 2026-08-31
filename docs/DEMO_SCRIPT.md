@@ -20,7 +20,7 @@ docker compose logs -f app
 
 1. **Problem, 15 seconds**
    - Show the landing page.
-   - Explain that a neutral facial rig can hide broken controls.
+   - Explain that a neutral Blender rig can hide broken controls.
    - Point to the animated inspect, diagnose, repair, and retest sequence.
 
 2. **Start a run, 15 seconds**

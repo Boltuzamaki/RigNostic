@@ -28,7 +28,7 @@ def run_case(case_id: str, rig_path: Path, config: Config, root: Path) -> dict[s
             "only defects supported by collected evidence."
         ),
     )
-    logger.log("observation", observation="Received an unfamiliar Blender facial rig.")
+    logger.log("observation", observation="Received an unfamiliar Blender rig.")
     started = time.monotonic()
 
     def record(event: dict[str, Any]) -> None:

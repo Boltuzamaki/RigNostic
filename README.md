@@ -2,16 +2,16 @@
 
 # RigNostic
 
-**Find broken Blender facial controls before animation starts.**
+**Find broken Blender rig controls before animation starts.**
 
-RigNostic opens a sandboxed copy of a `.blend` file, exercises facial controls,
+RigNostic opens a sandboxed copy of a `.blend` file, exercises rig controls,
 records Blender evidence, proposes supported repairs, and repeats the failed test.
 
 The diagnostic agent selects each Blender inspection from a fixed allowlist based
 on the evidence collected so far. Every selection, tool result, and final report
 is stored with the run.
 
-[Quick start](#quick-start) · [Agent traces](AGENT_TRACES.md) · [How it works](#how-it-works) · [Demo rigs](#demo-rigs) · [Documentation](#documentation)
+[Watch the 4:55 demo](https://www.youtube.com/watch?v=_eIpQpXOycI) · [Quick start](#quick-start) · [Agent traces](AGENT_TRACES.md) · [How it works](#how-it-works) · [Documentation](#documentation)
 
 </div>
 
@@ -19,7 +19,7 @@ is stored with the run.
 
 ## What it does
 
-Facial rigs can look correct in a neutral pose while hiding broken drivers,
+Blender rigs can look correct in a neutral pose while hiding broken drivers,
 empty shape keys, reversed controls, bad limits, or asymmetric deformation.
 RigNostic runs those checks before an animator has to find the problem manually.
 
@@ -221,7 +221,7 @@ generation and separate run/evaluate commands.
 ## Submission context
 
 RigNostic is for technical artists, riggers, and animation teams who need to
-validate facial controls before animation begins. A neutral pose can conceal a
+validate rig controls before animation begins. A neutral pose can conceal a
 muted driver, empty shape key, reversed deformation, excessive range, or a
 failure that appears only when controls interact. Finding these defects during
 animation is slow and causes avoidable rework; RigNostic makes the inspection,

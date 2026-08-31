@@ -1,4 +1,4 @@
-"""Generate a simple full-body character with RigNostic facial controls."""
+"""Generate a simple full-body character with RigNostic rig controls."""
 
 import sys
 from pathlib import Path
