@@ -27,7 +27,7 @@ Blender 4.5.13 LTS is pinned for Stage 0. The benchmark development executable i
 /home/boltuzamaki/Work/get_a_job/RigNostic/.tools/blender/blender
 ```
 
-It reports build hash `daeeeca98fb0` and successfully executes Python and saves
+It reports build hash `daeeeca98fb0`, successfully executes Python, and saves
 `.blend` files in background mode. The project-relative default is configured as
 `.tools/blender/blender`; `BLENDER_EXECUTABLE` overrides it.
 
@@ -49,7 +49,7 @@ uv run rignostic blender-version
 ```
 
 The second command invokes `blender --background` and prints Blender's real
-output. It has not succeeded in this environment because Blender is absent.
+output. Both commands were verified with Blender 4.5.13 LTS.
 
 ## Run infrastructure tests
 
@@ -77,6 +77,20 @@ Then open `http://127.0.0.1:5000`. For Flask's development command, use:
 
 ```bash
 uv run flask --app rignostic.web run
+```
+
+This is the final/advanced solution. Upload a `.blend` file to run the bounded
+adaptive diagnostic agent. From a completed run, explicitly choose **Repair this
+run** to apply supported changes to a sandboxed copy, retest them, compare both
+versions, and download the verified output. Run directories default to
+`src/instance/runs/` locally and `/data/runs/` in Compose.
+
+For the most reproducible clean-machine path, use Docker instead:
+
+```bash
+cp .env.example .env
+# Fill GEMINI_API_KEY in .env
+docker compose up --build
 ```
 
 Install the repository hook once per clone:
@@ -135,3 +149,31 @@ uv run rignostic iteration-01-all
 ```
 
 The agent never receives `gold.json`; only the evaluator reads it afterward.
+
+## Expected outputs, runtime, and cost
+
+- Benchmark generation writes ten `benchmark/cases/case_*/rig.blend` fixtures,
+  their gold labels, and `benchmark/validation_report.json`.
+- Baseline evaluation writes `results/baseline/results.json` and `summary.md`;
+  the frozen recorded run took 35.66 seconds and 10 model calls.
+- Iteration 1 writes inventories, results, metrics, and JSONL traces under
+  `results/iteration_01/`; the recorded run took 60.59 seconds.
+- A final web run writes `result.json`, `trajectory.jsonl`, a preview, and viewer
+  asset under its isolated run directory. Runtime depends on selected tools and
+  Blender startup speed; the loop is capped at 15 tool calls.
+- Model cost depends on the configured LiteLLM provider. The committed result
+  records include token counts, but the historical provider cost was not
+  measured. Tests and Blender generation do not make model calls. The live model
+  smoke test and agent runs can incur provider charges.
+
+## Create the clean archive
+
+After committing the final state:
+
+```bash
+bash scripts/create_submission_archive.sh
+unzip -l dist/rignostic-submission.zip | head
+```
+
+`git archive` includes tracked submission material and excludes `.env`, local
+databases, caches, downloaded toolchains, dependencies, and other ignored files.

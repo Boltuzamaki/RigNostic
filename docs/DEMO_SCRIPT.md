@@ -1,6 +1,6 @@
 # Hackathon demo script
 
-Target length: 2 to 3 minutes.
+Target length: 4:30 to 4:59 (hard maximum: 5:00).
 
 ## Before recording
 
@@ -48,6 +48,14 @@ docker compose logs -f app
    - Show the architecture diagram or repository README.
    - Mention the sandboxed copies, PostgreSQL history, LiteLLM provider support,
      Docker Compose setup, and deterministic verification gate.
+
+7. **Required evidence, 45 seconds**
+   - Show the baseline/final comparison and the committed result files.
+   - Name adaptive evidence selection as the biggest improvement.
+   - Name the removed full-inventory experiment: it increased false positives
+     and input tokens without improving formal recall.
+   - Close with the hot take: a control working alone does not make the rig
+     valid; interaction behavior and deformation evidence matter.
 
 ## Claims to use
 

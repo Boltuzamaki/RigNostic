@@ -1,0 +1,376 @@
+{
+  "scene": {
+    "objects": 20,
+    "types": {
+      "MESH": 15,
+      "ARMATURE": 1
+    }
+  },
+  "bones": {
+    "DemoFaceRig": [
+      "face_root",
+      "eyeBlink_L",
+      "eyeBlink_R",
+      "jawOpen",
+      "mouthSmile_L",
+      "mouthSmile_R",
+      "mouthFunnel",
+      "browUp_L",
+      "browUp_R"
+    ]
+  },
+  "shape_keys": {
+    "Brow_L": [
+      "Basis",
+      "browUp_L"
+    ],
+    "Brow_R": [
+      "Basis",
+      "browUp_R"
+    ],
+    "Eye_L": [
+      "Basis",
+      "eyeBlink_L"
+    ],
+    "Eye_R": [
+      "Basis",
+      "eyeBlink_R"
+    ],
+    "Lips": [
+      "Basis",
+      "mouthSmile_L",
+      "mouthSmile_R",
+      "mouthFunnel",
+      "jawOpen"
+    ],
+    "MouthFill": [
+      "Basis",
+      "mouthFillJawFollow"
+    ]
+  },
+  "shape_key_deformation": [
+    {
+      "owner": "Brow_L",
+      "shape_key": "browUp_L",
+      "vertex_count": 482,
+      "affected_vertex_count": 482,
+      "max_displacement": 0.23,
+      "relative_displacement": 0.27381,
+      "average_delta": [
+        0.0,
+        0.0,
+        0.230001
+      ]
+    },
+    {
+      "owner": "Brow_R",
+      "shape_key": "browUp_R",
+      "vertex_count": 482,
+      "affected_vertex_count": 482,
+      "max_displacement": 0.23,
+      "relative_displacement": 0.27381,
+      "average_delta": [
+        0.0,
+        0.0,
+        0.230001
+      ]
+    },
+    {
+      "owner": "Eye_L",
+      "shape_key": "eyeBlink_L",
+      "vertex_count": 922,
+      "affected_vertex_count": 0,
+      "max_displacement": 0.0,
+      "relative_displacement": 0.0,
+      "average_delta": [
+        0.0,
+        0.0,
+        0.0
+      ]
+    },
+    {
+      "owner": "Eye_R",
+      "shape_key": "eyeBlink_R",
+      "vertex_count": 922,
+      "affected_vertex_count": 882,
+      "max_displacement": 0.2024,
+      "relative_displacement": 0.297647,
+      "average_delta": [
+        0.0,
+        0.0,
+        -0.0
+      ]
+    },
+    {
+      "owner": "Lips",
+      "shape_key": "mouthSmile_L",
+      "vertex_count": 16,
+      "affected_vertex_count": 6,
+      "max_displacement": 0.281603,
+      "relative_displacement": 0.242761,
+      "average_delta": [
+        -0.08,
+        0.0,
+        0.27
+      ]
+    },
+    {
+      "owner": "Lips",
+      "shape_key": "mouthSmile_R",
+      "vertex_count": 16,
+      "affected_vertex_count": 6,
+      "max_displacement": 0.32311,
+      "relative_displacement": 0.278543,
+      "average_delta": [
+        0.12,
+        0.0,
+        -0.3
+      ]
+    },
+    {
+      "owner": "Lips",
+      "shape_key": "mouthFunnel",
+      "vertex_count": 16,
+      "affected_vertex_count": 16,
+      "max_displacement": 0.316087,
+      "relative_displacement": 0.272488,
+      "average_delta": [
+        0.0,
+        -0.16,
+        0.0
+      ]
+    },
+    {
+      "owner": "Lips",
+      "shape_key": "jawOpen",
+      "vertex_count": 16,
+      "affected_vertex_count": 16,
+      "max_displacement": 0.722,
+      "relative_displacement": 0.622414,
+      "average_delta": [
+        0.0,
+        0.0,
+        -0.36575
+      ]
+    },
+    {
+      "owner": "MouthFill",
+      "shape_key": "mouthFillJawFollow",
+      "vertex_count": 922,
+      "affected_vertex_count": 922,
+      "max_displacement": 0.365137,
+      "relative_displacement": 0.405708,
+      "average_delta": [
+        0.0,
+        0.01,
+        -0.229999
+      ]
+    }
+  ],
+  "drivers": [
+    {
+      "owner": "Brow_L",
+      "data_path": "key_blocks[\"browUp_L\"].value",
+      "expression": "var",
+      "muted": false
+    },
+    {
+      "owner": "Brow_R",
+      "data_path": "key_blocks[\"browUp_R\"].value",
+      "expression": "var",
+      "muted": false
+    },
+    {
+      "owner": "Eye_L",
+      "data_path": "key_blocks[\"eyeBlink_L\"].value",
+      "expression": "var",
+      "muted": false
+    },
+    {
+      "owner": "Eye_R",
+      "data_path": "key_blocks[\"eyeBlink_R\"].value",
+      "expression": "var",
+      "muted": false
+    },
+    {
+      "owner": "Lips",
+      "data_path": "key_blocks[\"mouthSmile_L\"].value",
+      "expression": "var",
+      "muted": false
+    },
+    {
+      "owner": "Lips",
+      "data_path": "key_blocks[\"mouthSmile_R\"].value",
+      "expression": "var",
+      "muted": false
+    },
+    {
+      "owner": "Lips",
+      "data_path": "key_blocks[\"mouthFunnel\"].value",
+      "expression": "var",
+      "muted": false
+    },
+    {
+      "owner": "Lips",
+      "data_path": "key_blocks[\"jawOpen\"].value",
+      "expression": "var",
+      "muted": false
+    },
+    {
+      "owner": "MouthFill",
+      "data_path": "key_blocks[\"mouthFillJawFollow\"].value",
+      "expression": "var",
+      "muted": false
+    }
+  ],
+  "constraints": [
+    {
+      "owner": "browUp_L",
+      "name": "Brow Range",
+      "type": "LIMIT_LOCATION",
+      "influence": 1.0,
+      "mute": false
+    },
+    {
+      "owner": "browUp_R",
+      "name": "Brow Range",
+      "type": "LIMIT_LOCATION",
+      "influence": 1.0,
+      "mute": false
+    }
+  ],
+  "detected_defects": [
+    {
+      "defect_type": "Zero Vertex Deformation",
+      "affected_control": "eyeBlink_L",
+      "description": "The shape key eyeBlink_L on mesh Eye_L affects 0 vertices, meaning it cannot deform its mesh.",
+      "likely_root_cause": "Vertices were not assigned to the shape key or it was created on the wrong mesh object.",
+      "confidence": 1.0,
+      "evidence_source": "agent"
+    },
+    {
+      "defect_type": "Asymmetric Movement",
+      "affected_control": "mouthSmile_R",
+      "description": "mouthSmile_L and mouthSmile_R move in opposite vertical directions.",
+      "likely_root_cause": "One mirrored shape-key deformation is reversed.",
+      "confidence": 0.97,
+      "evidence_source": "deterministic_guard"
+    },
+    {
+      "defect_type": "Excessive Deformation",
+      "affected_control": "jawOpen",
+      "description": "jawOpen moves more than twice the typical control range on Lips.",
+      "likely_root_cause": "The shape-key displacement or driven range is unusually large.",
+      "confidence": 0.95,
+      "evidence_source": "deterministic_guard"
+    }
+  ],
+  "suggested_repairs": [
+    "Re-assign vertices to the eyeBlink_L shape key on the Eye_L mesh or check if the driver targets the correct shape key block."
+  ],
+  "findings": [
+    {
+      "defect_type": "Zero Vertex Deformation",
+      "affected_control": "eyeBlink_L",
+      "description": "The shape key eyeBlink_L on mesh Eye_L affects 0 vertices, meaning it cannot deform its mesh.",
+      "likely_root_cause": "Vertices were not assigned to the shape key or it was created on the wrong mesh object.",
+      "confidence": 1.0,
+      "evidence_source": "agent"
+    },
+    {
+      "defect_type": "Asymmetric Movement",
+      "affected_control": "mouthSmile_R",
+      "description": "mouthSmile_L and mouthSmile_R move in opposite vertical directions.",
+      "likely_root_cause": "One mirrored shape-key deformation is reversed.",
+      "confidence": 0.97,
+      "evidence_source": "deterministic_guard"
+    },
+    {
+      "defect_type": "Excessive Deformation",
+      "affected_control": "jawOpen",
+      "description": "jawOpen moves more than twice the typical control range on Lips.",
+      "likely_root_cause": "The shape-key displacement or driven range is unusually large.",
+      "confidence": 0.95,
+      "evidence_source": "deterministic_guard"
+    }
+  ],
+  "trajectory": [
+    {
+      "type": "decision",
+      "action": "use_tool",
+      "tool": "scene_summary",
+      "summary": "Need to inspect the overall scene structure and identify the objects and armature present."
+    },
+    {
+      "type": "tool_result",
+      "tool": "scene_summary",
+      "summary": "Stored scene"
+    },
+    {
+      "type": "decision",
+      "action": "use_tool",
+      "tool": "bone_names",
+      "summary": "need to inspect armature bone structure to evaluate facial rig setup"
+    },
+    {
+      "type": "tool_result",
+      "tool": "bone_names",
+      "summary": "Stored bones"
+    },
+    {
+      "type": "decision",
+      "action": "use_tool",
+      "tool": "shape_key_names",
+      "summary": "We have the bone structure and scene summary, but we need to verify the available shape keys corresponding to the facial controls before checking drivers or deformations."
+    },
+    {
+      "type": "tool_result",
+      "tool": "shape_key_names",
+      "summary": "Stored shape_keys"
+    },
+    {
+      "type": "decision",
+      "action": "use_tool",
+      "tool": "shape_key_deformation_summary",
+      "summary": "we have shape key names and bones, now we need to check shape key deformation data to evaluate affected vertices and relative displacement before concluding."
+    },
+    {
+      "type": "tool_result",
+      "tool": "shape_key_deformation_summary",
+      "summary": "Stored shape_key_deformation"
+    },
+    {
+      "type": "decision",
+      "action": "use_tool",
+      "tool": "driver_summary",
+      "summary": "Checking drivers to see how controls drive the shape keys, particularly to investigate potential issues like the zero affected vertices on eyeBlink_L."
+    },
+    {
+      "type": "tool_result",
+      "tool": "driver_summary",
+      "summary": "Stored drivers"
+    },
+    {
+      "type": "decision",
+      "action": "use_tool",
+      "tool": "constraint_summary",
+      "summary": "Check constraints on the armature bones to see how they drive or follow transforms before reporting."
+    },
+    {
+      "type": "tool_result",
+      "tool": "constraint_summary",
+      "summary": "Stored constraints"
+    },
+    {
+      "type": "decision",
+      "action": "report",
+      "summary": "Diagnosis complete"
+    }
+  ],
+  "model_calls": 7,
+  "tool_calls": 6,
+  "input_tokens": 6089,
+  "output_tokens": 370,
+  "model": "gemini/gemini-3.5-flash-lite",
+  "provider": "gemini"
+}

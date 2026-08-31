@@ -193,6 +193,29 @@ marketing estimates.
 - [Evaluation contract](docs/EVALUATION.md)
 - [Improvement changelog](docs/IMPROVEMENT_CHANGELOG.md)
 - [Hackathon demo script](docs/DEMO_SCRIPT.md)
+- [Judge-facing submission package](submission/README.md)
+
+## Submission context
+
+RigNostic is for technical artists, riggers, and animation teams who need to
+validate facial controls before animation begins. A neutral pose can conceal a
+muted driver, empty shape key, reversed deformation, excessive range, or a
+failure that appears only when controls interact. Finding these defects during
+animation is slow and causes avoidable rework; RigNostic makes the inspection,
+evidence, repair proposal, and retest reviewable before handoff.
+
+The repository was empty when the hackathon work began. Everything specific to
+RigNostic—application code, agent instructions, benchmark, synthetic fixtures,
+evaluation, tests, web experience, and documentation—was added during the
+hackathon. Third-party runtimes and libraries are listed in the tech stack and
+lockfiles. See [the full disclosure](docs/PRE_EXISTING_WORK.md).
+
+Recorded Stage 0 execution took 35.66 seconds for ten model calls and used 7,549
+input plus 1,087 output tokens. Cost was not measured at run time and is not
+retroactively estimated. Local deterministic tests take about 12 seconds on the
+documented development machine; benchmark generation and Blender timings vary
+by CPU. Exact baseline, final web, benchmark, evaluation, and test commands are
+in the [clean-machine reproduction guide](docs/REPRODUCTION.md).
 
 ---
 

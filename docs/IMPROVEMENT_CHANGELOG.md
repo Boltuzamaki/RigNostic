@@ -144,3 +144,67 @@ then atomically published. The input and reference cannot be output targets. All
 were exercised through the apply path: 12 property repairs addressed all 11 injected defects, and
 each healed output had zero remaining supported differences. This validates benchmark restoration,
 not autonomous diagnosis or safe generalization to unrelated production rigs.
+
+## Iteration 2 — Adaptive Evidence Selection
+
+### What We Tried and Why
+
+Replaced the one-shot, all-evidence prompt with a bounded loop in which the model
+chooses the next unused read-only Blender inspection from a fixed allowlist. This
+keeps tool choice responsive while preventing arbitrary execution, repeated
+calls, and unbounded runs.
+
+### Measured Result and Learning
+
+On the representative broken demo face, the agent selected six relevant tools
+and stopped after seven model calls. The full trace is committed under
+`trajectories/final/`. This was kept with a deterministic tool-call cap and
+rejected-action logging.
+
+## Iteration 3 — Diagnostic Deformation Evidence
+
+### What We Tried and Why
+
+Added owner-aware affected-vertex counts, relative displacement, average deltas,
+left/right comparison, and deterministic structural guards. Names and driver
+presence alone cannot prove that a control deforms the correct geometry.
+
+### Measured Result and Learning
+
+The final representative demo run found all three injected demo defects (3/3):
+empty left blink, reversed right smile, and excessive jaw movement. It used
+6,089 input and 370 output tokens; provider cost was not measured. The earlier
+same-file coarse run found 0/3 with one false positive. This was kept, but the
+result is explicitly a demo-fixture comparison, not a claim about the ten-case
+formal benchmark.
+
+## Iteration 4 — Interaction Testing Experiment (Removed)
+
+### What We Tried and Why
+
+We explored presenting broad combined-control and full-inventory evidence to the
+agent in pursuit of interaction failures. The hypothesis was that more global
+context would expose failures invisible in single controls.
+
+### Measured Result and Learning
+
+The closest measured full-inventory experiment (Iteration 1) left formal recall
+at 18.2%, increased false positives from 4 to 10, raised input tokens from 7,549
+to 60,012, and increased runtime from 35.66 to 60.59 seconds. Exhaustive
+interaction testing was therefore not shipped or claimed as supported.
+
+### Decision
+
+REMOVE from the final supported feature set. Keep interaction testing marked as
+planned until a pruned candidate strategy has fixed benchmark evidence.
+
+## Final RigNostic
+
+The shipped workflow combines bounded adaptive inspection, structured Blender
+evidence, trace persistence, deterministic structural guards, sandboxed repair,
+retesting, and before/after review. Automatic repair remains deliberately
+narrower than detection.
+
+**Final hot take:** a facial control working by itself does not make a rig valid.
+Rig QA should be treated as evidence-backed behavioral testing, not a checklist
+of whether named controls merely exist.

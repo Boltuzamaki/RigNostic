@@ -1,4 +1,4 @@
-# Stage 0 baseline results
+# Baseline results
 
 Defect detection recall: 18.2%
 False positives: 4

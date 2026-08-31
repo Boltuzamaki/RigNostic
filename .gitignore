@@ -8,6 +8,7 @@ __pycache__/
 *.blend1
 dist/
 build/
+final_submission/
 node_modules/
 instance/
 demo_asset/rain_v01.blend

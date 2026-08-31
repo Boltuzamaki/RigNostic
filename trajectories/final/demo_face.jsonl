@@ -1,0 +1,17 @@
+{"stage":"instruction","timestamp":"2026-08-31T15:41:30.000000+00:00","instruction_source":"src/rignostic/baseline/agent.py","summary":"Diagnose an unfamiliar facial rig by selecting unused read-only Blender tools from the fixed allowlist; report only evidence-supported findings."}
+{"stage":"human_checkpoint","timestamp":"2026-08-31T15:41:30.100000+00:00","action":"upload","summary":"User selected the bundled broken demo-face rig and explicitly started analysis."}
+{"stage":"agent","timestamp":"2026-08-31T15:41:31.814958+00:00","type":"decision","action":"use_tool","tool":"scene_summary","summary":"Inspect overall scene structure and identify objects and armatures."}
+{"stage":"agent","timestamp":"2026-08-31T15:41:32.197988+00:00","type":"tool_result","tool":"scene_summary","summary":"Stored scene evidence."}
+{"stage":"agent","timestamp":"2026-08-31T15:41:33.208345+00:00","type":"decision","action":"use_tool","tool":"bone_names","summary":"Inspect armature structure."}
+{"stage":"agent","timestamp":"2026-08-31T15:41:33.559413+00:00","type":"tool_result","tool":"bone_names","summary":"Stored bone evidence."}
+{"stage":"agent","timestamp":"2026-08-31T15:41:34.687675+00:00","type":"decision","action":"use_tool","tool":"shape_key_names","summary":"Inspect shape keys corresponding to facial controls."}
+{"stage":"agent","timestamp":"2026-08-31T15:41:35.060733+00:00","type":"tool_result","tool":"shape_key_names","summary":"Stored shape-key evidence."}
+{"stage":"agent","timestamp":"2026-08-31T15:41:36.276483+00:00","type":"decision","action":"use_tool","tool":"shape_key_deformation_summary","summary":"Evaluate affected vertices and relative displacement."}
+{"stage":"agent","timestamp":"2026-08-31T15:41:36.668812+00:00","type":"tool_result","tool":"shape_key_deformation_summary","summary":"Stored deformation evidence."}
+{"stage":"agent","timestamp":"2026-08-31T15:41:37.797695+00:00","type":"decision","action":"use_tool","tool":"driver_summary","summary":"Check how controls drive shape keys, particularly the zero-vertex left blink."}
+{"stage":"agent","timestamp":"2026-08-31T15:41:38.169843+00:00","type":"tool_result","tool":"driver_summary","summary":"Stored driver evidence."}
+{"stage":"agent","timestamp":"2026-08-31T15:41:39.291261+00:00","type":"decision","action":"use_tool","tool":"constraint_summary","summary":"Check armature constraints before reporting."}
+{"stage":"agent","timestamp":"2026-08-31T15:41:39.667391+00:00","type":"tool_result","tool":"constraint_summary","summary":"Stored constraint evidence."}
+{"stage":"agent","timestamp":"2026-08-31T15:41:40.973028+00:00","type":"decision","action":"report","summary":"Diagnosis complete."}
+{"stage":"final_result","timestamp":"2026-08-31T15:41:40.973100+00:00","summary":"Reported all three injected demo defects: zero left-blink deformation, reversed right smile, and excessive jaw deformation. Six Blender tools and seven model calls were used."}
+{"stage":"human_checkpoint","timestamp":"2026-08-31T15:41:43.100000+00:00","action":"review","summary":"Repair remains user-triggered; the user reviews findings and chooses whether to create a verified sandboxed copy."}
