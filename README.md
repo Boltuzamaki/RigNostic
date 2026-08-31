@@ -11,7 +11,7 @@ The diagnostic agent selects each Blender inspection from a fixed allowlist base
 on the evidence collected so far. Every selection, tool result, and final report
 is stored with the run.
 
-[Quick start](#quick-start) · [How it works](#how-it-works) · [Demo rigs](#demo-rigs) · [Documentation](#documentation)
+[Quick start](#quick-start) · [Agent traces](AGENT_TRACES.md) · [How it works](#how-it-works) · [Demo rigs](#demo-rigs) · [Documentation](#documentation)
 
 </div>
 
